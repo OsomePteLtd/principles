@@ -1,0 +1,2 @@
+# principles
+Osome Development Principles
