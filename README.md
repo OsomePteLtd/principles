@@ -1,7 +1,9 @@
 # principles
+
 Osome Development Principles
 
-- [General Development Principles](general/index.md)
-- [Spec Development Principles](spec/index.md)
-- [Backend Development Principles](backend/index.md)
-- [Frontend Development Principles](frontend/index.md)
+- [General Development Principles](general.md)
+- [Spec Development Principles](spec.md)
+- [Backend Development Principles](backend.md)
+- [Frontend Development Principles](frontend.md)
+- [Hiring Principles](hiring.md)
