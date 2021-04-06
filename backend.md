@@ -25,7 +25,7 @@ TODO
 
 1. Business logic should be inside services.
 
-2. The right file name for a service will be `/services/model.service.ts` or `/services/domain.service.ts`.
+2. The right file name for a service will be `services/model.service.ts` or `services/domain.service.ts`.
 
 3. All methods for creating, updating and destroying models should be wrapped into service functions. For example, there should be `createUser` service function instead of using `User.create` from controllers. In this case, for example, a socket call goes to such a service function.
 
@@ -35,7 +35,7 @@ TODO
 
 1. SQS handlers should be jobs.
 
-2. The right file name for a job will be `/jobs/model.job.ts` or `/jobs/domain.job.ts`.
+2. The right file name for a job will be `jobs/model.job.ts` or `jobs/domain.job.ts`.
 
    ```
    // bad
