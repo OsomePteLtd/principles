@@ -125,7 +125,7 @@
 
 7. Use the following fields for list responses:
 
-   - entiry name in a plural form, for example `companyUsers` - for entities
+   - entiry name in plural (for example `companyUsers`) - for entities
    - `page` - for a page number, starts from 1
    - `perPage` - for a page size
    - `totalCount` - for a total count of entities found by a query
