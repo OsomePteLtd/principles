@@ -16,10 +16,6 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: Setup Node.js
-        shell: bash -l {0}
-        run: nvm install
-
       - name: Restore cache
         uses: c-hive/gha-npm-cache@v1
 
