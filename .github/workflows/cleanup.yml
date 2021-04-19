@@ -1,0 +1,15 @@
+name: Clean up artifacts
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # every midnight
+
+jobs:
+  delete-artifacts:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: kolpav/purge-artifacts-action@v1
+        with:
+          token: ${{ secrets.OSOME_BOT_TOKEN }}
+          expire-in: 0
