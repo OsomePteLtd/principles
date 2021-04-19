@@ -5,7 +5,7 @@
   "private": true,
   "license": "Proprietary",
   "scripts": {
-    "static-checks": "prettier --check 'src/**/*.md'"
+    "static-checks": "prettier --check '**/*.md'"
   },
   "devDependencies": {
     "prettier": "^2.2.1"
