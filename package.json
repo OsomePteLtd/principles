@@ -1,0 +1,13 @@
+{
+  "name": "principles",
+  "version": "1.0.0",
+  "description": "Osome Development Principles",
+  "private": true,
+  "license": "Proprietary",
+  "scripts": {
+    "static-checks": "prettier --check '**/*.md'"
+  },
+  "devDependencies": {
+    "prettier": "^2.2.1"
+  }
+}
