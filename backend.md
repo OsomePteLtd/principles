@@ -190,4 +190,64 @@
 
 ## Tests
 
-TODO
+1. All HTTP endpoints, lambdas and jobs should be covered by tests.
+
+2. Prefer to write integration tests rather then unit tests, i.e. it is better to write a test for a controller than for a service. Write unit tests only for covering some corner cases that are difficult to cover with integration tests.
+
+3. Use seed functions for preparing a database state for your tests. Use `faker` for random values and use other seed functions for associations.
+
+   Example:
+
+   ```
+   export async function seedConnection(overrides: Partial<ConnectionAttributes> = {}) {
+     let { institutionId } = overrides;
+     if (!institutionId) {
+       const institution = await seedInstitution();
+       institutionId = institution.id;
+     }
+     const defaults: Partial<ConnectionAttributes> & ConnectionAttributesNew = {
+       institutionId,
+       companyId: generateFakeId(),
+       externalId: faker.random.uuid(),
+       accessToken: faker.random.uuid(),
+       status: ConnectionStatus.active,
+     };
+     const attributes = { ...defaults, ...overrides };
+     return Connection.create({
+       ...attributes,
+       accessToken: encrypt(attributes.accessToken),
+     });
+   }
+   ```
+
+4. Do not seed common data for multiple tests in `beforeEach`, keep you tests isolated. More info [here](https://thoughtbot.com/blog/lets-not).
+
+5. Use `describe` blocks for each endpoint.
+
+6. A first test in a `describe` block should be a test for a basic scenario. The good name for this test will be `success`.
+
+   Example:
+
+   ```
+   describe('POST /bank/links', () => {
+     it('success', async () => {
+       // ...
+     });
+   });
+   ```
+
+7. Group ACL tests for each endpoint into "ACL" `describe` blocks.
+
+   Example:
+
+   ```
+   describe('POST /bank/links', () => {
+     // ...
+
+     describe('ACL', () => {
+       it('fails without permissions', async () => {
+         // ...
+       });
+     });
+   });
+   ```
