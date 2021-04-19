@@ -15,11 +15,131 @@
 
 ## Models
 
-TODO
+1. Do not use models from other models (except for associations). For example, you should not create a method in the `Ticket` model that will do `User.findAll()`. For such case you should create a service function that will use 2 models.
+
+2. Do not use services from models.
+
+3. Do not define enums in models, use enums from SDK.
+
+4. Use `separate: true` include option for inner lists. Otherwise Sequelize will generate an inefficient SQL with JOINS and then reduce it on the Node.js part. Also it is imposible to have different `order` options for different entities without `separate: true`.
+
+   ```
+   // good
+
+   const connections = await Connection.findAll({
+     include: [
+       Connection.institution,
+       { association: Connection.accounts, order: [['id', 'ASC']], separate: true },
+     ],
+     where: filter,
+     order: [['id', 'ASC']],
+   });
+   ```
 
 ## Controllers
 
-TODO
+1. Use 1 file per 1 resource.
+
+2. Exceptions should be handled universally in a middlware (for Koa / Express) or in a wrapper function (for microservices).
+
+   ```
+   // bad
+
+   async function create(req: Request, res: Response, next: NextFunction) {
+     try {
+       // ...
+       const template = await TemplateService.createTemplate(data);
+       // ...
+     } catch (err) {
+       if (err instanceof UniqueConstraintError) {
+         return res.status(422).json({
+           type: 'UniqueConstraintError',
+           message: 'Template with such alias and branch already exists',
+         });
+       }
+       next(err);
+     }
+   }
+   ```
+
+3. Validate requests by schemas.
+
+   ```
+   // bad
+
+   export const index = api(async (event: any) => {
+     const company = await validateCompany({
+       companyId: event.pathParameters.companyId,
+     });
+     // ...
+   });
+
+   // good
+
+   export const index = api(async (event: APIGatewayEvent) => {
+     const request = castAndValidateEvent<AcBankAccountIndexRequest>(
+       event,
+       schemas.AcBankAccountIndexRequest,
+     );
+     const company = await validateCompany({
+       companyId: request.pathParameters.companyId,
+     });
+     // ...
+   });
+   ```
+
+4. Serialize responses by schemas.
+
+   ```
+   // bad
+
+   return {
+     body: { bankAccounts },
+   };
+
+   // good
+
+   return {
+     body: serialize({ bankAccounts }, schemas.AcBankAccountListResponse),
+   };
+   ```
+
+5. Use service functions for creating, updating and deleting entities and use directly ORM `find*` functions for querying entities. More info in [Services](#services).
+
+6. Use the following query parameters for list requests:
+
+   - `search` - for a text search query
+   - `filter` - for filtering parameters
+   - `sort` - for ordering
+   - `page` - for a page number, starts from 1
+   - `perPage` - for a page size
+
+   All query parameters should be optional and should have default values.
+
+   Examples:
+
+   ```
+   /companies?page=3&perPage=25
+   /companies?filter[status]=active&sort=name
+   ```
+
+7. Use the following fields for list responses:
+
+   - entiry name in plural (for example `companyUsers`) - for entities
+   - `page` - for a page number, starts from 1
+   - `perPage` - for a page size
+   - `totalCount` - for a total count of entities found by a query
+
+   Example:
+
+   ```
+   {
+      companyUsers: [...],
+      page: 1,
+      perPage: 25,
+      totalCount: 31
+   }
+   ```
 
 ## Services
 
@@ -39,9 +159,11 @@ TODO
 
    ```
    // bad
+
    jobs/downloadInvoice.job.ts
 
    // good
+
    jobs/invoice.job.ts
    ```
 
@@ -51,11 +173,13 @@ TODO
 
    ```
    // bad
+
    export async function syncAccountsJob({ connectionId }: { connectionId: number }) {
      // very complex in-place logic
    }
 
    // good
+
    export async function syncAccountsJob({ connectionId }: { connectionId: number }) {
      debug(`[syncAccountsJob] connectionId = ${connectionId}`);
      const connection = await Connection.findByPk(connectionId, { rejectOnEmpty: true });
@@ -66,4 +190,64 @@ TODO
 
 ## Tests
 
-TODO
+1. All HTTP endpoints, lambdas and jobs should be covered by tests.
+
+2. Prefer to write integration tests rather then unit tests, i.e. it is better to write a test for a controller than for a service. Write unit tests only for covering some corner cases that are difficult to cover with integration tests.
+
+3. Use seed functions for preparing a database state for your tests. Use `faker` for random values and use other seed functions for associations.
+
+   Example:
+
+   ```
+   export async function seedConnection(overrides: Partial<ConnectionAttributes> = {}) {
+     let { institutionId } = overrides;
+     if (!institutionId) {
+       const institution = await seedInstitution();
+       institutionId = institution.id;
+     }
+     const defaults: Partial<ConnectionAttributes> & ConnectionAttributesNew = {
+       institutionId,
+       companyId: generateFakeId(),
+       externalId: faker.random.uuid(),
+       accessToken: faker.random.uuid(),
+       status: ConnectionStatus.active,
+     };
+     const attributes = { ...defaults, ...overrides };
+     return Connection.create({
+       ...attributes,
+       accessToken: encrypt(attributes.accessToken),
+     });
+   }
+   ```
+
+4. Do not seed common data for multiple tests in `beforeEach`, keep you tests isolated. More info [here](https://thoughtbot.com/blog/lets-not).
+
+5. Use `describe` blocks for each endpoint.
+
+6. A first test in a `describe` block should be a test for a basic scenario. The good name for this test will be `success`.
+
+   Example:
+
+   ```
+   describe('POST /bank/links', () => {
+     it('success', async () => {
+       // ...
+     });
+   });
+   ```
+
+7. Group ACL tests for each endpoint into "ACL" `describe` blocks.
+
+   Example:
+
+   ```
+   describe('POST /bank/links', () => {
+     // ...
+
+     describe('ACL', () => {
+       it('fails without permissions', async () => {
+         // ...
+       });
+     });
+   });
+   ```
