@@ -38,7 +38,108 @@
 
 ## Controllers
 
-TODO
+1. Use 1 file per 1 resource.
+
+2. Exceptions should be handled universally in a middlware (for Koa / Express) or in a wrapper function (for microservices).
+
+   ```
+   // bad
+
+   async function create(req: Request, res: Response, next: NextFunction) {
+     try {
+       // ...
+       const template = await TemplateService.createTemplate(data);
+       // ...
+     } catch (err) {
+       if (err instanceof UniqueConstraintError) {
+         return res.status(422).json({
+           type: 'UniqueConstraintError',
+           message: 'Template with such alias and branch already exists',
+         });
+       }
+       next(err);
+     }
+   }
+   ```
+
+3. Validate requests by schemas.
+
+   ```
+   // bad
+
+   export const index = api(async (event: any) => {
+     const company = await validateCompany({
+       companyId: event.pathParameters.companyId,
+     });
+     // ...
+   });
+
+   // good
+
+   export const index = api(async (event: APIGatewayEvent) => {
+     const request = castAndValidateEvent<AcBankAccountIndexRequest>(
+       event,
+       schemas.AcBankAccountIndexRequest,
+     );
+     const company = await validateCompany({
+       companyId: request.pathParameters.companyId,
+     });
+     // ...
+   });
+   ```
+
+4. Serialize responses by schemas.
+
+   ```
+   // bad
+
+   return {
+     body: { bankAccounts },
+   };
+
+   // good
+
+   return {
+     body: serialize({ bankAccounts }, schemas.AcBankAccountListResponse),
+   };
+   ```
+
+5. Use service functions for creating, updating and deleting entities and use directly ORM `find*` functions for querying entities. More info in [Services](#services).
+
+6. Use the following query parameters for list requests:
+
+   - `search` - for a text search query
+   - `filter` - for filtering parameters
+   - `sort` - for ordering
+   - `page` - for a page number, starts from 1
+   - `perPage` - for a page size
+
+   All query parameters should be optional and should have default values.
+
+   Examples:
+
+   ```
+   /companies?page=3&perPage=25
+   /companies?filter[status]=active&sort=name
+   ```
+
+7. Use the following fields for list responses:
+
+   - entiry name in a plural form, for example `companyUsers` - for entities
+   - `page` - for a page number, starts from 1
+   - `perPage` - for a page size
+   - `totalCount` - for a total count of entities found by a query
+
+   Example:
+
+   ```
+   {
+      companyUsers: [...],
+      page: 1,
+      perPage: 25,
+      totalCount: 31
+   }
+   ```
 
 ## Services
 
