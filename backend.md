@@ -15,7 +15,11 @@
 
 ## Models
 
-TODO
+1. Do not use models from other models (except for associations). For example, you should not create a method in the `Ticket` model that will do `User.findAll()`. For such case you should create a service function that will use 2 models.
+
+2. Do not use services from models.
+
+3. Do not define enums in models, use enums from SDK.
 
 ## Controllers
 
@@ -39,9 +43,11 @@ TODO
 
    ```
    // bad
+
    jobs/downloadInvoice.job.ts
 
    // good
+
    jobs/invoice.job.ts
    ```
 
@@ -51,11 +57,13 @@ TODO
 
    ```
    // bad
+
    export async function syncAccountsJob({ connectionId }: { connectionId: number }) {
      // very complex in-place logic
    }
 
    // good
+
    export async function syncAccountsJob({ connectionId }: { connectionId: number }) {
      debug(`[syncAccountsJob] connectionId = ${connectionId}`);
      const connection = await Connection.findByPk(connectionId, { rejectOnEmpty: true });
