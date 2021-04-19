@@ -21,6 +21,21 @@
 
 3. Do not define enums in models, use enums from SDK.
 
+4. Use `separate: true` include option for inner lists. Otherwise Sequelize will generate an inefficient SQL with JOINS and then reduce it on the Node.js part. Also it is imposible to have different `order` options for different entities without `separate: true`.
+
+   ```
+   // good
+
+   const connections = await Connection.findAll({
+     include: [
+       Connection.institution,
+       { association: Connection.accounts, order: [['id', 'ASC']], separate: true },
+     ],
+     where: filter,
+     order: [['id', 'ASC']],
+   });
+   ```
+
 ## Controllers
 
 TODO
