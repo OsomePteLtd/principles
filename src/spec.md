@@ -4,13 +4,21 @@
 
 We are using [TinySpec](https://github.com/Ajaxy/tinyspec) for defining our API. Specs live in the [SDK repository](https://github.com/OsomePteLtd/sdk/tree/master/spec). Specs are grouped by domain (`core`, `accounting`, `ecommerce`, etc).
 
-## Client and Agent Specs
-
 We have 3 types of specs:
 
 - `common` – for both agents and clients
 - `agent` – only for agents
 - `client` – only for clients
+
+File names for an entity should have the following form:
+
+- `${domain}/endpoints/${entity}.${type}.endpoints.tinyspec`
+- `${domain}/models/${entity}.${type}.models.tinyspec`
+
+Example:
+
+- `bank/endpoints/connection.common.endpoints.tinyspec`
+- `bank/models/connection.common.models.tinyspec`
 
 ## Index Endpoints
 
