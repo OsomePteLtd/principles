@@ -2,7 +2,7 @@
 
 ## Introduction
 
-We are using [TinySpec](https://github.com/Ajaxy/tinyspec) for defining our API. Specs live in the [SDK repository](https://github.com/OsomePteLtd/sdk). Specs are grouped by domain (`core`, `accounting`, `ecommerce`, etc).
+We are using [TinySpec](https://github.com/Ajaxy/tinyspec) for defining our API. Specs live in the [SDK repository](https://github.com/OsomePteLtd/sdk/tree/master/spec). Specs are grouped by domain (`core`, `accounting`, `ecommerce`, etc).
 
 ## Client and Agent Specs
 
@@ -156,5 +156,13 @@ Example:
 DELETE /bank/connections/:id:i
   => 204
 ```
+
+```
+BkConnectionDeleteRequest < BkConnectionRequest {}
+```
+
+Here we added the following name:
+
+- `${Entity}DeleteRequest` – for the "delete" request
 
 Specify `204` status code if your endpoint is not returning any content.
