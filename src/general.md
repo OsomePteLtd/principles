@@ -2,13 +2,29 @@
 
 ## Pull Requests
 
-1. Make you pull requests focused. Ideally, a pull request should do 1 thing and have a simple name.
+1. Make your pull requests focused:
 
-2. Avoid large pull requests because they are hard to review. Try to split your tasks into small steps.
+   - A pull request should do 1 thing and have a simple title.
 
-## Code Review
+   - Avoid mixing in a single pull request a product feature and something subjective like changing a linter config. A reviewer may agree with the main code, but a dispute about the linter config will start, and as a result, everything drags on. Make minor changes in a separate PR and make the discussion on different parts parallel.
 
-TODO
+2. Avoid large pull requests:
+
+   - Large pull requests are hard to review, try to split your tasks into small steps.
+
+   - Minimize the diff, avoid reformatting of code that is irrelevant to your pull request.
+
+3. Provide context for reviewers:
+
+   - Choose a good title for your pull request.
+
+   - Provide a link to Jira and a short description of what your pull request should do.
+
+   - Add comments to all lines of code that could potentially raise questions from reviewers (via GitHub comments, not in code).
+
+4. Make your pull request initially good:
+
+   - For example, if you will not add tests, then the first comment will be about tests, avoid unnecessary rounds of reviews.
 
 ## Branches
 
