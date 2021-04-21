@@ -28,7 +28,7 @@
 
 2. If you want to update more than 1M of records:
 
-   - Make a migration with a commented out update
+   - Make a migration with a commented out body
    - Run the query manually from an SQL client
 
    You should do it because all migrations are running in a single DB transaction. Your huge update will lock many DB objects. And Production will be down for the entire duration of the migration.
