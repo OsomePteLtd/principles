@@ -6,7 +6,7 @@
 
    - A pull request should do 1 thing and have a simple title.
 
-   - Avoid mixing in a single pull request a product feature and something subjective like changing a linter config. A reviewer may agree with the main code, but a dispute about the linter config will start, and as a result, everything drags on. Make minor changes in a separate PR and make the discussion on different parts parallel.
+   - Avoid mixing in a single pull request with a product feature something subjective like changing a linter config. A reviewer may agree with the main code, but a dispute about the linter config will start, and as a result, everything drags on. Make minor changes in a separate PR and make the discussion on different parts parallel.
 
 2. Avoid large pull requests:
 
