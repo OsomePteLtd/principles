@@ -13,6 +13,26 @@
    - We are saving raw data from an external service (for example, a Xero Invoice).
    - We are saving data with unpredictable nesting (for example, something like a form builder).
 
+## Migrations
+
+1. If you want to drop a column:
+
+   1. Make a PR with removing column usage from your code
+   2. Release to Production
+   3. Make a PR with a migration that renames your column `mycolumn` => `mycolumn_dropme`
+   4. Release to Production
+   5. Wait a couple weeks
+   6. Make a PR with completely dropping of the column
+
+   Otherwise, if you will drop or rename a column in a single release with removing usage of it, Production will fail, because there is a time gap (about 30 minutes for Core and about 3 minutes for microservices) between a DB migration and deploying a new version of code.
+
+2. If you want to update more than 1M of records:
+
+   - Make a migration with a commented out update
+   - Run the query manually from an SQL client
+
+   You should do it because all migrations are running in a single DB transaction. Your huge update will lock many DB objects. And Production will be down for the entire duration of the migration.
+
 ## Models
 
 1. Do not use models from other models (except for associations). For example, you should not create a method in the `Ticket` model that will do `User.findAll()`. For such case you should create a service function that will use 2 models.
