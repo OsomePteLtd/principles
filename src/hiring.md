@@ -1,3 +1,0 @@
-# Hiring Principles
-
-TODO
