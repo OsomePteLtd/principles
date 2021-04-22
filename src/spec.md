@@ -174,3 +174,15 @@ Here we added the following name:
 - `${Entity}DeleteRequest` – for the "delete" request
 
 Specify `204` status code if your endpoint is not returning any content.
+
+```
+// deprecated
+
+DELETE /bank/connections/:id:i
+  => SuccessResponse
+
+// good
+
+DELETE /bank/connections/:id:i
+  => 204
+```
