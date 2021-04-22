@@ -4,11 +4,11 @@
 
 1. Use foreign key constraints for foreign keys.
 
-2. Use `TIMESTAMP WITH TIME ZONE` (`TIMESTAMPTZ`) for timestamps.
+1. Use `TIMESTAMP WITH TIME ZONE` (`TIMESTAMPTZ`) for timestamps.
 
-3. Use `DATE` (not TIMESTAMP!) for dates.
+1. Use `DATE` (not TIMESTAMP!) for dates.
 
-4. Avoid JSON columns with a few exceptions:
+1. Avoid JSON columns with a few exceptions:
 
    - We are saving raw data from an external service (for example, a Xero Invoice).
    - We are saving data with unpredictable nesting (for example, something like a form builder).
@@ -18,15 +18,15 @@
 1. If you want to drop a column:
 
    1. Make a PR with removing column usage from your code
-   2. Release to Production
-   3. Make a PR with a migration that renames your column `mycolumn` => `mycolumn_dropme`
-   4. Release to Production
-   5. Wait a couple weeks
-   6. Make a PR with completely dropping of the column
+   1. Release to Production
+   1. Make a PR with a migration that renames your column `mycolumn` => `mycolumn_dropme`
+   1. Release to Production
+   1. Wait a couple weeks
+   1. Make a PR with completely dropping of the column
 
    Otherwise, if you will drop or rename a column in a single release with removing usage of it, Production will fail, because there is a time gap (about 30 minutes for Core and about 3 minutes for microservices) between a DB migration and deploying a new version of code.
 
-2. If you want to update more than 1M of records:
+1. If you want to update more than 1M of records:
 
    - Make a migration with a commented out body
    - Run the query manually from an SQL client
@@ -37,11 +37,11 @@
 
 1. Do not use models from other models (except for associations). For example, you should not create a method in the `Ticket` model that will do `User.findAll()`. For such case you should create a service function that will use 2 models.
 
-2. Do not use services from models.
+1. Do not use services from models.
 
-3. Do not define enums in models, use enums from SDK.
+1. Do not define enums in models, use enums from SDK.
 
-4. Use `separate: true` include option for inner lists. Otherwise Sequelize will generate an inefficient SQL with JOINS and then reduce it on the Node.js part. Also it is imposible to have different `order` options for different entities without `separate: true`.
+1. Use `separate: true` include option for inner lists. Otherwise Sequelize will generate an inefficient SQL with JOINS and then reduce it on the Node.js part. Also it is imposible to have different `order` options for different entities without `separate: true`.
 
    ```
    // good
@@ -60,7 +60,7 @@
 
 1. Use 1 file per 1 resource.
 
-2. Exceptions should be handled universally in a middlware (for Koa / Express) or in a wrapper function (for microservices).
+1. Exceptions should be handled universally in a middlware (for Koa / Express) or in a wrapper function (for microservices).
 
    ```
    // bad
@@ -82,7 +82,7 @@
    }
    ```
 
-3. Validate requests by schemas.
+1. Validate requests by schemas.
 
    ```
    // bad
@@ -108,7 +108,7 @@
    });
    ```
 
-4. Serialize responses by schemas.
+1. Serialize responses by schemas.
 
    ```
    // bad
@@ -124,9 +124,9 @@
    };
    ```
 
-5. Use service functions for creating, updating and deleting entities and use directly ORM `find*` functions for querying entities. More info in [Services](#services).
+1. Use service functions for creating, updating and deleting entities and use directly ORM `find*` functions for querying entities. More info in [Services](#services).
 
-6. Use the following query parameters for list requests:
+1. Use the following query parameters for list requests:
 
    - `search` - for a text search query
    - `filter` - for filtering parameters
@@ -143,7 +143,7 @@
    /companies?filter[status]=active&sort=name
    ```
 
-7. Use the following fields for list responses:
+1. Use the following fields for list responses:
 
    - entiry name in plural (for example `companyUsers`) - for entities
    - `page` - for a page number, starts from 1
@@ -165,17 +165,17 @@
 
 1. Business logic should be inside services.
 
-2. The right file name for a service will be `services/model.service.ts` or `services/domain.service.ts`.
+1. The right file name for a service will be `services/model.service.ts` or `services/domain.service.ts`.
 
-3. All methods for creating, updating and destroying models should be wrapped into service functions. For example, there should be `createUser` service function instead of using `User.create` from controllers. In this case, for example, a socket call goes to such a service function.
+1. All methods for creating, updating and destroying models should be wrapped into service functions. For example, there should be `createUser` service function instead of using `User.create` from controllers. In this case, for example, a socket call goes to such a service function.
 
-4. Do not add `find*` service functions, use directly ORM `find*` functions from controllers instead. Exception: the finder function is very complex and has very specific domain logic, so it’s guaranteed it will not be used by different parts of the app. E.g., `findAllDocumentsRelatedToDocumentThroughReconciliations`.
+1. Do not add `find*` service functions, use directly ORM `find*` functions from controllers instead. Exception: the finder function is very complex and has very specific domain logic, so it’s guaranteed it will not be used by different parts of the app. E.g., `findAllDocumentsRelatedToDocumentThroughReconciliations`.
 
 ## Jobs
 
 1. SQS handlers should be jobs.
 
-2. The right file name for a job will be `jobs/model.job.ts` or `jobs/domain.job.ts`.
+1. The right file name for a job will be `jobs/model.job.ts` or `jobs/domain.job.ts`.
 
    ```
    // bad
@@ -187,9 +187,9 @@
    jobs/invoice.job.ts
    ```
 
-3. A job function should have the `Job` suffix, for example `syncTransactionsJob()`.
+1. A job function should have the `Job` suffix, for example `syncTransactionsJob()`.
 
-4. A job function should be a thin wrapper for a service function.
+1. A job function should be a thin wrapper for a service function.
 
    ```
    // bad
@@ -212,9 +212,9 @@
 
 1. All HTTP endpoints, lambdas and jobs should be covered by tests.
 
-2. Prefer to write integration tests rather then unit tests, i.e. it is better to write a test for a controller than for a service. Write unit tests only for covering some corner cases that are difficult to cover with integration tests.
+1. Prefer to write integration tests rather then unit tests, i.e. it is better to write a test for a controller than for a service. Write unit tests only for covering some corner cases that are difficult to cover with integration tests.
 
-3. Use seed functions for preparing a database state for your tests. Use `faker` for random values and use other seed functions for associations.
+1. Use seed functions for preparing a database state for your tests. Use `faker` for random values and use other seed functions for associations.
 
    Example:
 
@@ -240,11 +240,11 @@
    }
    ```
 
-4. Do not seed common data for multiple tests in `beforeEach`, keep you tests isolated. More info [here](https://thoughtbot.com/blog/lets-not).
+1. Do not seed common data for multiple tests in `beforeEach`, keep you tests isolated. More info [here](https://thoughtbot.com/blog/lets-not).
 
-5. Use `describe` blocks for each endpoint.
+1. Use `describe` blocks for each endpoint.
 
-6. A first test in a `describe` block should be a test for a basic scenario. The good name for this test will be `success`.
+1. A first test in a `describe` block should be a test for a basic scenario. The good name for this test will be `success`.
 
    Example:
 
@@ -256,7 +256,7 @@
    });
    ```
 
-7. Group ACL tests for each endpoint into "ACL" `describe` blocks.
+1. Group ACL tests for each endpoint into "ACL" `describe` blocks.
 
    Example:
 

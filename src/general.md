@@ -8,13 +8,13 @@
 
    - Avoid mixing in a single pull request with a product feature something subjective like changing a linter config. A reviewer may agree with the main code, but a dispute about the linter config will start, and as a result, everything drags on. Make minor changes in a separate PR and make the discussion on different parts parallel.
 
-2. Avoid large pull requests:
+1. Avoid large pull requests:
 
    - Large pull requests are hard to review, try to split your tasks into small steps.
 
    - Minimize the diff, avoid reformatting of code that is irrelevant to your pull request.
 
-3. Provide context for reviewers:
+1. Provide context for reviewers:
 
    - Choose a good title for your pull request.
 
@@ -22,7 +22,7 @@
 
    - Add comments to all lines of code that could potentially raise questions from reviewers (via GitHub comments, not in code).
 
-4. Make your pull request initially good:
+1. Make your pull request initially good:
 
    - For example, if you will not add tests, then the first comment will be about tests, avoid unnecessary rounds of reviews.
 
@@ -48,7 +48,7 @@ Now we are working in different countries (`branch` attribute) and it is importa
    const documentIds = documents.map(d => d.id);
    ```
 
-2. Plural for compound names:
+1. Plural for compound names:
 
    ```
    // bad
@@ -60,7 +60,7 @@ Now we are working in different countries (`branch` attribute) and it is importa
    documentIds
    ```
 
-3. Pattern "Loop + Function". If you have more then 1 line of code inside a loop, it is a sign that you need to extract a function.
+1. Pattern "Loop + Function". If you have more then 1 line of code inside a loop, it is a sign that you need to extract a function.
 
    ```
    // bad
