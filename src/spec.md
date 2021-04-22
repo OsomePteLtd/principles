@@ -12,15 +12,13 @@ We have 3 types of specs:
 
 File names for an entity should have the following form:
 
-- `spec/${domain}/${group}/${entity}.${type}.endpoints.tinyspec`
-- `spec/${domain}/${group}/${entity}.${type}.models.tinyspec`
-
-In most cases `${group}` will be equal to `${entity}`.
+- `spec/${domain}/endpoints/${entity}.${type}.endpoints.tinyspec`
+- `spec/${domain}/models/${entity}.${type}.models.tinyspec`
 
 Example:
 
-- `spec/bank/connection/connection.common.endpoints.tinyspec`
-- `spec/bank/connection/connection.common.models.tinyspec`
+- `spec/bank/endpoints/connection.common.endpoints.tinyspec`
+- `spec/bank/models/connection.common.models.tinyspec`
 
 ## Index Endpoints
 
