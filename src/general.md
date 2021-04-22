@@ -48,7 +48,19 @@ Now we are working in different countries (`branch` attribute) and it is importa
    const documentIds = documents.map(d => d.id);
    ```
 
-2. Pattern "Loop + Function". If you have more then 1 line of code inside a loop, it is a sign that you need to extract a function.
+2. Plural for compound names:
+
+   ```
+   // bad
+
+   documentsIds, documentsId
+
+   // good
+
+   documentIds
+   ```
+
+3. Pattern "Loop + Function". If you have more then 1 line of code inside a loop, it is a sign that you need to extract a function.
 
    ```
    // bad
