@@ -182,7 +182,7 @@
        setRedirectToNextTicketId();
      }
    }, [ticket]);
- 
+
    // you can also call push() from component, but declarative Redirect is preferrable
    return shouldRedirectToNextTicketId ? <Redirect to={createTicketLink(nextTicketId)} /> : null;
    ```
@@ -212,4 +212,3 @@
      setFailed();
    }
    ```
-
