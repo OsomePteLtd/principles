@@ -25,7 +25,7 @@
    };
    type DoSomethingOptions = {
      how: DoSomethingHow;
-     times: numberl
+     times: number;
    };
    function doSomething(entity: Entity, options?: DoSomethingOptions);
    ```
