@@ -27,7 +27,11 @@
      how: DoSomethingHow;
      times: number;
    };
-   function doSomething(entity: Entity, options?: DoSomethingOptions);
+   type SomeEntity = {
+     id: number;
+     title: string;
+   }
+   function doSomething(entity: SomeEntity, options?: DoSomethingOptions);
    ```
 
 1. Tend to increase typescript coverage, avoid `any` and implicit `any`.
