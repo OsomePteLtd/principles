@@ -12,7 +12,7 @@
    type DocumentsById = Partial<Record<Document['id'], Document>>;
    ```
 
-1. Prefer specific types instead of common ones.
+1. Prefer specific types instead of common ones. It allows us to prevent more errors or development stage.
 
    ```
    // bad
