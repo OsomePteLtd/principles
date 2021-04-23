@@ -44,7 +44,7 @@
 
 ## Styles
 
-1. Avoid using tags or ids for styling. However, you can use tags for svg styles or external libraries components.
+1. Avoid using nested tags or ids for styling. However, you can use nested tags for svg styles or external libraries components.
 
    ```
    // bad
@@ -71,13 +71,41 @@
    `;
    ```
 
-2. If some color is repeated several times in code, extract it to theme.
+1. If some color is repeated several times in code, extract it to theme.
 
 ## UI-kit
 
 1. Design components API for common usage rather than for specific one.
 
-1. Prefer several simple components over complicated one. Use component composition if they have common parts.
+1. If component handles too many specific cases or dramatically changes its appearance on prop changes, consider having several components instead.
+
+   ```
+   // bad
+   export const Button = ({ type, title, ...props }) => {
+     if (type === 'primary') {
+       return (
+         <PrimaryStyledButton {...props}>
+           {title}
+         </PrimaryStyledButton>
+       );
+     }
+
+     if (type === 'go-back') {
+       return (
+         <StyledGoBackButton {...props}>
+           <GoBackIcon />
+           {title}
+         </StyledGoBackButton>
+       );
+     }
+
+     // ...
+   };
+
+   // good
+   export const Button = props => {...};
+   export const GoBackButton = props => {...};
+   ```
 
 1. Do not hurry to extract components to UI-kit if you have only one. Try to collect more usages of this component. It helps create better component API for common usage.
 
@@ -136,7 +164,7 @@
 
    // good
    type State = {
-     selectedDocumentId: Document['id],
+     selectedDocumentId: Document['id'],
      documentsById: DocumentsById,
    };
    ```
