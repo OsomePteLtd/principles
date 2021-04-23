@@ -77,6 +77,8 @@
 
 1. Design components API for common usage rather than for specific one.
 
+1. Prefer several simple components over complicated one. Use component composition if they have common parts.
+
 1. Do not hurry to extract components to UI-kit if you have only one. Try to collect more usages of this component. It helps create better component API for common usage.
 
 1. When extracting complicated components to UI-kit, consider exporting component parts instead of single component with complicated API. Complicated APIs are too hard to extend without breaking backward compatibility.
