@@ -110,12 +110,11 @@ Now we are working in different countries (`branch` attribute) and it is importa
      },
    ]);
    ```
-   
-   
+
 ## Comments
 
-1. Use comments to add context or information that is not obvious from the code already. Don't use comments to explain the code itself - code (through proper naming) should be self-explanatory
+1. Use comments to add context or information that is not obvious from the code already. Don't use comments to explain the code itself - code (through proper naming) should be self-explanatory.
 
-1. Use TODO prefix in comments to track and document technical debt - things that are worth doing, but not done yet
+1. Use TODO prefix in comments to track and document technical debt - things that are worth doing, but not done yet.
 
-1. It's considered a bad practice to comment out raw code. Commented code causes ["broken windows"](https://blog.codinghorror.com/pragmatic-programming/), increases cognitve load on developers, lacks support (commented code almost always doesn't work), lacks test coverage. For detailed explanation, see [link 1](https://www.markhneedham.com/blog/2009/01/17/the-danger-of-commenting-out-code/), [link 2](https://kentcdodds.com/blog/please-dont-commit-commented-out-code)
+1. It's considered a bad practice to comment out raw code. Commented code causes ["broken windows"](https://blog.codinghorror.com/pragmatic-programming/), increases cognitve load on developers, lacks support (commented code almost always doesn't work) and lacks test coverage. For detailed explanation, see [link 1](https://www.markhneedham.com/blog/2009/01/17/the-danger-of-commenting-out-code/), [link 2](https://kentcdodds.com/blog/please-dont-commit-commented-out-code)
