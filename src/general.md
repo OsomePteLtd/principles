@@ -110,3 +110,7 @@ Now we are working in different countries (`branch` attribute) and it is importa
      },
    ]);
    ```
+
+## Types
+
+1. The return type must be explicitly specified for functions that return `boolean` values.
