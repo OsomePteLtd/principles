@@ -271,3 +271,5 @@
      });
    });
    ```
+
+1. If you use a stub then you must check a call and/or calls arguments
