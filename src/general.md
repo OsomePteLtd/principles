@@ -1,5 +1,14 @@
 # General Development Principles
 
+    “I read a study that measured the efficiency of locomotion for various species on the planet.
+    The condor used the least energy to move a kilometer. And, humans came in with a rather unimpressive showing,
+    about a third of the way down the list. It was not too proud a showing for the crown of creation. So, that
+    didn’t look so good. But, then somebody at Scientific American had the insight to test the efficiency of
+    locomotion for a man on a bicycle. And, a man on a bicycle, a human on a bicycle, blew the condor away,
+    completely off the top of the charts. And that’s what a computer is to me.” - Steve Jobs
+
+We believe it describes very precisely what we’re doing here: we’re creating an accounting / corpsec bicycle.
+
 ## Pull Requests
 
 1. Make your pull requests focused:
@@ -110,3 +119,11 @@ Now we are working in different countries (`branch` attribute) and it is importa
      },
    ]);
    ```
+
+## Comments
+
+1. Use comments to add context or information that is not obvious from the code already. Don't use comments to explain the code itself - code (through proper naming) should be self-explanatory.
+
+1. Use TODO prefix in comments to track and document technical debt - things that are worth doing, but not done yet.
+
+1. It's considered a bad practice to comment out raw code. Commented code causes ["broken windows"](https://blog.codinghorror.com/pragmatic-programming/), increases cognitve load on developers, lacks support (commented code almost always doesn't work) and lacks test coverage. For detailed explanation, see [link 1](https://www.markhneedham.com/blog/2009/01/17/the-danger-of-commenting-out-code/), [link 2](https://kentcdodds.com/blog/please-dont-commit-commented-out-code)
