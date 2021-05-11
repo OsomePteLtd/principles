@@ -33,6 +33,34 @@
 
    You should do it because all migrations are running in a single DB transaction. Your huge update will lock many DB objects. And Production will be down for the entire duration of the migration.
 
+1. Keep down migrations empty.
+
+   ```
+   // bad
+
+   up: (queryInterface, Sequelize) => {
+     return queryInterface.sequelize.query(`
+       ALTER TABLE "lineItems" ADD COLUMN "migrationSourceData" JSONB;
+     `);
+   },
+
+   down: (queryInterface, Sequelize) => {
+     return queryInterface.sequelize.query(`
+       ALTER TABLE "contacts" DROP COLUMN "migrationSourceData";
+     `);
+   },
+
+   // good
+
+   up: (queryInterface, Sequelize) => {
+     return queryInterface.sequelize.query(`
+       ALTER TABLE "lineItems" ADD COLUMN "migrationSourceData" JSONB;
+     `);
+   },
+
+   down: () => {},
+   ```
+
 ## Models
 
 1. Do not use models from other models (except for associations). For example, you should not create a method in the `Ticket` model that will do `User.findAll()`. For such case you should create a service function that will use 2 models.
