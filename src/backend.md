@@ -33,7 +33,7 @@
 
    You should do it because all migrations are running in a single DB transaction. Your huge update will lock many DB objects. And Production will be down for the entire duration of the migration.
 
-1. Keep down migrations empty.
+1. Leave `down` migrations empty. They are not actually used, so it is not worth wasting time on them.
 
    ```
    // bad
