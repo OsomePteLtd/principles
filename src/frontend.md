@@ -135,7 +135,7 @@
 
 ## Redux
 
-1. Group entities by domain, not by components.
+1. Group entities by domain, not by usage.
 
    ```
    // bad
