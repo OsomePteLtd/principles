@@ -15,21 +15,37 @@
 
 ## Migrations
 
-1. If you want to drop a column:
+### If you want to drop a column
 
-   1. Make a PR with removing column usage from your code
-   1. Release to Production
-   1. Make a PR with a migration that renames your column `mycolumn` => `mycolumn_dropme`
-   1. Release to Production
-   1. Wait a couple weeks
-   1. Make a PR with completely dropping of the column
+1. Make a PR with removing column usage from your code
+2. Release to Production
+3. Make a PR with a migration that renames your column `mycolumn` => `mycolumn_killMePlease`. For example:
 
-   Otherwise, if you will drop or rename a column in a single release with removing usage of it, Production will fail, because there is a time gap (about 30 minutes for Core and about 3 minutes for microservices) between a DB migration and deploying a new version of code.
+```sql
+  SET lock_timeout TO '2s';
+  DO $$ BEGIN
+    ALTER TABLE "companies"
+      RENAME COLUMN "isHero" TO "isHero_killMePlease";
+  EXCEPTION
+    WHEN undefined_column THEN
+  END $$;
+  ```
 
-1. If you want to update more than 1M of records:
+4. Release to Production
+5. Wait a couple weeks
+6. Make a PR with completely dropping of the column. For example:
 
-   - Make a migration with a commented out body
-   - Run the query manually from an SQL client
+```sql
+SET lock_timeout TO '2s';
+ALTER TABLE "companies" DROP COLUMN IF EXISTS "isHero_killMePlease";
+```
+
+Otherwise, if you will drop or rename a column in a single release with removing usage of it, Production will fail, because there is a time gap (about 30 minutes for Core and about 3 minutes for microservices) between a DB migration and deploying a new version of code.
+
+### If you want to update more than 1M of records
+
+  - Make a migration with a commented out body
+  - Run the query manually from an SQL client
 
    You should do it because all migrations are running in a single DB transaction. Your huge update will lock many DB objects. And Production will be down for the entire duration of the migration.
 
