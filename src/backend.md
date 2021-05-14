@@ -330,7 +330,7 @@
     function createUser(attributes, { auditLogs }: { auditLogs: boolean })
     ```
 
-4. It's possible to shorten argument name of an arrow function in array iteration methods
+4. It's possible to shorten an argument name of an arrow function in array iteration methods
 
     ```
     reconciliations.map((r) => r.reconciliationLineItem)
