@@ -96,6 +96,17 @@ Now we are working in different countries (`branch` attribute) and it is importa
    }
    ```
 
+1. An anonymous flag in arguments list is unacceptable
+
+   ```
+   // bad
+   function createUser(attributes, auditLogs: boolean) { ... }
+   createUser({ ... }, true) // what is true here?
+
+   // good
+   function createUser(attributes, { auditLogs }: { auditLogs: boolean })
+   ```
+
 ## Tests
 
 1. Do not use `?` in tests, use `!`.
