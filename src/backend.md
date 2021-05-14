@@ -301,37 +301,3 @@
    ```
 
 1. If you use a stub then you must check a call and/or calls arguments
-
-## Functions
-
-1. Max number of anonymous arguments: 2
-2. The meaning of anonymous arguments must be clear
-
-   ```
-   // good
-   addUserToCompany(company, user)
-
-   // bad
-   updateUser(user, false)
-   ```
-
-3. An anonymous flag in arguments list is unacceptable
-
-   ```
-   // bad
-   function createUser(attributes, auditLogs: boolean) { ... }
-   createUser({ ... }, true) // what is true here?
-
-   // very bad
-   function createUser(attributes: object, auditLogs: boolean, extraFields?: object, profile: Profile) { ... }
-   createUser({ ... }, true, undefined, profile) // WTF?
-
-   // good
-   function createUser(attributes, { auditLogs }: { auditLogs: boolean })
-   ```
-
-4. It's possible to shorten an argument name of an arrow function in array iteration methods
-
-   ```
-   reconciliations.map((r) => r.reconciliationLineItem)
-   ```
