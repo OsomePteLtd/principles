@@ -86,6 +86,7 @@ function authoriseRead(event: APIGatewayEvent) {
     agent: { permissionType: PermissionType.companiesRead },
   });
 }
+
 function authoriseWrite(event: APIGatewayEvent) {
   return authorize(event, {
     agent: { permissionType: PermissionType.companiesWrite },
@@ -98,9 +99,7 @@ function findBankAccounts(request: AcBankAccountIndexRequest): Promise<BankAccou
   };
   return BankAccount.findAll({
     where,
-    order: [
-      ['createdAt', 'ASC'],
-    ],
+    order: [['createdAt', 'ASC']],
     include: [BankAccount.company, BankAccount.bankContact],
   });
 }
