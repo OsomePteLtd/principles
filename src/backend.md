@@ -86,6 +86,8 @@
 
 ## Controllers
 
+1. Use the [Lambda Controller Sample](https://github.com/OsomePteLtd/principles/blob/main/src/samples/lambda/bankAccount.controller.ts) to create a CRUDL scaffolding controller.
+
 1. Use 1 file per 1 resource.
 
 1. Exceptions should be handled universally in a middlware (for Koa / Express) or in a wrapper function (for microservices).
