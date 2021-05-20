@@ -3,7 +3,9 @@ import {
   AcBankAccountDeleteRequest,
   AcBankAccountGetRequest,
   AcBankAccountIndexRequest,
+  AcBankAccountListResponse,
   AcBankAccountRequest,
+  AcBankAccountResponse,
   AcBankAccountUpdateRequest,
   PermissionType,
   schemas,
@@ -20,7 +22,7 @@ import {
   updateBankAccount,
 } from '../../services/bankAccount.service';
 
-export const index = api2<AcBankAccountIndexRequest>(
+export const index = api2<AcBankAccountIndexRequest, AcBankAccountListResponse>(
   schemas.AcBankAccountIndexRequest,
   schemas.AcBankAccountListResponse,
   async ({ request, event }) => {
@@ -32,7 +34,7 @@ export const index = api2<AcBankAccountIndexRequest>(
   },
 );
 
-export const show = api2<AcBankAccountGetRequest>(
+export const show = api2<AcBankAccountGetRequest, AcBankAccountResponse>(
   schemas.AcBankAccountGetRequest,
   schemas.AcBankAccountResponse,
   async ({ request, event }) => {
@@ -44,7 +46,7 @@ export const show = api2<AcBankAccountGetRequest>(
   },
 );
 
-export const create = api2<AcBankAccountCreateRequest>(
+export const create = api2<AcBankAccountCreateRequest, AcBankAccountResponse>(
   schemas.AcBankAccountCreateRequest,
   schemas.AcBankAccountResponse,
   async ({ request, event }) => {
@@ -57,7 +59,7 @@ export const create = api2<AcBankAccountCreateRequest>(
   },
 );
 
-export const update = api2<AcBankAccountUpdateRequest>(
+export const update = api2<AcBankAccountUpdateRequest, AcBankAccountResponse>(
   schemas.AcBankAccountUpdateRequest,
   schemas.AcBankAccountResponse,
   async ({ request, event }) => {
