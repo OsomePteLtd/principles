@@ -7,7 +7,7 @@
     locomotion for a man on a bicycle. And, a man on a bicycle, a human on a bicycle, blew the condor away,
     completely off the top of the charts. And that’s what a computer is to me.” - Steve Jobs
 
-We believe it describes very precisely what we’re doing here: we’re creating an accounting / corpsec bicycle.
+We believe it describes very precisely what we’re doing here: we’re creating an accounting / corpsec bicycle 🚲.
 
 ## Pull Requests
 
@@ -34,6 +34,20 @@ We believe it describes very precisely what we’re doing here: we’re creating
 1. Make your pull request initially good:
 
    - For example, if you will not add tests, then the first comment will be about tests, avoid unnecessary rounds of reviews.
+
+1. How to use auto-merge:
+
+   // bad
+
+   Create a pull request, enable auto-merge
+
+   // good
+
+   Create a pull request, get all required approves.
+
+   If there is a small change like a typo fix or rename, push a fix and enable auto-merge.
+
+   Why? We have a practice that the reviewer adds minor comments and approves the pull request. In this case, you will not have a chance to fix them before merging.
 
 ## Branches
 
