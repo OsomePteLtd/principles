@@ -58,6 +58,11 @@ BkConnectionIndexRequestQuery !{
 BkConnectionListResponse !{
   connections: BkConnection[],
 }
+
+// paginated version
+BkConnectionListResponse < PaginatedResponse !{
+  connections: BkConnection[],
+}
 ```
 
 Here we have the following names:
@@ -66,7 +71,7 @@ Here we have the following names:
 - `${Entity}Filter` – for the filter parameters
 - `${Entity}IndexRequest` – for the "index" request
 - `${Entity}IndexRequestQuery` – for the "index" query string parameters
-- `${Entity}ListResponse` – for the list response body
+- `${Entity}ListResponse` – for the list response body. For paginated responses, inherit from the shared `PaginatedResponse` model.
 
 ## Create Endpoints
 
