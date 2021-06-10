@@ -15,6 +15,7 @@ import { WhereAttributeHash } from 'sequelize';
 
 import { authorize } from '../../lib/acl';
 import { api2, apiNoContent } from '../../lib/app';
+import { throwNotFound } from '../../lib/errors';
 import { BankAccount } from '../../models';
 import {
   createBankAccount,
@@ -106,9 +107,10 @@ function findBankAccounts(request: AcBankAccountIndexRequest): Promise<BankAccou
   });
 }
 
-function findBankAccount(request: AcBankAccountRequest): Promise<BankAccount> {
-  return BankAccount.findByPk(request.pathParameters.bankAccountId, {
-    rejectOnEmpty: true,
-    include: [BankAccount.company, BankAccount.bankContact],
-  });
+async function findBankAccount(request: AcBankAccountRequest): Promise<BankAccount> {
+  return (
+    (await BankAccount.findByPk(request.pathParameters.bankAccountId, {
+      include: [BankAccount.company, BankAccount.bankContact],
+    })) ?? throwNotFound()
+  );
 }
