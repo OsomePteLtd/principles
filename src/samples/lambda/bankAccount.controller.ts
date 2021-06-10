@@ -108,8 +108,9 @@ function findBankAccounts(request: AcBankAccountIndexRequest): Promise<BankAccou
 }
 
 async function findBankAccount(request: AcBankAccountRequest): Promise<BankAccount> {
-  const bankAccount = await BankAccount.findByPk(request.pathParameters.bankAccountId, {
-    include: [BankAccount.company, BankAccount.bankContact],
-  });
-  return bankAccount ?? throwNotFound();
+  return (
+    (await BankAccount.findByPk(request.pathParameters.bankAccountId, {
+      include: [BankAccount.company, BankAccount.bankContact],
+    })) ?? throwNotFound()
+  );
 }
