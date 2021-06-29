@@ -70,7 +70,7 @@
   ```sql
    // bad
 
-   CREATE UNIQUE "subscription_period_key_value" INDEX ON "notificationPeriods" ("subscriptionId", "type", "value") WHERE ("deletedAt" IS NULL);
+   CREATE UNIQUE INDEX "subscription_period_key_value" ON "notificationPeriods" ("subscriptionId", "type", "value") WHERE ("deletedAt" IS NULL);
 
    // good
 
