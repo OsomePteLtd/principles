@@ -65,6 +65,17 @@
 
    - Is easier
    - Does not require to use any specific organization-wide convention, we simply use the standard one
+   - Ensures the name actually includes proper fields
+
+  ```sql
+   // bad
+
+   CREATE UNIQUE "subscription_period_key_value" INDEX ON "notificationPeriods" ("subscriptionId", "type", "value") WHERE ("deletedAt" IS NULL);
+
+   // good
+
+   CREATE UNIQUE INDEX ON "notificationPeriods" ("subscriptionId", "type", "value") WHERE ("deletedAt" IS NULL);
+   ```
 
 ## Models
 
