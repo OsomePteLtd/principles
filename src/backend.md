@@ -35,7 +35,7 @@
 
 1. Leave `down` migrations empty. They are not actually used, so it is not worth wasting time on them.
 
-   ```
+   ```javascript
    // bad
 
    up: (queryInterface, Sequelize) => {
@@ -71,7 +71,7 @@
 
 1. Use `separate: true` include option for inner lists. Otherwise Sequelize will generate an inefficient SQL with JOINS and then reduce it on the Node.js part. Also it is imposible to have different `order` options for different entities without `separate: true`.
 
-   ```
+   ```typescript
    // good
 
    const connections = await Connection.findAll({
@@ -92,7 +92,7 @@
 
 1. Exceptions should be handled universally in a middlware (for Koa / Express) or in a wrapper function (for microservices).
 
-   ```
+   ```typescript
    // bad
 
    async function create(req: Request, res: Response, next: NextFunction) {
@@ -114,7 +114,7 @@
 
 1. Validate requests by schemas.
 
-   ```
+   ```typescript
    // bad
 
    export const index = api(async (event: any) => {
@@ -140,7 +140,7 @@
 
 1. Serialize responses by schemas.
 
-   ```
+   ```typescript
    // bad
 
    return {
@@ -182,7 +182,7 @@
 
    Example:
 
-   ```
+   ```json
    {
       companyUsers: [...],
       page: 1,
@@ -221,7 +221,7 @@
 
 1. A job function should be a thin wrapper for a service function.
 
-   ```
+   ```typescript
    // bad
 
    export async function syncAccountsJob({ connectionId }: { connectionId: number }) {
@@ -248,7 +248,7 @@
 
    Example:
 
-   ```
+   ```typescript
    export async function seedConnection(overrides: Partial<ConnectionAttributes> = {}) {
      let { institutionId } = overrides;
      if (!institutionId) {
@@ -278,7 +278,7 @@
 
    Example:
 
-   ```
+   ```typescript
    describe('POST /bank/links', () => {
      it('success', async () => {
        // ...
@@ -290,7 +290,7 @@
 
    Example:
 
-   ```
+   ```typescript
    describe('POST /bank/links', () => {
      // ...
 
