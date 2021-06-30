@@ -61,6 +61,22 @@
    down: () => {},
    ```
 
+1. Do not explicitly specify the index name and let the database set it since it:
+
+   - Is easier
+   - Does not require to use any specific organization-wide convention, we simply use the standard one
+   - Ensures the name actually includes proper fields
+
+   ```sql
+   // bad
+
+   CREATE UNIQUE INDEX "subscription_period_key_value" ON "notificationPeriods" ("subscriptionId", "type", "value") WHERE ("deletedAt" IS NULL);
+
+   // good
+
+   CREATE UNIQUE INDEX ON "notificationPeriods" ("subscriptionId", "type", "value") WHERE ("deletedAt" IS NULL);
+   ```
+
 ## Models
 
 1. Do not use models from other models (except for associations). For example, you should not create a method in the `Ticket` model that will do `User.findAll()`. For such case you should create a service function that will use 2 models.
