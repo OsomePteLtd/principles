@@ -182,7 +182,7 @@
 
    Example:
 
-   ```json
+   ```typescript
    {
       companyUsers: [...],
       page: 1,
