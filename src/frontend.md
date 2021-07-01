@@ -116,7 +116,7 @@
 1. When extracting complicated components to UI-kit, consider exporting component parts instead of single component with complicated API. Complicated APIs are too hard to extend without breaking backward compatibility.
 
    ```JSX
-   {/* bad */}
+   // bad
    <MyFancySelect
      options=[
        { value: 'a', type: 'with-counter', counter: 5, title: 'Foo' },
@@ -124,8 +124,10 @@
        { value: 'b, type: 'simple', title: 'Bar' },
      ]
    />
+   ```
 
-   {/* good */}
+   ```JSX
+   // good
    <MyFancySelect>
      <OptionWithCounter value='a' counter={5}>Foo</OptionWithCounter>
      <Divider />
