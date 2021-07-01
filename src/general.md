@@ -57,7 +57,7 @@ Now we are working in different countries (`branch` attribute) and it is importa
 
 1. Do not use abbreviations for names (variables, functions, etc). Exceptions are `map` / `reduce`. For such case use 1 letter abbreviations.
 
-   ```
+   ```typescript
    // bad
 
    const docs = Document.findAll();
@@ -68,7 +68,7 @@ Now we are working in different countries (`branch` attribute) and it is importa
 
    // ok
 
-   const documentIds = documents.map(d => d.id);
+   const documentIds = documents.map((d) => d.id);
    ```
 
 1. Plural for compound names:
@@ -85,7 +85,7 @@ Now we are working in different countries (`branch` attribute) and it is importa
 
 1. Pattern "Loop + Function". If you have more then 1 line of code inside a loop, it is a sign that you need to extract a function.
 
-   ```
+   ```typescript
    // bad
 
    for (const plaidAccount of plaidAccounts) {
@@ -112,7 +112,7 @@ Now we are working in different countries (`branch` attribute) and it is importa
 
 1. An anonymous flag in arguments list is unacceptable
 
-   ```
+   ```typescript
    // bad
    function createUser(attributes, auditLogs: boolean) { ... }
    createUser({ ... }, true) // what is true here?
@@ -125,7 +125,7 @@ Now we are working in different countries (`branch` attribute) and it is importa
 
 1. Do not use `?` in tests, use `!`.
 
-   ```
+   ```typescript
    // bad
 
    expect(journal.journalEntries?.map((je) => je.toJSON())).toMatchObject([
