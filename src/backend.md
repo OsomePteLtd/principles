@@ -68,11 +68,11 @@
    - Ensures the name actually includes proper fields
 
    ```sql
-   // bad
+   -- bad
 
    CREATE UNIQUE INDEX "subscription_period_key_value" ON "notificationPeriods" ("subscriptionId", "type", "value") WHERE ("deletedAt" IS NULL);
 
-   // good
+   -- good
 
    CREATE UNIQUE INDEX ON "notificationPeriods" ("subscriptionId", "type", "value") WHERE ("deletedAt" IS NULL);
    ```
