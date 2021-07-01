@@ -115,7 +115,7 @@
 
 1. When extracting complicated components to UI-kit, consider exporting component parts instead of single component with complicated API. Complicated APIs are too hard to extend without breaking backward compatibility.
 
-   ```typescript
+   ```JSX
    // bad
    <MyFancySelect
      options=[
@@ -124,7 +124,9 @@
        { value: 'b, type: 'simple', title: 'Bar' },
      ]
    />
+   ```
 
+   ```JSX
    // good
    <MyFancySelect>
      <OptionWithCounter value='a' counter={5}>Foo</OptionWithCounter>
