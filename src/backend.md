@@ -35,7 +35,7 @@
 
 1. Leave `down` migrations empty. They are not actually used, so it is not worth wasting time on them.
 
-   ```
+   ```javascript
    // bad
 
    up: (queryInterface, Sequelize) => {
@@ -61,6 +61,22 @@
    down: () => {},
    ```
 
+1. Do not explicitly specify the index name and let the database set it since it:
+
+   - Is easier
+   - Does not require to use any specific organization-wide convention, we simply use the standard one
+   - Ensures the name actually includes proper fields
+
+   ```sql
+   // bad
+
+   CREATE UNIQUE INDEX "subscription_period_key_value" ON "notificationPeriods" ("subscriptionId", "type", "value") WHERE ("deletedAt" IS NULL);
+
+   // good
+
+   CREATE UNIQUE INDEX ON "notificationPeriods" ("subscriptionId", "type", "value") WHERE ("deletedAt" IS NULL);
+   ```
+
 ## Models
 
 1. Do not use models from other models (except for associations). For example, you should not create a method in the `Ticket` model that will do `User.findAll()`. For such case you should create a service function that will use 2 models.
@@ -71,7 +87,7 @@
 
 1. Use `separate: true` include option for inner lists. Otherwise Sequelize will generate an inefficient SQL with JOINS and then reduce it on the Node.js part. Also it is imposible to have different `order` options for different entities without `separate: true`.
 
-   ```
+   ```typescript
    // good
 
    const connections = await Connection.findAll({
@@ -92,7 +108,7 @@
 
 1. Exceptions should be handled universally in a middlware (for Koa / Express) or in a wrapper function (for microservices).
 
-   ```
+   ```typescript
    // bad
 
    async function create(req: Request, res: Response, next: NextFunction) {
@@ -114,7 +130,7 @@
 
 1. Validate requests by schemas.
 
-   ```
+   ```typescript
    // bad
 
    export const index = api(async (event: any) => {
@@ -140,7 +156,7 @@
 
 1. Serialize responses by schemas.
 
-   ```
+   ```typescript
    // bad
 
    return {
@@ -182,7 +198,7 @@
 
    Example:
 
-   ```
+   ```typescript
    {
       companyUsers: [...],
       page: 1,
@@ -221,7 +237,7 @@
 
 1. A job function should be a thin wrapper for a service function.
 
-   ```
+   ```typescript
    // bad
 
    export async function syncAccountsJob({ connectionId }: { connectionId: number }) {
@@ -248,7 +264,7 @@
 
    Example:
 
-   ```
+   ```typescript
    export async function seedConnection(overrides: Partial<ConnectionAttributes> = {}) {
      let { institutionId } = overrides;
      if (!institutionId) {
@@ -278,7 +294,7 @@
 
    Example:
 
-   ```
+   ```typescript
    describe('POST /bank/links', () => {
      it('success', async () => {
        // ...
@@ -290,7 +306,7 @@
 
    Example:
 
-   ```
+   ```typescript
    describe('POST /bank/links', () => {
      // ...
 
