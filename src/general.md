@@ -63,7 +63,7 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
 
 1. Do not use abbreviations for names (variables, functions, etc). Exceptions are `map` / `reduce`. For such case use 1 letter abbreviations.
 
-   ```
+   ```typescript
    // bad
 
    const docs = Document.findAll();
@@ -74,7 +74,7 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
 
    // ok
 
-   const documentIds = documents.map(d => d.id);
+   const documentIds = documents.map((d) => d.id);
    ```
 
 1. Plural for compound names:
@@ -91,7 +91,7 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
 
 1. Pattern "Loop + Function". If you have more then 1 line of code inside a loop, it is a sign that you need to extract a function.
 
-   ```
+   ```typescript
    // bad
 
    for (const plaidAccount of plaidAccounts) {
@@ -118,7 +118,7 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
 
 1. An anonymous flag in arguments list is unacceptable
 
-   ```
+   ```typescript
    // bad
    function createUser(attributes, auditLogs: boolean) { ... }
    createUser({ ... }, true) // what is true here?
@@ -131,7 +131,7 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
 
 1. Do not use `?` in tests, use `!`.
 
-   ```
+   ```typescript
    // bad
 
    expect(journal.journalEntries?.map((je) => je.toJSON())).toMatchObject([

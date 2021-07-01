@@ -4,7 +4,7 @@
 
 1. Tend to write sound typings. It means you should never get into a state when your data mismatches your typings.
 
-   ```
+   ```typescript
    // bad, you don't have loaded document for any possible document id
    type DocumentsById = Record<Document['id'], Document>;
 
@@ -14,7 +14,7 @@
 
 1. Prefer specific types instead of common ones. It allows us to prevent more errors or development stage.
 
-   ```
+   ```typescript
    // bad
    function doSomething(entity: object, options?: object);
 
@@ -50,7 +50,7 @@
 
 1. Avoid using nested tags or ids for styling. However, you can use nested tags for svg styles or external libraries components.
 
-   ```
+   ```typescript
    // bad
    const ParentBlock = styled.div`
      color: red;
@@ -83,7 +83,7 @@
 
 1. If component handles too many specific cases or dramatically changes its appearance on prop changes, consider having several components instead.
 
-   ```
+   ```typescript
    // bad
    export const Button = ({ type, title, ...props }) => {
      if (type === 'primary') {
@@ -115,7 +115,7 @@
 
 1. When extracting complicated components to UI-kit, consider exporting component parts instead of single component with complicated API. Complicated APIs are too hard to extend without breaking backward compatibility.
 
-   ```
+   ```JSX
    // bad
    <MyFancySelect
      options=[
@@ -124,7 +124,9 @@
        { value: 'b, type: 'simple', title: 'Bar' },
      ]
    />
+   ```
 
+   ```JSX
    // good
    <MyFancySelect>
      <OptionWithCounter value='a' counter={5}>Foo</OptionWithCounter>
@@ -137,7 +139,7 @@
 
 1. Group entities by domain, not by usage.
 
-   ```
+   ```typescript
    // bad
    type State = {
      documentView: {
@@ -159,23 +161,23 @@
 
 1. Avoid state duplication.
 
-   ```
+   ```typescript
    // bad
    type State = {
-     selectedDocument: Document,
-     documentsById: DocumentsById,
+     selectedDocument: Document;
+     documentsById: DocumentsById;
    };
 
    // good
    type State = {
-     selectedDocumentId: Document['id'],
-     documentsById: DocumentsById,
+     selectedDocumentId: Document['id'];
+     documentsById: DocumentsById;
    };
    ```
 
 1. Do not mix different data formats into one store field since it's impossible to say if we have specific entity fields loaded.
 
-   ```
+   ```typescript
    // bad
    type Ticket = {...};
    type SingleTicket = Ticket & {...};
@@ -198,7 +200,7 @@
 
 1. Avoid navigation in middleware, prefer having it in components.
 
-   ```
+   ```typescript
    // bad
    // saga.ts
    const nextTicketId = yield select(getNextTicketId, { ticketId });
@@ -227,7 +229,7 @@
 
 1. Prefer absolute imports where it's possible. But it's reasonable to use relative imports for files from current or parent directory, they can be considered as module and imported files aren't imported outside.
 
-   ```
+   ```typescript
    // good
    import { DocumentPreview } from 'components/documents/DocumentPreview';
    import { MyBlock } from './MyComponent.styled.ts';
@@ -235,7 +237,7 @@
 
 1. Report unexpected errors to bugsnag. Pay attention to your try/catch blocks:
 
-   ```
+   ```typescript
    // good
    try {
      const { documents } = await requestDocuments();
