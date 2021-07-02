@@ -53,6 +53,12 @@ We believe it describes very precisely what we’re doing here: we’re creating
 
 Now we are working in different countries (`branch` attribute) and it is important to understand that we have no concept of "default branch" in any scenarios. A branch always and everywhere must be explicitly received, since all countries are equal and there is no fallback, for example, to Singapore, if a person has a company in the UK.
 
+## English
+
+The primary language for development is American English. We use it because, de facto, it's the standard language in programming.
+
+In the UI, the language should be local. For the UK, Singapore, and HK, it's British English.
+
 ## Clean Code
 
 1. Do not use abbreviations for names (variables, functions, etc). Exceptions are `map` / `reduce`. For such case use 1 letter abbreviations.
