@@ -330,8 +330,10 @@ Main:
 [ ] sequelize typed models
 [ ] relative imports
 [ ] latest major version of typescript
+[ ] api function from toolkit
+[ ] retry DLQ function from toolkit
 
-Statick check:
+Static checks:
 
 [ ] eslint
 [ ] eslint airbnb
