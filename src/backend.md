@@ -322,7 +322,7 @@
 
 ## Microservices
 
-### Best Practices Checlist
+### Best Practices Checklist
 
 Main:
 
