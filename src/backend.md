@@ -319,3 +319,42 @@
    ```
 
 1. If you use a stub then you must check a call and/or calls arguments
+
+## Microservices
+
+### Best Practices Checklist
+
+Main:
+
+[ ] toolkit logger
+[ ] sequelize typed models
+[ ] relative imports
+[ ] latest major version of typescript
+
+Statick check:
+
+[ ] eslint
+[ ] eslint airbnb
+[ ] eslint finance
+[ ] standard static-checks
+
+Tests:
+
+[ ] jest
+[ ] no sinon
+
+Infrastructure
+
+[ ] serverless config in typescript
+[ ] serverless config with separate handlers
+[ ] own database instance
+[ ] LTS Node (v14)
+
+SDK:
+
+[ ] lambda SDK
+[ ] SNS SDK
+
+Other:
+
+[ ] no parameter store SDK
