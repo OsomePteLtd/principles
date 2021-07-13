@@ -348,7 +348,7 @@ Infrastructure
 [ ] serverless config in typescript
 [ ] serverless config with separate handlers
 [ ] own database instance
-[ ] LTS Node
+[ ] LTS Node (v14)
 
 SDK:
 
