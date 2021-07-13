@@ -332,6 +332,7 @@ Main:
 [ ] latest major version of typescript
 [ ] api function from toolkit
 [ ] retry DLQ function from toolkit
+[ ] DB migrate function from toolkit
 
 Static checks:
 
