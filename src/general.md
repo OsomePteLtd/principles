@@ -40,7 +40,7 @@ We believe it describes very precisely what we’re doing here: we’re creating
    ```
    // bad
 
-   Create a pull request, enable auto-merge
+   Create a pull request, enable auto-merge.
 
    // good
 
