@@ -37,13 +37,15 @@ We believe it describes very precisely what we’re doing here: we’re creating
 
 1. How to use auto-merge:
 
+   ```
    // bad
 
-   Create a pull request, enable auto-merge
+   Create a pull request, enable auto-merge.
 
    // good
 
    Create a pull request, get all required approves.
+   ```
 
    If there is a small change like a typo fix or rename, push a fix and enable auto-merge.
 

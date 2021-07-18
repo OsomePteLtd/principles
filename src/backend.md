@@ -322,43 +322,48 @@
 
 ## Microservices
 
+### Canonical Microservice
+
+Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
+
 ### Best Practices Checklist
 
 Main:
 
-[ ] toolkit logger
-[ ] sequelize typed models
-[ ] relative imports
-[ ] latest major version of typescript
-[ ] api function from toolkit
-[ ] retry DLQ function from toolkit
-[ ] DB migrate function from toolkit
-[ ] ACL from toolkit
+- [ ] latest major version of typescript
+- [ ] relative imports
+- [ ] sequelize typed models
+
+Toolkit:
+
+- [ ] framework (`api`, `sqs`, `sns`, `cron` functions)
+- [ ] logger
+- [ ] ACL
+- [ ] lambda SDK
+- [ ] eventBus SDK
+- [ ] database migrate function
+- [ ] retry DLQ function
 
 Static checks:
 
-[ ] eslint
-[ ] eslint airbnb
-[ ] eslint finance
-[ ] standard static-checks
+- [ ] eslint
+- [ ] eslint airbnb
+- [ ] eslint finance
+- [ ] standard static-checks
 
 Tests:
 
-[ ] jest
-[ ] no sinon
+- [ ] jest
+- [ ] no sinon
 
-Infrastructure
+Infrastructure:
 
-[ ] serverless config in typescript
-[ ] serverless config with separate handlers
-[ ] own database instance
-[ ] LTS Node (v14)
-
-SDK:
-
-[ ] lambda SDK
-[ ] SNS SDK
+- [ ] own database instance
+- [ ] LTS Node (v14)
+- [ ] serverless config in typescript
+- [ ] serverless config with separate handlers
 
 Other:
 
-[ ] no parameter store SDK
+- [ ] no parameter store SDK
+- [ ] standard CODEOWNERS
