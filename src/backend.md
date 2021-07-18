@@ -322,6 +322,10 @@
 
 ## Microservices
 
+### Canonical Microservice
+
+Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
+
 ### Best Practices Checklist
 
 Main:
