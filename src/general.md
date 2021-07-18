@@ -79,8 +79,6 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    const documentIds = documents.map((d) => d.id);
    ```
 
-````
-
 1. Plural for compound names:
 
    ```
@@ -162,4 +160,3 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
 1. Use TODO prefix in comments to track and document technical debt - things that are worth doing, but not done yet.
 
 1. It's considered a bad practice to comment out raw code. Commented code causes ["broken windows"](https://blog.codinghorror.com/pragmatic-programming/), increases cognitve load on developers, lacks support (commented code almost always doesn't work) and lacks test coverage. For detailed explanation, see [link 1](https://www.markhneedham.com/blog/2009/01/17/the-danger-of-commenting-out-code/), [link 2](https://kentcdodds.com/blog/please-dont-commit-commented-out-code)
-````
