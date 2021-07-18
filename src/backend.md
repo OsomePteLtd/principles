@@ -355,9 +355,9 @@ Tests:
 Infrastructure:
 
 - [ ] own database instance
+- [ ] LTS Node (v14)
 - [ ] serverless config in typescript
 - [ ] serverless config with separate handlers
-- [ ] LTS Node (v14)
 
 Other:
 
