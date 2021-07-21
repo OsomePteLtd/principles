@@ -172,3 +172,36 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    // good
    const failedAuthorizationPayload = 'authorization_failed';
    ```
+
+## Conditions
+
+1. Avoid of implicit type conversions in conditions. Sometimes you can forget about all false cases.
+
+```typescript
+ // bad
+ if (!someArray.length) {}
+
+ // good
+ if (someArray.length === 0)
+```
+
+```typescript
+ // bad
+ if (!myParam) {} // Because of `0` is falsy
+
+ // good
+ if (myParam === null || myParam === undefined)
+
+```
+
+1. Try to be declarative. Declarative code more readable and produce better byte code [Performance Advice - Declarative JavaScript](https://docs.google.com/presentation/d/1_eLlVzcj94_G4r9j9d_Lj5HRKFnq6jgpuPJtnmIBs88/edit#slide=id.g2134da681e_0_596)
+
+   ```typescript
+   // bad
+   if (someObj) {}
+
+   // good
+   if (someObj !== undefined)
+   ```
+
+The JS engine needs to track what kind of values were seen for someObj, which requires time and memory. People who will read this code should understand what you mean - you are not checking a boolean parameter, you want to understand that the object exists.
