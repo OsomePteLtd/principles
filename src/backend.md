@@ -324,7 +324,7 @@
 
 1. Don't post messages to other service SQS queues. Consider using 1) SNS event if the current service does not want to know about what happens with the event and who in fact uses it, 2) direct Lambda invocation if the service wants to know what happens and what is the result, 3) async Lambda invocation if the service knows what happens, but does not want to know the result, or can not afford waiting for the result.
 
-   By the moment, there are usages like this, but there are deprecated.
+   By the moment, there are usages like this, but they are deprecated.
 
 ### Canonical Microservice
 
