@@ -330,6 +330,21 @@
 
 Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
 
+### Timeouts
+
+- For API Gateway:
+
+  - do not specify `timeout` by default (it will be `6 seconds`);
+  - specify `timeout: 30` for slow endpoints (i.g. reports), 30 seconds is maximum for API Gateway;
+
+- SQS, SNS, CRON, etc:
+
+  - specify `timeout: 900`, it is maximum for AWS Lambda;
+
+- Other values:
+
+  - if you need some other value of timeout please add a comment why you need it.
+
 ### Best Practices Checklist
 
 Main:
