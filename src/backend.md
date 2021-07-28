@@ -362,6 +362,7 @@ Toolkit:
 - [ ] eventBus SDK
 - [ ] database migrate function
 - [ ] retry DLQ function
+- [ ] canary deployment function
 
 Static checks:
 
