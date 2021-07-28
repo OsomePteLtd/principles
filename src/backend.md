@@ -362,7 +362,6 @@ Toolkit:
 - [ ] eventBus SDK
 - [ ] database migrate function
 - [ ] retry DLQ function
-- [ ] canary deployment function
 
 Static checks:
 
@@ -382,6 +381,7 @@ Infrastructure:
 - [ ] LTS Node (v14)
 - [ ] serverless config in typescript
 - [ ] serverless config with separate handlers
+- [ ] canary deployment function
 
 Other:
 
