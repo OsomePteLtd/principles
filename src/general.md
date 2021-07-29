@@ -9,6 +9,8 @@
 
 We believe it describes very precisely what we’re doing here: we’re creating an accounting / corpsec bicycle 🚲.
 
+1. If we encounter a problem, first we solve it, then we think about a long-term solution that can prevent such issues in the future.
+
 ## Pull Requests
 
 1. Make your pull requests focused:
