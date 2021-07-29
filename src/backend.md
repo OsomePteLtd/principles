@@ -381,6 +381,7 @@ Infrastructure:
 - [ ] LTS Node (v14)
 - [ ] serverless config in typescript
 - [ ] serverless config with separate handlers
+- [ ] canary deployment function
 
 Other:
 
