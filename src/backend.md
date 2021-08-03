@@ -368,7 +368,10 @@ Static checks:
 - [ ] eslint
 - [ ] eslint airbnb
 - [ ] eslint finance
-- [ ] standard static-checks
+- [ ] depcheck
+- [ ] unused-exports
+- [ ] type-check
+- [ ] webpack (build)
 
 Tests:
 
