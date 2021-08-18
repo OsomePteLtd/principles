@@ -379,13 +379,15 @@ Toolkit:
 
 Static checks:
 
-- [ ] eslint
-- [ ] eslint airbnb
-- [ ] eslint finance
+- [ ] shared eslint config
 - [ ] depcheck
 - [ ] unused-exports
 - [ ] type-check
+- [ ] type-coverage
 - [ ] webpack (build)
+- [ ] separate steps in CI
+- [ ] standard editorconfig
+- [ ] spell check
 
 Tests:
 
@@ -404,3 +406,5 @@ Other:
 
 - [ ] no parameter store SDK
 - [ ] standard CODEOWNERS
+- [ ] `main` branch
+- [ ] dependabot updates with auto-merge
