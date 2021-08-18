@@ -369,13 +369,23 @@ Main:
 
 Toolkit:
 
-- [ ] framework (`api`, `sqs`, `sns`, `cron` functions)
-- [ ] logger
-- [ ] ACL
-- [ ] lambda SDK
-- [ ] eventBus SDK
-- [ ] database migrate function
-- [ ] retry DLQ function
+| Service / Feature | wrappers | logger | ACL | lambda | eventBus | migrate | retry DLQ |
+| ----------------- | -------- | ------ | --- | ------ | -------- | ------- | --------- |
+| analytix          | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| auditor           | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| billy             | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| bouncer           | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| core              | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| dealer            | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| flexflow          | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| hero              | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| jamal             | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| pablo             | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| payot             | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| pechkin           | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| scrooge           | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| shiva             | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| tigerdocs         | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
 
 Static checks:
 
