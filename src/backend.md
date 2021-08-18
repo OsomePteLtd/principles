@@ -349,9 +349,23 @@ Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
 
 Main:
 
-- [ ] latest major version of typescript
-- [ ] relative imports
-- [ ] sequelize typed models
+| Service / Feature | latest major TS | relative imports | typed models |
+| ----------------- | --------------- | ---------------- | ------------ |
+| analytix          | 🍅              | 🍏               | 🍅           |
+| auditor           | 🍅              | 🍏               | 🍅           |
+| billy             | 🍏              | 🍏               | 🍅           |
+| bouncer           | ❓              | ❓               | ❓           |
+| core              | ❓              | ❓               | ❓           |
+| dealer            | ❓              | ❓               | ❓           |
+| flexflow          | ❓              | ❓               | ❓           |
+| hero              | ❓              | ❓               | ❓           |
+| jamal             | ❓              | ❓               | ❓           |
+| pablo             | ❓              | ❓               | ❓           |
+| payot             | ❓              | ❓               | ❓           |
+| pechkin           | ❓              | ❓               | ❓           |
+| scrooge           | ❓              | ❓               | ❓           |
+| shiva             | ❓              | ❓               | ❓           |
+| tigerdocs         | ❓              | ❓               | ❓           |
 
 Toolkit:
 
