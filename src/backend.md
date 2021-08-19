@@ -389,28 +389,63 @@ Toolkit:
 
 Static checks:
 
-- [ ] shared eslint config
-- [ ] depcheck
-- [ ] unused-exports
-- [ ] type-check
-- [ ] type-coverage
-- [ ] webpack (build)
-- [ ] separate steps in CI
-- [ ] standard editorconfig
-- [ ] spell check
+| Service / Feature | eslint config | depcheck | unused-exports | type-check | type-coverage | build | separate steps in CI | editorconfig | spell check |
+| ----------------- | ------------- | -------- | -------------- | ---------- | ------------- | ----- | -------------------- | ------------ | ----------- |
+| analytix          | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| auditor           | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| billy             | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| bouncer           | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| core              | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| dealer            | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| flexflow          | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| hero              | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| jamal             | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| pablo             | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| payot             | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| pechkin           | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| scrooge           | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| shiva             | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| tigerdocs         | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
 
 Tests:
 
-- [ ] jest
-- [ ] no sinon
+| Service / Feature | jest | no sinon |
+| ----------------- | ---- | -------- |
+| analytix          | ❓   | ❓       |
+| auditor           | ❓   | ❓       |
+| billy             | ❓   | ❓       |
+| bouncer           | ❓   | ❓       |
+| core              | ❓   | ❓       |
+| dealer            | ❓   | ❓       |
+| flexflow          | ❓   | ❓       |
+| hero              | ❓   | ❓       |
+| jamal             | ❓   | ❓       |
+| pablo             | ❓   | ❓       |
+| payot             | ❓   | ❓       |
+| pechkin           | ❓   | ❓       |
+| scrooge           | ❓   | ❓       |
+| shiva             | ❓   | ❓       |
+| tigerdocs         | ❓   | ❓       |
 
 Infrastructure:
 
-- [ ] own database instance
-- [ ] LTS Node (v14)
-- [ ] serverless config in typescript
-- [ ] serverless config with separate handlers
-- [ ] canary deployment function
+| Service / Feature | own database instance | LTS Node | TS SLS config | SLS separate handlers | canary |
+| ----------------- | --------------------- | -------- | ------------- | --------------------- | ------ |
+| analytix          | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| auditor           | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| billy             | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| bouncer           | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| core              | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| dealer            | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| flexflow          | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| hero              | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| jamal             | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| pablo             | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| payot             | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| pechkin           | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| scrooge           | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| shiva             | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| tigerdocs         | ❓                    | ❓       | ❓            | ❓                    | ❓     |
 
 Other:
 
