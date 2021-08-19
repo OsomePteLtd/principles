@@ -404,7 +404,20 @@ Infrastructure:
 
 Other:
 
-- [ ] no parameter store SDK
-- [ ] standard CODEOWNERS
-- [ ] `main` branch
-- [ ] dependabot updates with auto-merge
+| Service / Feature | no parameter store SDK | standard CODEOWNERS | `main` branch | dependabot with auto-merge |
+| ----------------- | ---------------------- | ------------------- | ------------- | -------------------------- |
+| analytix          | ❓                     | ❓                  | ❓            | ❓                         |
+| auditor           | ❓                     | ❓                  | ❓            | ❓                         |
+| billy             | ❓                     | ❓                  | ❓            | ❓                         |
+| bouncer           | ❓                     | ❓                  | ❓            | ❓                         |
+| core              | ❓                     | ❓                  | ❓            | ❓                         |
+| dealer            | ❓                     | ❓                  | ❓            | ❓                         |
+| flexflow          | ❓                     | ❓                  | ❓            | ❓                         |
+| hero              | ❓                     | ❓                  | ❓            | ❓                         |
+| jamal             | ❓                     | ❓                  | ❓            | ❓                         |
+| pablo             | ❓                     | ❓                  | ❓            | ❓                         |
+| payot             | ❓                     | ❓                  | ❓            | ❓                         |
+| pechkin           | ❓                     | ❓                  | ❓            | ❓                         |
+| scrooge           | ❓                     | ❓                  | ❓            | ❓                         |
+| shiva             | ❓                     | ❓                  | ❓            | ❓                         |
+| tigerdocs         | ❓                     | ❓                  | ❓            | ❓                         |
