@@ -404,7 +404,7 @@ Static checks:
 | payot             | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
 | pechkin           | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
 | scrooge           | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
-| shiva             | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
+| shiva             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | tigerdocs         | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
 
 Tests:
@@ -424,7 +424,7 @@ Tests:
 | payot             | ❓   | ❓       |
 | pechkin           | ❓   | ❓       |
 | scrooge           | ❓   | ❓       |
-| shiva             | ❓   | ❓       |
+| shiva             | 🍏   | 🍏       |
 | tigerdocs         | ❓   | ❓       |
 
 Infrastructure:
@@ -444,7 +444,7 @@ Infrastructure:
 | payot             | ❓                    | ❓       | ❓            | ❓                    | ❓     |
 | pechkin           | ❓                    | ❓       | ❓            | ❓                    | ❓     |
 | scrooge           | ❓                    | ❓       | ❓            | ❓                    | ❓     |
-| shiva             | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| shiva             | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
 | tigerdocs         | ❓                    | ❓       | ❓            | ❓                    | ❓     |
 
 Other:
