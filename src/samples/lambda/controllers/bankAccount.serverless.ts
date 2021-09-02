@@ -8,7 +8,7 @@ export const bankAccount: Functions = {
         http: {
           path: 'api/v2/accounting/companies/{companyId}/bank_accounts',
           method: 'post',
-          authorizer: '${self:custom.authorizer}' as any,
+          authorizer: '${self:custom.authorizer}',
           cors: true,
         },
       },
@@ -21,7 +21,7 @@ export const bankAccount: Functions = {
         http: {
           path: 'api/v2/accounting/companies/{companyId}/bank_accounts',
           method: 'get',
-          authorizer: '${self:custom.authorizer}' as any,
+          authorizer: '${self:custom.authorizer}',
           cors: true,
         },
       },
@@ -34,7 +34,7 @@ export const bankAccount: Functions = {
         http: {
           path: 'api/v2/accounting/bank_accounts/{bankAccountId}',
           method: 'get',
-          authorizer: '${self:custom.authorizer}' as any,
+          authorizer: '${self:custom.authorizer}',
           cors: true,
         },
       },
@@ -47,7 +47,7 @@ export const bankAccount: Functions = {
         http: {
           path: 'api/v2/accounting/bank_accounts/{bankAccountId}',
           method: 'patch',
-          authorizer: '${self:custom.authorizer}' as any,
+          authorizer: '${self:custom.authorizer}',
           cors: true,
         },
       },
@@ -60,7 +60,7 @@ export const bankAccount: Functions = {
         http: {
           path: 'api/v2/accounting/bank_accounts/{bankAccountId}',
           method: 'delete',
-          authorizer: '${self:custom.authorizer}' as any,
+          authorizer: '${self:custom.authorizer}',
           cors: true,
         },
       },
