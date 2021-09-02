@@ -1,6 +1,3 @@
-// DO NOT COPY ME!
-// @ts-nocheck
-
 import { AcBankAccountCreateRequest, AcBankAccountUpdateRequest, PermissionType } from '@osome/sdk';
 import {
   expectForbidden,
@@ -363,7 +360,6 @@ describe(__filename, () => {
               permissions: [PermissionType.companiesWrite],
             }),
             body: {
-              // TODO make the fields optional in the spec and leave only name here
               bankAccount: {
                 name: faker.finance.accountName(),
                 bankAccountNumber,
@@ -385,7 +381,6 @@ describe(__filename, () => {
         const response = await testApiError(create, {
           requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
           body: {
-            // TODO make the fields optional in the spec and leave only name here
             bankAccount: {
               name: faker.finance.accountName(),
               bankAccountNumber: faker.finance.iban(),
@@ -447,22 +442,13 @@ describe(__filename, () => {
 
     describe('errors', () => {
       it('not found', async () => {
-        const { bankAccount } = await seedBankAccountExtended();
-        const newBankContact = await seedContact();
-
         const response = await testApiError(update, {
           pathParameters: {
             bankAccountId: WRONG_ID,
           },
           body: {
-            // TODO make the fields optional in the spec and leave only name here
             bankAccount: {
               name: faker.finance.accountName(),
-              bankAccountNumber: faker.finance.iban(),
-              currencyCode: bankAccount.currencyCode,
-              companyId: bankAccount.companyId,
-              bankContactId: newBankContact.id,
-              openDate: new Date().toISOString(),
             },
           },
         });
@@ -482,14 +468,8 @@ describe(__filename, () => {
             bankAccountId: bankAccount.id,
           },
           body: {
-            // TODO make the fields optional in the spec and leave only name here
             bankAccount: {
               name: faker.finance.accountName(),
-              bankAccountNumber: faker.finance.iban(),
-              currencyCode: bankAccount.currencyCode,
-              companyId: bankAccount.companyId,
-              bankContactId: newBankContact.id,
-              openDate: new Date().toISOString(),
             },
           },
         });
@@ -504,14 +484,8 @@ describe(__filename, () => {
             bankAccountId: bankAccount.id,
           },
           body: {
-            // TODO make the fields optional in the spec and leave only name here
             bankAccount: {
               name: faker.finance.accountName(),
-              bankAccountNumber: faker.finance.iban(),
-              currencyCode: bankAccount.currencyCode,
-              companyId: bankAccount.companyId,
-              bankContactId: bankAccount.bankContactId,
-              openDate: new Date().toISOString(),
             },
           },
         });
