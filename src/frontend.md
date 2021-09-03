@@ -248,3 +248,21 @@
      setFailed();
    }
    ```
+
+1. Do not use default exports. Prefer named exports over default
+
+   ```typescript
+   // good
+   export const variable = 10;
+   export function Component() {}
+
+   class Component extends React.Component<Props, State> {}
+   export { Component };
+
+   // bad
+   export default function () {
+     return <div>...</div>;
+   }
+
+   export default class extends Component {}
+   ```
