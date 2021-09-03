@@ -253,15 +253,15 @@
 
    ```typescript
    // good
-   export const var = 10;
+   export const variable = 10;
    export function Component() {}
 
    class Component extends React.Component<Props, State> {}
-   export { Component }
+   export { Component };
 
    // bad
    export default function () {
-     return <div>...</div>
+     return <div>...</div>;
    }
 
    export default class extends Component {}
