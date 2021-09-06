@@ -78,6 +78,7 @@
    ```
 
 ## Data migration
+
 As the project you are working on develops, aside from migrating your DB schema you have to migrate your data as well.
 
 Example: migrate the data that was previously saved to jsonb field and should be saved in the dedicated column now.
@@ -96,7 +97,7 @@ For the method 2 you have to create a Job following the same rules in [Job](#job
 
 Method 3 is the same except you implement your migration in lambda function and start the migration process by executing the function.
 
-
+For serverless projects - method 3 is preferred, method 2 for others.
 
 ## Models
 
