@@ -97,7 +97,7 @@ For the method 2 you have to create a Job following the same rules in [Job](#job
 
 Method 3 is the same except you implement your migration in lambda function and start the migration process by executing the function.
 
-For serverless projects - method 3 is preferred, but not always. When you have a huge dataset and it is impossible to perform migration within one serverless function invocation because of timeout (15 minutes usually), method is the only option since it allows you to split your migration by batches via multiple sqs messages.
+For serverless projects - method 3 is preferred, but not always. When you have a huge dataset and it is impossible to perform migration within one serverless function invocation because of timeout (15 minutes usually), method 2 is the only option since it allows you to split your migration by batches via multiple sqs messages.
 
 ## Models
 
@@ -107,7 +107,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 1. Do not define enums in models, use enums from SDK.
 
-1. Use `separate: true` include option for inner lists. Otherwise Sequelize will generate an inefficient SQL with JOINS and then reduce it on the Node.js part. Also it is imposible to have different `order` options for different entities without `separate: true`.
+1. Use `separate: true` include option for inner lists. Otherwise Sequelize will generate an inefficient SQL with JOINS and then reduce it on the Node.js part. Also it is impossible to have different `order` options for different entities without `separate: true`.
 
    ```typescript
    // good
