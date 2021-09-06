@@ -77,6 +77,27 @@
    CREATE UNIQUE INDEX ON "notificationPeriods" ("subscriptionId", "type", "value") WHERE ("deletedAt" IS NULL);
    ```
 
+## Data migration
+As the project you are working on develops, aside from migrating your DB schema you have to migrate your data as well.
+
+Example: migrate the data that was previously saved to jsonb field and should be saved in the dedicated column now.
+
+Depending on the complexity of migration there are several ways to perform it:
+
+1. The same method is used for [schema migrations](#migrations)(sequalize migrations). This method is suitable for simple migrations when migration flow is the same for all table rows (there are no complex condition statements etc.)
+
+1. Migration with SQS message trigger
+
+1. Lambda function
+
+Methods 2, 3 are pretty much the same and are used when you need to perform some complex migrations with a bunch of logic and conditions. Your migration functions must be covered with tests covering all possible scenarios.
+
+For the method 2 you have to create a Job following the same rules in [Job](#jobs) section, implement your migration in the job, write tests. You start the migration process by triggering the corresponding SQS message.
+
+Method 3 is the same except you implement your migration in lambda function and start the migration process by executing the function.
+
+
+
 ## Models
 
 1. Do not use models from other models (except for associations). For example, you should not create a method in the `Ticket` model that will do `User.findAll()`. For such case you should create a service function that will use 2 models.
