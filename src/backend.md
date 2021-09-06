@@ -97,7 +97,7 @@ For the method 2 you have to create a Job following the same rules in [Job](#job
 
 Method 3 is the same except you implement your migration in lambda function and start the migration process by executing the function.
 
-For serverless projects - method 3 is preferred, method 2 for others.
+For serverless projects - method 3 is preferred, but not always. When you have a huge dataset and it is impossible to perform migration within one serverless function invocation because of timeout (15 minutes usually), method is the only option since it allows you to split your migration by batches via multiple sqs messages.
 
 ## Models
 
