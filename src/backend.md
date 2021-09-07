@@ -386,7 +386,7 @@ Main:
 | payot             | ❓     | ❓               | ❓           |
 | pechkin           | ❓     | ❓               | ❓           |
 | scrooge           | ❓     | ❓               | ❓           |
-| shiva             | 🍅     | 🍏               | 🍏           |
+| shiva             | 🍏     | 🍏               | 🍏           |
 | tigerdocs         | ❓     | ❓               | ❓           |
 
 Toolkit:
