@@ -371,23 +371,23 @@ Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
 
 Main:
 
-| Service / Feature | latest major TS | relative imports | typed models |
-| ----------------- | --------------- | ---------------- | ------------ |
-| analytix          | 🍅              | 🍏               | 🍅           |
-| auditor           | 🍅              | 🍏               | 🍅           |
-| billy             | 🍏              | 🍏               | 🍅           |
-| bouncer           | ❓              | ❓               | ❓           |
-| core              | ❓              | ❓               | ❓           |
-| dealer            | 🍏              | 🍏               | 🍏           |
-| flexflow          | ❓              | ❓               | ❓           |
-| hero              | ❓              | ❓               | ❓           |
-| jamal             | ❓              | ❓               | ❓           |
-| pablo             | ❓              | ❓               | ❓           |
-| payot             | ❓              | ❓               | ❓           |
-| pechkin           | ❓              | ❓               | ❓           |
-| scrooge           | ❓              | ❓               | ❓           |
-| shiva             | 🍏              | 🍏               | 🍏           |
-| tigerdocs         | ❓              | ❓               | ❓           |
+| Service / Feature | TS 4.4 | relative imports | typed models |
+| ----------------- | ------ | ---------------- | ------------ |
+| analytix          | 🍅     | 🍏               | 🍅           |
+| auditor           | 🍅     | 🍏               | 🍅           |
+| billy             | 🍏     | 🍏               | 🍅           |
+| bouncer           | ❓     | ❓               | ❓           |
+| core              | ❓     | ❓               | ❓           |
+| dealer            | 🍅     | 🍏               | 🍏           |
+| flexflow          | ❓     | ❓               | ❓           |
+| hero              | ❓     | ❓               | ❓           |
+| jamal             | ❓     | ❓               | ❓           |
+| pablo             | ❓     | ❓               | ❓           |
+| payot             | ❓     | ❓               | ❓           |
+| pechkin           | ❓     | ❓               | ❓           |
+| scrooge           | ❓     | ❓               | ❓           |
+| shiva             | 🍅     | 🍏               | 🍏           |
+| tigerdocs         | ❓     | ❓               | ❓           |
 
 Toolkit:
 
