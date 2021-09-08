@@ -174,3 +174,20 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    // good
    const failedAuthorizationPayload = 'authorization_failed';
    ```
+
+## Always mark main parts of every test using 3 comments: Arrange, Act, Assert
+
+```typescript
+it('test sum function works correctly', () => {
+  // Arrange
+  const firstArgument = 1;
+  const secondArgument = 2;
+  const expectedResult = 3;
+
+  // Act
+  const result = sum(firstArgument, secondArgument);
+
+  // Assert
+  expect(result).toEqual(expectedResult);
+});
+```
