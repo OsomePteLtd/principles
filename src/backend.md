@@ -124,7 +124,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 ## Controllers
 
-1. Use the [Lambda Controller Sample](https://github.com/OsomePteLtd/principles/blob/main/src/samples/lambda/bankAccount.controller.ts) to create a CRUDL scaffolding controller.
+1. Use the [Lambda Controller Sample](https://github.com/OsomePteLtd/principles/blob/main/src/samples/lambda/controllers/bankAccount.controller.ts) to create a CRUDL scaffolding controller.
 
 1. Use 1 file per 1 resource.
 
