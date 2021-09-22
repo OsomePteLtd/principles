@@ -375,19 +375,19 @@ Main:
 | ----------------- | ------ | ---------------- | ------------ |
 | analytix          | 🍅     | 🍏               | 🍅           |
 | auditor           | 🍅     | 🍏               | 🍅           |
-| billy             | 🍏     | 🍏               | 🍅           |
-| bouncer           | ❓     | ❓               | ❓           |
-| core              | ❓     | ❓               | ❓           |
+| billy             | 🍅     | 🍏               | 🍅           |
+| bouncer           | 🍅     | 🍏               | ❓           |
+| core              | 🍅     | 🍏               | ❓           |
 | dealer            | 🍅     | 🍏               | 🍏           |
-| flexflow          | ❓     | ❓               | ❓           |
-| hero              | ❓     | ❓               | ❓           |
-| jamal             | ❓     | ❓               | ❓           |
-| pablo             | ❓     | ❓               | ❓           |
-| payot             | ❓     | ❓               | ❓           |
-| pechkin           | ❓     | ❓               | ❓           |
-| scrooge           | ❓     | ❓               | ❓           |
+| flexflow          | 🍅     | 🍅               | ❓           |
+| hero              | 🍏     | 🍏               | ❓           |
+| jamal             | 🍅     | 🍏               | ❓           |
+| pablo             | 🍅     | 🍏               | ❓           |
+| payot             | 🍅     | 🍏               | ❓           |
+| pechkin           | 🍅     | 🍏               | ❓           |
+| scrooge           | 🍅     | 🍏               | ❓           |
 | shiva             | 🍏     | 🍏               | 🍏           |
-| tigerdocs         | ❓     | ❓               | ❓           |
+| tigerdocs         | 🍅     | 🍅               | ❓           |
 
 Toolkit:
 
@@ -433,21 +433,21 @@ Tests:
 
 | Service / Feature | jest | no sinon |
 | ----------------- | ---- | -------- |
-| analytix          | ❓   | ❓       |
-| auditor           | ❓   | ❓       |
-| billy             | ❓   | ❓       |
-| bouncer           | ❓   | ❓       |
-| core              | ❓   | ❓       |
+| analytix          | 🍅   | ❓       |
+| auditor           | 🍏   | ❓       |
+| billy             | 🍏   | ❓       |
+| bouncer           | 🍅   | ❓       |
+| core              | 🍅   | ❓       |
 | dealer            | 🍏   | 🍏       |
-| flexflow          | ❓   | ❓       |
-| hero              | ❓   | ❓       |
-| jamal             | ❓   | ❓       |
-| pablo             | ❓   | ❓       |
-| payot             | ❓   | ❓       |
-| pechkin           | ❓   | ❓       |
-| scrooge           | ❓   | ❓       |
+| flexflow          | 🍅   | ❓       |
+| hero              | 🍅   | ❓       |
+| jamal             | 🍏   | ❓       |
+| pablo             | 🍏   | ❓       |
+| payot             | 🍏   | ❓       |
+| pechkin           | 🍏   | ❓       |
+| scrooge           | 🍏   | ❓       |
 | shiva             | 🍏   | 🍏       |
-| tigerdocs         | ❓   | ❓       |
+| tigerdocs         | 🍅   | ❓       |
 
 Infrastructure:
 
