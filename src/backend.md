@@ -453,17 +453,17 @@ Infrastructure:
 
 | Service / Feature | own database instance | LTS Node | TS SLS config | SLS separate handlers | canary |
 | ----------------- | --------------------- | -------- | ------------- | --------------------- | ------ |
-| analytix          | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
+| analytix          | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
 | auditor           | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
 | billy             | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
-| bouncer           | ❓                    | ❓       | 🍏            | ❓                    | 🍏     |
-| core              | ❓                    | ❓       | ❓            | ❓                    | 🍅     |
+| bouncer           | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
+| core              | ❓                    | 🍏       | ❓            | ❓                    | 🍅     |
 | dealer            | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
 | flexflow          | ❓                    | 🍅       | ❓            | ❓                    | 🍅     |
 | hero              | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
 | jamal             | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
 | pablo             | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
-| payot             | ❓                    | ❓       | 🍏            | ❓                    | 🍏     |
+| payot             | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
 | pechkin           | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
 | scrooge           | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
 | shiva             | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
