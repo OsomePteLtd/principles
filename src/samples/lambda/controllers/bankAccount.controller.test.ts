@@ -22,27 +22,22 @@ import { create, destroy, index, show, update } from './bankAccount.controller';
 describe(__filename, () => {
   describe('get-bank-accounts', () => {
     it('success', async () => {
-      const { company, bankAccount, bankContact } = await seedBankAccountExtended();
+      const bankAccount = await seedBankAccount();
 
       const responseBody = await testApi(index, {
         pathParameters: {
-          companyId: company.id,
+          companyId: bankAccount.companyId,
         },
       });
 
       expect(responseBody.bankAccounts).toMatchObject([
         {
+          id: bankAccount.id,
+          name: bankAccount.name,
           bankAccountNumber: bankAccount.bankAccountNumber,
           bankContactId: bankAccount.bankContactId,
           companyId: bankAccount.companyId,
           currencyCode: bankAccount.currencyCode,
-          id: bankAccount.id,
-          name: bankAccount.name,
-          company: {
-            id: company.id,
-            branch: company.branch,
-            baseCurrency: company.baseCurrency,
-          },
           contact: {
             id: bankContact.id,
             name: bankContact.name,
@@ -56,20 +51,19 @@ describe(__filename, () => {
     describe('filter', () => {
       it('bankAccountNumber', async () => {
         const bankAccountNumber = faker.finance.iban();
-        const { company, bankAccount, bankContact } = await seedBankAccountExtended({
+        const bankAccount = await seedBankAccount({
           overrides: {
             bankAccountOverridesAttributes: { bankAccountNumber },
           },
         });
         await seedBankAccount({
           companyId: company.id,
-          bankContactId: bankContact.id,
           bankAccountNumber: bankAccountNumber + faker.finance.iban(),
         });
 
         const responseBody = await testApi(index, {
           pathParameters: {
-            companyId: company.id,
+            companyId: bankAccount.companyId,
           },
           queryStringParameters: {
             filter: {
@@ -84,20 +78,19 @@ describe(__filename, () => {
       });
 
       it('currencyCode', async () => {
-        const { company, bankAccount, bankContact } = await seedBankAccountExtended({
+        const bankAccount = await seedBankAccount({
           overrides: {
             bankAccountOverridesAttributes: { currencyCode: 'SGD' },
           },
         });
         await seedBankAccount({
-          companyId: company.id,
-          bankContactId: bankContact.id,
+          companyId: bankAccount.companyId,
           currencyCode: 'USD',
         });
 
         const responseBody = await testApi(index, {
           pathParameters: {
-            companyId: company.id,
+            companyId: bankAccount.companyId,
           },
           queryStringParameters: {
             filter: { currencyCode: bankAccount.currencyCode },
@@ -165,12 +158,12 @@ describe(__filename, () => {
 
     describe('ACL', () => {
       it('agent - success', async () => {
-        const { company } = await seedBankAccountExtended();
+        const bankAccount = await seedBankAccount();
 
         const responseBody = await testApi(index, {
           requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
           pathParameters: {
-            companyId: company.id,
+            companyId: bankAccount.companyId,
           },
         });
 
@@ -178,12 +171,12 @@ describe(__filename, () => {
       });
 
       it('agent - fail w/o permissions', async () => {
-        const { company } = await seedBankAccountExtended();
+        const bankAccount = await seedBankAccount();
 
         const response = await testApiError(index, {
           requestContext: fakeAgentRequestContext({ permissions: [] }),
           pathParameters: {
-            companyId: company.id,
+            companyId: bankAccount.companyId,
           },
         });
 
@@ -194,7 +187,7 @@ describe(__filename, () => {
 
   describe('get-bank-account', () => {
     it('success', async () => {
-      const { bankAccount, bankContact, company } = await seedBankAccountExtended();
+      const bankAccount = await seedBankAccount();
 
       const responseBody = await testApi(show, {
         pathParameters: {
@@ -210,15 +203,15 @@ describe(__filename, () => {
         currencyCode: bankAccount.currencyCode,
         name: bankAccount.name,
         company: {
-          id: company.id,
-          branch: company.branch,
-          baseCurrency: company.baseCurrency,
+          id: bankAccount.company.id,
+          branch: bankAccount.company.branch,
+          baseCurrency: bankAccount.company.baseCurrency,
         },
         contact: {
-          id: bankContact.id,
-          name: bankContact.name,
-          registrationNumber: bankContact.registrationNumber,
-          registrationCountryCode: bankContact.registrationCountryCode,
+          id: bankAccount.bankContact.id,
+          name: bankAccount.bankContact.name,
+          registrationNumber: bankAccount.bankContact.registrationNumber,
+          registrationCountryCode: bankAccount.bankContact.registrationCountryCode,
         },
       });
     });
@@ -236,7 +229,7 @@ describe(__filename, () => {
 
     describe('ACL', () => {
       it('agent - success', async () => {
-        const { bankAccount } = await seedBankAccountExtended();
+        const bankAccount = await seedBankAccount();
 
         await testApi(show, {
           requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
@@ -247,7 +240,7 @@ describe(__filename, () => {
       });
 
       it('agent - fail w/o permissions', async () => {
-        const { bankAccount } = await seedBankAccountExtended();
+        const bankAccount = await seedBankAccount();
 
         const response = await testApiError(show, {
           requestContext: fakeAgentRequestContext({ permissions: [] }),
@@ -399,7 +392,7 @@ describe(__filename, () => {
 
   describe('update-bank-account', () => {
     it('success', async () => {
-      const { bankAccount, company } = await seedBankAccountExtended();
+      const bankAccount = await seedBankAccount();
       const newBankContact = await seedContact();
 
       const request: AcBankAccountUpdateRequest = {
@@ -427,9 +420,9 @@ describe(__filename, () => {
         currencyCode: request.body.bankAccount.currencyCode,
         name: request.body.bankAccount.name,
         company: {
-          id: company.id,
-          branch: company.branch,
-          baseCurrency: company.baseCurrency,
+          id: bankAccount.company.id,
+          branch: bankAccount.company.branch,
+          baseCurrency: bankAccount.company.baseCurrency,
         },
         contact: {
           id: newBankContact.id,
@@ -459,8 +452,7 @@ describe(__filename, () => {
 
     describe('ACL', () => {
       it('agent - success', async () => {
-        const { bankAccount } = await seedBankAccountExtended();
-        const newBankContact = await seedContact();
+        const { bankAccount } = await seedBankAccount();
 
         await testApi(update, {
           requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesWrite] }),
@@ -476,7 +468,7 @@ describe(__filename, () => {
       });
 
       it('agent - fail w/o permissions', async () => {
-        const { bankAccount } = await seedBankAccountExtended();
+        const bankAccount = await seedBankAccount();
 
         const response = await testApiError(update, {
           requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
@@ -497,7 +489,7 @@ describe(__filename, () => {
 
   describe('delete-bank-account', () => {
     it('success', async () => {
-      const { bankAccount } = await seedBankAccountExtended();
+      const bankAccount = await seedBankAccount();
 
       await testApiNoContent(destroy, {
         pathParameters: {
@@ -523,7 +515,7 @@ describe(__filename, () => {
 
     describe('ACL', () => {
       it('agent - success', async () => {
-        const { bankAccount } = await seedBankAccountExtended();
+        const bankAccount = await seedBankAccount();
 
         await testApiNoContent(destroy, {
           requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesWrite] }),
@@ -534,7 +526,7 @@ describe(__filename, () => {
       });
 
       it('agent - fail w/o permissions', async () => {
-        const { bankAccount } = await seedBankAccountExtended();
+        const bankAccount = await seedBankAccount();
 
         const response = await testApiError(destroy, {
           requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
@@ -551,7 +543,7 @@ describe(__filename, () => {
 
 // private
 
-async function seedBankAccountExtended(
+async function seedBankAccount(
   {
     overrides: { bankAccountOverridesAttributes },
   }: {
