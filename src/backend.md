@@ -77,6 +77,28 @@
    CREATE UNIQUE INDEX ON "notificationPeriods" ("subscriptionId", "type", "value") WHERE ("deletedAt" IS NULL);
    ```
 
+## Data migration
+
+As the project you are working on develops, aside from migrating your DB schema you have to migrate your data as well.
+
+Example: migrate the data that was previously saved to jsonb field and should be saved in the dedicated column now.
+
+Depending on the complexity of migration there are several ways to perform it:
+
+1. The same method is used for [schema migrations](#migrations)(sequalize migrations). This method is suitable for simple migrations when migration flow is the same for all table rows (there are no complex condition statements etc.)
+
+1. Migration with SQS message trigger
+
+1. Lambda function
+
+Methods 2, 3 are pretty much the same and are used when you need to perform some complex migrations with a bunch of logic and conditions. Your migration functions must be covered with tests covering all possible scenarios.
+
+For the method 2 you have to create a Job following the same rules in [Job](#jobs) section, implement your migration in the job, write tests. You start the migration process by triggering the corresponding SQS message.
+
+Method 3 is the same except you implement your migration in lambda function and start the migration process by executing the function.
+
+For serverless projects - method 3 is preferred, but not always. When you have a huge dataset and it is impossible to perform migration within one serverless function invocation because of timeout (15 minutes usually), method 2 is the only option since it allows you to split your migration by batches via multiple SQS messages.
+
 ## Models
 
 1. Do not use models from other models (except for associations). For example, you should not create a method in the `Ticket` model that will do `User.findAll()`. For such case you should create a service function that will use 2 models.
@@ -85,7 +107,7 @@
 
 1. Do not define enums in models, use enums from SDK.
 
-1. Use `separate: true` include option for inner lists. Otherwise Sequelize will generate an inefficient SQL with JOINS and then reduce it on the Node.js part. Also it is imposible to have different `order` options for different entities without `separate: true`.
+1. Use `separate: true` include option for inner lists. Otherwise Sequelize will generate an inefficient SQL with JOINS and then reduce it on the Node.js part. Also it is impossible to have different `order` options for different entities without `separate: true`.
 
    ```typescript
    // good
@@ -102,7 +124,7 @@
 
 ## Controllers
 
-1. Use the [Lambda Controller Sample](https://github.com/OsomePteLtd/principles/blob/main/src/samples/lambda/bankAccount.controller.ts) to create a CRUDL scaffolding controller.
+1. Use the [Lambda Controller Sample](https://github.com/OsomePteLtd/principles/blob/main/src/samples/lambda/controllers/bankAccount.controller.ts) to create a CRUDL scaffolding controller.
 
 1. Use 1 file per 1 resource.
 
@@ -349,41 +371,41 @@ Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
 
 Main:
 
-| Service / Feature | latest major TS | relative imports | typed models |
-| ----------------- | --------------- | ---------------- | ------------ |
-| analytix          | 🍅              | 🍏               | 🍅           |
-| auditor           | 🍅              | 🍏               | 🍅           |
-| billy             | 🍏              | 🍏               | 🍅           |
-| bouncer           | ❓              | ❓               | ❓           |
-| core              | ❓              | ❓               | ❓           |
-| dealer            | 🍏              | 🍏               | 🍏           |
-| flexflow          | ❓              | ❓               | ❓           |
-| hero              | ❓              | ❓               | ❓           |
-| jamal             | ❓              | ❓               | ❓           |
-| pablo             | ❓              | ❓               | ❓           |
-| payot             | ❓              | ❓               | ❓           |
-| pechkin           | ❓              | ❓               | ❓           |
-| scrooge           | ❓              | ❓               | ❓           |
-| shiva             | 🍏              | 🍏               | 🍏           |
-| tigerdocs         | ❓              | ❓               | ❓           |
+| Service / Feature | TS 4.4 | relative imports | typed models |
+| ----------------- | ------ | ---------------- | ------------ |
+| analytix          | 🍅     | 🍏               | 🍅           |
+| auditor           | 🍅     | 🍏               | 🍅           |
+| billy             | 🍅     | 🍏               | 🍅           |
+| bouncer           | 🍅     | 🍏               | ❓           |
+| core              | 🍅     | 🍏               | ❓           |
+| dealer            | 🍅     | 🍏               | 🍏           |
+| flexflow          | 🍅     | 🍅               | ❓           |
+| hero              | 🍏     | 🍏               | ❓           |
+| jamal             | 🍅     | 🍏               | ❓           |
+| pablo             | 🍅     | 🍏               | ❓           |
+| payot             | 🍅     | 🍏               | ❓           |
+| pechkin           | 🍅     | 🍏               | ❓           |
+| scrooge           | 🍅     | 🍏               | ❓           |
+| shiva             | 🍏     | 🍏               | 🍏           |
+| tigerdocs         | 🍅     | 🍅               | ❓           |
 
 Toolkit:
 
 | Service / Feature | wrappers | logger | ACL | lambda | eventBus | migrate | retry DLQ |
 | ----------------- | -------- | ------ | --- | ------ | -------- | ------- | --------- |
-| analytix          | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| analytix          | ❓       | ❓     | ❓  | ❓     | ❓       | 🍅      | ❓        |
 | auditor           | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
-| billy             | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
-| bouncer           | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| billy             | ❓       | 🍏     | 🍅  | ❓     | 🍅       | 🍏      | ❓        |
+| bouncer           | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        |
 | core              | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
 | dealer            | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍅        |
 | flexflow          | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
-| hero              | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| hero              | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        |
 | jamal             | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
-| pablo             | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
-| payot             | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
-| pechkin           | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
-| scrooge           | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
+| pablo             | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        |
+| payot             | ❓       | 🍏     | 🍅  | ❓     | 🍏       | 🍏      | ❓        |
+| pechkin           | ❓       | ❓     | ❓  | ❓     | ❓       | 🍅      | ❓        |
+| scrooge           | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        |
 | shiva             | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍅        |
 | tigerdocs         | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        |
 
@@ -411,41 +433,41 @@ Tests:
 
 | Service / Feature | jest | no sinon |
 | ----------------- | ---- | -------- |
-| analytix          | ❓   | ❓       |
-| auditor           | ❓   | ❓       |
-| billy             | ❓   | ❓       |
-| bouncer           | ❓   | ❓       |
-| core              | ❓   | ❓       |
+| analytix          | 🍅   | ❓       |
+| auditor           | 🍏   | ❓       |
+| billy             | 🍏   | ❓       |
+| bouncer           | 🍅   | ❓       |
+| core              | 🍅   | ❓       |
 | dealer            | 🍏   | 🍏       |
-| flexflow          | ❓   | ❓       |
-| hero              | ❓   | ❓       |
-| jamal             | ❓   | ❓       |
-| pablo             | ❓   | ❓       |
-| payot             | ❓   | ❓       |
-| pechkin           | ❓   | ❓       |
-| scrooge           | ❓   | ❓       |
+| flexflow          | 🍅   | ❓       |
+| hero              | 🍅   | ❓       |
+| jamal             | 🍏   | ❓       |
+| pablo             | 🍏   | ❓       |
+| payot             | 🍏   | ❓       |
+| pechkin           | 🍏   | ❓       |
+| scrooge           | 🍏   | ❓       |
 | shiva             | 🍏   | 🍏       |
-| tigerdocs         | ❓   | ❓       |
+| tigerdocs         | 🍅   | ❓       |
 
 Infrastructure:
 
 | Service / Feature | own database instance | LTS Node | TS SLS config | SLS separate handlers | canary |
 | ----------------- | --------------------- | -------- | ------------- | --------------------- | ------ |
-| analytix          | ❓                    | ❓       | ❓            | ❓                    | ❓     |
-| auditor           | ❓                    | ❓       | ❓            | ❓                    | ❓     |
-| billy             | ❓                    | ❓       | ❓            | ❓                    | ❓     |
-| bouncer           | ❓                    | ❓       | ❓            | ❓                    | ❓     |
-| core              | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| analytix          | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
+| auditor           | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
+| billy             | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
+| bouncer           | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
+| core              | ❓                    | 🍏       | ❓            | ❓                    | 🍅     |
 | dealer            | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
-| flexflow          | ❓                    | ❓       | ❓            | ❓                    | ❓     |
-| hero              | ❓                    | ❓       | ❓            | ❓                    | ❓     |
-| jamal             | ❓                    | ❓       | ❓            | ❓                    | ❓     |
-| pablo             | ❓                    | ❓       | ❓            | ❓                    | ❓     |
-| payot             | ❓                    | ❓       | ❓            | ❓                    | ❓     |
-| pechkin           | ❓                    | ❓       | ❓            | ❓                    | ❓     |
-| scrooge           | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| flexflow          | ❓                    | 🍅       | ❓            | ❓                    | 🍅     |
+| hero              | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
+| jamal             | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
+| pablo             | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
+| payot             | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
+| pechkin           | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
+| scrooge           | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
 | shiva             | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
-| tigerdocs         | ❓                    | ❓       | ❓            | ❓                    | ❓     |
+| tigerdocs         | ❓                    | 🍏       | ❓            | ❓                    | 🍅     |
 
 Other:
 
@@ -459,10 +481,10 @@ Other:
 | dealer            | 🍏                     | 🍏                  | 🍏            | 🍏                         |
 | flexflow          | ❓                     | ❓                  | ❓            | ❓                         |
 | hero              | ❓                     | ❓                  | ❓            | ❓                         |
-| jamal             | ❓                     | ❓                  | ❓            | ❓                         |
+| jamal             | ❓                     | ❓                  | 🍏            | ❓                         |
 | pablo             | ❓                     | ❓                  | ❓            | ❓                         |
 | payot             | ❓                     | ❓                  | ❓            | ❓                         |
 | pechkin           | ❓                     | ❓                  | ❓            | ❓                         |
 | scrooge           | ❓                     | ❓                  | ❓            | ❓                         |
-| shiva             | 🍏                     | 🍏                  | 🍅            | 🍏                         |
+| shiva             | 🍏                     | 🍏                  | 🍏            | 🍏                         |
 | tigerdocs         | ❓                     | ❓                  | ❓            | ❓                         |

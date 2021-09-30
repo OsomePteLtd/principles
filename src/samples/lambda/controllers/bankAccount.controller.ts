@@ -7,15 +7,18 @@ import {
   AcBankAccountRequest,
   AcBankAccountResponse,
   AcBankAccountUpdateRequest,
-  PermissionType,
   schemas,
 } from '@osome/sdk';
+import {
+  authorizeModel,
+  authorizeRead,
+  authorizeWrite,
+  throwNotFound,
+} from '@osome/server-toolkit';
 import { APIGatewayEvent } from 'aws-lambda';
 import { WhereAttributeHash } from 'sequelize';
 
-import { authorize } from '../../lib/acl';
-import { api2, apiNoContent } from '../../lib/app';
-import { throwNotFound } from '../../lib/errors';
+import { api, apiNoContent } from '../../lib/app';
 import { BankAccount } from '../../models';
 import {
   createBankAccount,
@@ -23,35 +26,34 @@ import {
   updateBankAccount,
 } from '../../services/bankAccount.service';
 
-export const index = api2<AcBankAccountIndexRequest, AcBankAccountListResponse>(
+export const index = api<AcBankAccountIndexRequest, AcBankAccountListResponse>(
   schemas.AcBankAccountIndexRequest,
   schemas.AcBankAccountListResponse,
   async ({ request, event }) => {
-    await authoriseRead(event);
-    const bankAccounts = await findBankAccounts(request);
+    const bankAccounts = await findBankAccounts(event, request);
     return {
       body: { bankAccounts },
     };
   },
 );
 
-export const show = api2<AcBankAccountGetRequest, AcBankAccountResponse>(
+export const show = api<AcBankAccountGetRequest, AcBankAccountResponse>(
   schemas.AcBankAccountGetRequest,
   schemas.AcBankAccountResponse,
   async ({ request, event }) => {
-    await authoriseRead(event);
     const bankAccount = await findBankAccount(request);
+    await authorizeRead(event, bankAccount);
     return {
       body: { bankAccount },
     };
   },
 );
 
-export const create = api2<AcBankAccountCreateRequest, AcBankAccountResponse>(
+export const create = api<AcBankAccountCreateRequest, AcBankAccountResponse>(
   schemas.AcBankAccountCreateRequest,
   schemas.AcBankAccountResponse,
   async ({ request, event }) => {
-    await authoriseWrite(event);
+    await authorizeWrite(event, BankAccount.build(request.body.bankAccount));
     const bankAccount = await createBankAccount(request.body.bankAccount);
     return {
       statusCode: 201,
@@ -60,12 +62,12 @@ export const create = api2<AcBankAccountCreateRequest, AcBankAccountResponse>(
   },
 );
 
-export const update = api2<AcBankAccountUpdateRequest, AcBankAccountResponse>(
+export const update = api<AcBankAccountUpdateRequest, AcBankAccountResponse>(
   schemas.AcBankAccountUpdateRequest,
   schemas.AcBankAccountResponse,
   async ({ request, event }) => {
-    await authoriseWrite(event);
     const bankAccount = await findBankAccount(request);
+    await authorizeWrite(event, bankAccount);
     await updateBankAccount(bankAccount, request.body.bankAccount);
     return {
       body: { bankAccount },
@@ -76,31 +78,22 @@ export const update = api2<AcBankAccountUpdateRequest, AcBankAccountResponse>(
 export const destroy = apiNoContent<AcBankAccountDeleteRequest>(
   schemas.AcBankAccountDeleteRequest,
   async ({ request, event }) => {
-    await authoriseWrite(event);
     const bankAccount = await findBankAccount(request);
+    await authorizeWrite(event, bankAccount);
     await deleteBankAccount(bankAccount);
   },
 );
 
 // private
 
-function authoriseRead(event: APIGatewayEvent) {
-  return authorize(event, {
-    agent: { permissionType: PermissionType.companiesRead },
-  });
-}
-
-function authoriseWrite(event: APIGatewayEvent) {
-  return authorize(event, {
-    agent: { permissionType: PermissionType.companiesWrite },
-  });
-}
-
-function findBankAccounts(request: AcBankAccountIndexRequest): Promise<BankAccount[]> {
-  const where: WhereAttributeHash<BankAccount> = {
-    companyId: request.pathParameters.companyId,
-  };
-  return BankAccount.findAll({
+async function findBankAccounts(
+  event: APIGatewayEvent,
+  request: AcBankAccountIndexRequest,
+): Promise<BankAccount[]> {
+  const { companyId } = request.pathParameters;
+  const authorizedModel = await authorizeModel(event, BankAccount, companyId);
+  const where: WhereAttributeHash<BankAccount> = { companyId };
+  return authorizedModel.findAll({
     where,
     order: [['createdAt', 'ASC']],
     include: [BankAccount.company, BankAccount.bankContact],
