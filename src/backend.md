@@ -442,7 +442,7 @@ Tests:
 | bouncer           | 🍅   | ❓       |
 | core              | 🍅   | 🍅       |
 | dealer            | 🍏   | 🍏       |
-| emrique           | 🍏   | ❓       |
+| enrique           | 🍏   | ❓       |
 | flexflow          | 🍅   | ❓       |
 | hero              | 🍅   | ❓       |
 | jamal             | 🍏   | ❓       |
