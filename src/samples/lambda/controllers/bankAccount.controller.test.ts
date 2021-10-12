@@ -19,283 +19,328 @@ import { seedCompany } from '../../tests/seeds/company.seed';
 import { seedContact } from '../../tests/seeds/contact.seed';
 import { create, destroy, index, show, update } from './bankAccount.controller';
 
-describe(__filename, () => {
-  describe('get-bank-accounts', () => {
-    it('success', async () => {
-      const bankAccount = await seedBankAccount();
+describe('get-bank-accounts', () => {
+  it('success', async () => {
+    const bankAccount = await seedBankAccount();
 
-      const responseBody = await testApi(index, {
-        pathParameters: {
-          companyId: bankAccount.companyId,
-        },
-      });
-
-      expect(responseBody.bankAccounts).toMatchObject([
-        {
-          id: bankAccount.id,
-          name: bankAccount.name,
-          bankAccountNumber: bankAccount.bankAccountNumber,
-          bankContactId: bankAccount.bankContactId,
-          companyId: bankAccount.companyId,
-          currencyCode: bankAccount.currencyCode,
-          contact: {
-            id: bankContact.id,
-            name: bankContact.name,
-            registrationNumber: bankContact.registrationNumber,
-            registrationCountryCode: bankContact.registrationCountryCode,
-          },
-        },
-      ]);
+    const responseBody = await testApi(index, {
+      pathParameters: {
+        companyId: bankAccount.companyId,
+      },
     });
 
-    describe('filter', () => {
-      it('bankAccountNumber', async () => {
-        const bankAccountNumber = faker.finance.iban();
-        const bankAccount = await seedBankAccount({
-          overrides: {
-            bankAccountOverridesAttributes: { bankAccountNumber },
-          },
-        });
-        await seedBankAccount({
-          companyId: company.id,
-          bankAccountNumber: bankAccountNumber + faker.finance.iban(),
-        });
-
-        const responseBody = await testApi(index, {
-          pathParameters: {
-            companyId: bankAccount.companyId,
-          },
-          queryStringParameters: {
-            filter: {
-              bankAccountNumber: bankAccount.bankAccountNumber,
-            },
-          },
-        });
-
-        expect(responseBody.bankAccounts.map((bc) => bc.bankAccountNumber)).toEqual([
-          bankAccount.bankAccountNumber,
-        ]);
-      });
-
-      it('currencyCode', async () => {
-        const bankAccount = await seedBankAccount({
-          overrides: {
-            bankAccountOverridesAttributes: { currencyCode: 'SGD' },
-          },
-        });
-        await seedBankAccount({
-          companyId: bankAccount.companyId,
-          currencyCode: 'USD',
-        });
-
-        const responseBody = await testApi(index, {
-          pathParameters: {
-            companyId: bankAccount.companyId,
-          },
-          queryStringParameters: {
-            filter: { currencyCode: bankAccount.currencyCode },
-          },
-        });
-
-        expect(responseBody.bankAccounts.map((bc) => bc.currencyCode)).toEqual([
-          bankAccount.currencyCode,
-        ]);
-      });
-    });
-
-    describe('sort', () => {
-      it('closeDate and createdAt', async () => {
-        const company = await seedCompany();
-        const bankContact = await seedContact();
-        await seedBankAccount({
-          name: 'bankAccountClosed1',
-          companyId: company.id,
-          bankContactId: bankContact.id,
-          closeDate: format(faker.date.past(), 'yyyy-MM-dd'),
-        });
-        await seedBankAccount({
-          name: 'bankAccountOpen1',
-          companyId: company.id,
-          bankContactId: bankContact.id,
-        });
-        await seedBankAccount({
-          name: 'bankAccountClosed2',
-          companyId: company.id,
-          bankContactId: bankContact.id,
-          closeDate: format(faker.date.past(), 'yyyy-MM-dd'),
-        });
-        await seedBankAccount({
-          name: 'bankAccountOpen2',
-          companyId: company.id,
-          bankContactId: bankContact.id,
-        });
-
-        const responseBody = await testApi(index, {
-          pathParameters: {
-            companyId: company.id,
-          },
-        });
-
-        expect(responseBody.bankAccounts.map((bc) => bc.name)).toEqual([
-          'bankAccountOpen1',
-          'bankAccountOpen2',
-          'bankAccountClosed1',
-          'bankAccountClosed2',
-        ]);
-      });
-    });
-
-    describe('errors', () => {
-      it('company not found', async () => {
-        const response = await testApiError(index, {
-          pathParameters: {
-            companyId: WRONG_ID,
-          },
-        });
-        expectNotFound(response);
-      });
-    });
-
-    describe('ACL', () => {
-      it('agent - success', async () => {
-        const bankAccount = await seedBankAccount();
-
-        const responseBody = await testApi(index, {
-          requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
-          pathParameters: {
-            companyId: bankAccount.companyId,
-          },
-        });
-
-        expect(responseBody.bankAccounts).toHaveLength(1);
-      });
-
-      it('agent - fail w/o permissions', async () => {
-        const bankAccount = await seedBankAccount();
-
-        const response = await testApiError(index, {
-          requestContext: fakeAgentRequestContext({ permissions: [] }),
-          pathParameters: {
-            companyId: bankAccount.companyId,
-          },
-        });
-
-        expectForbidden(response);
-      });
-    });
-  });
-
-  describe('get-bank-account', () => {
-    it('success', async () => {
-      const bankAccount = await seedBankAccount();
-
-      const responseBody = await testApi(show, {
-        pathParameters: {
-          bankAccountId: bankAccount.id,
-        },
-      });
-
-      expect(responseBody.bankAccount).toMatchObject({
+    expect(responseBody.bankAccounts).toMatchObject([
+      {
         id: bankAccount.id,
+        name: bankAccount.name,
         bankAccountNumber: bankAccount.bankAccountNumber,
         bankContactId: bankAccount.bankContactId,
         companyId: bankAccount.companyId,
         currencyCode: bankAccount.currencyCode,
-        name: bankAccount.name,
-        company: {
-          id: bankAccount.company.id,
-          branch: bankAccount.company.branch,
-          baseCurrency: bankAccount.company.baseCurrency,
-        },
-        contact: {
-          id: bankAccount.bankContact.id,
-          name: bankAccount.bankContact.name,
-          registrationNumber: bankAccount.bankContact.registrationNumber,
-          registrationCountryCode: bankAccount.bankContact.registrationCountryCode,
-        },
-      });
-    });
-
-    describe('errors', () => {
-      it('not found', async () => {
-        const response = await testApiError(show, {
-          pathParameters: {
-            bankAccountId: WRONG_ID,
-          },
-        });
-        expectNotFound(response);
-      });
-    });
-
-    describe('ACL', () => {
-      it('agent - success', async () => {
-        const bankAccount = await seedBankAccount();
-
-        await testApi(show, {
-          requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
-          pathParameters: {
-            bankAccountId: bankAccount.id,
-          },
-        });
-      });
-
-      it('agent - fail w/o permissions', async () => {
-        const bankAccount = await seedBankAccount();
-
-        const response = await testApiError(show, {
-          requestContext: fakeAgentRequestContext({ permissions: [] }),
-          pathParameters: {
-            bankAccountId: bankAccount.id,
-          },
-        });
-
-        expectForbidden(response);
-      });
-    });
-  });
-
-  describe('create-bank-account', () => {
-    it('success', async () => {
-      const company = await seedCompany();
-      const bankContact = await seedContact();
-      const bankAccountNumber = `${faker.finance.iban()} 111-222 33-3`;
-
-      const request: AcBankAccountCreateRequest = {
-        body: {
-          bankAccount: {
-            name: faker.finance.accountName(),
-            bankAccountNumber,
-            currencyCode: 'SGD',
-            openDate: faker.date.past().toDateString(),
-            companyId: company.id,
-            bankContactId: bankContact.id,
-          },
-        },
-      };
-
-      const responseBody = await testApi(create, request, { statusCode: 201 });
-
-      expect(responseBody.bankAccount).toMatchSchema({
-        bankAccountNumber: cleanBankAccountNumber(bankAccountNumber),
-        bankContactId: request.body.bankAccount.bankContactId,
-        companyId: request.body.bankAccount.companyId,
-        currencyCode: request.body.bankAccount.currencyCode,
-        name: request.body.bankAccount.name,
-        company: {
-          id: company.id,
-          branch: company.branch,
-          baseCurrency: company.baseCurrency,
-        },
         contact: {
           id: bankContact.id,
           name: bankContact.name,
           registrationNumber: bankContact.registrationNumber,
           registrationCountryCode: bankContact.registrationCountryCode,
         },
+      },
+    ]);
+  });
+
+  describe('filter', () => {
+    it('bankAccountNumber', async () => {
+      const bankAccountNumber = faker.finance.iban();
+      const bankAccount = await seedBankAccount({
+        overrides: {
+          bankAccountOverridesAttributes: { bankAccountNumber },
+        },
+      });
+      await seedBankAccount({
+        companyId: company.id,
+        bankAccountNumber: bankAccountNumber + faker.finance.iban(),
+      });
+
+      const responseBody = await testApi(index, {
+        pathParameters: {
+          companyId: bankAccount.companyId,
+        },
+        queryStringParameters: {
+          filter: {
+            bankAccountNumber: bankAccount.bankAccountNumber,
+          },
+        },
+      });
+
+      expect(responseBody.bankAccounts.map((bc) => bc.bankAccountNumber)).toEqual([
+        bankAccount.bankAccountNumber,
+      ]);
+    });
+
+    it('currencyCode', async () => {
+      const bankAccount = await seedBankAccount({
+        overrides: {
+          bankAccountOverridesAttributes: { currencyCode: 'SGD' },
+        },
+      });
+      await seedBankAccount({
+        companyId: bankAccount.companyId,
+        currencyCode: 'USD',
+      });
+
+      const responseBody = await testApi(index, {
+        pathParameters: {
+          companyId: bankAccount.companyId,
+        },
+        queryStringParameters: {
+          filter: { currencyCode: bankAccount.currencyCode },
+        },
+      });
+
+      expect(responseBody.bankAccounts.map((bc) => bc.currencyCode)).toEqual([
+        bankAccount.currencyCode,
+      ]);
+    });
+  });
+
+  describe('sort', () => {
+    it('closeDate and createdAt', async () => {
+      const company = await seedCompany();
+      const bankContact = await seedContact();
+      await seedBankAccount({
+        name: 'bankAccountClosed1',
+        companyId: company.id,
+        bankContactId: bankContact.id,
+        closeDate: format(faker.date.past(), 'yyyy-MM-dd'),
+      });
+      await seedBankAccount({
+        name: 'bankAccountOpen1',
+        companyId: company.id,
+        bankContactId: bankContact.id,
+      });
+      await seedBankAccount({
+        name: 'bankAccountClosed2',
+        companyId: company.id,
+        bankContactId: bankContact.id,
+        closeDate: format(faker.date.past(), 'yyyy-MM-dd'),
+      });
+      await seedBankAccount({
+        name: 'bankAccountOpen2',
+        companyId: company.id,
+        bankContactId: bankContact.id,
+      });
+
+      const responseBody = await testApi(index, {
+        pathParameters: {
+          companyId: company.id,
+        },
+      });
+
+      expect(responseBody.bankAccounts.map((bc) => bc.name)).toEqual([
+        'bankAccountOpen1',
+        'bankAccountOpen2',
+        'bankAccountClosed1',
+        'bankAccountClosed2',
+      ]);
+    });
+  });
+
+  describe('errors', () => {
+    it('company not found', async () => {
+      const response = await testApiError(index, {
+        pathParameters: {
+          companyId: WRONG_ID,
+        },
+      });
+      expectNotFound(response);
+    });
+  });
+
+  describe('ACL', () => {
+    it('agent - success', async () => {
+      const bankAccount = await seedBankAccount();
+
+      const responseBody = await testApi(index, {
+        requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
+        pathParameters: {
+          companyId: bankAccount.companyId,
+        },
+      });
+
+      expect(responseBody.bankAccounts).toHaveLength(1);
+    });
+
+    it('agent - fail w/o permissions', async () => {
+      const bankAccount = await seedBankAccount();
+
+      const response = await testApiError(index, {
+        requestContext: fakeAgentRequestContext({ permissions: [] }),
+        pathParameters: {
+          companyId: bankAccount.companyId,
+        },
+      });
+
+      expectForbidden(response);
+    });
+  });
+});
+
+describe('get-bank-account', () => {
+  it('success', async () => {
+    const bankAccount = await seedBankAccount();
+
+    const responseBody = await testApi(show, {
+      pathParameters: {
+        bankAccountId: bankAccount.id,
+      },
+    });
+
+    expect(responseBody.bankAccount).toMatchObject({
+      id: bankAccount.id,
+      bankAccountNumber: bankAccount.bankAccountNumber,
+      bankContactId: bankAccount.bankContactId,
+      companyId: bankAccount.companyId,
+      currencyCode: bankAccount.currencyCode,
+      name: bankAccount.name,
+      company: {
+        id: bankAccount.company.id,
+        branch: bankAccount.company.branch,
+        baseCurrency: bankAccount.company.baseCurrency,
+      },
+      contact: {
+        id: bankAccount.bankContact.id,
+        name: bankAccount.bankContact.name,
+        registrationNumber: bankAccount.bankContact.registrationNumber,
+        registrationCountryCode: bankAccount.bankContact.registrationCountryCode,
+      },
+    });
+  });
+
+  describe('errors', () => {
+    it('not found', async () => {
+      const response = await testApiError(show, {
+        pathParameters: {
+          bankAccountId: WRONG_ID,
+        },
+      });
+      expectNotFound(response);
+    });
+  });
+
+  describe('ACL', () => {
+    it('agent - success', async () => {
+      const bankAccount = await seedBankAccount();
+
+      await testApi(show, {
+        requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
+        pathParameters: {
+          bankAccountId: bankAccount.id,
+        },
       });
     });
 
-    it('with empty openDate', async () => {
+    it('agent - fail w/o permissions', async () => {
+      const bankAccount = await seedBankAccount();
+
+      const response = await testApiError(show, {
+        requestContext: fakeAgentRequestContext({ permissions: [] }),
+        pathParameters: {
+          bankAccountId: bankAccount.id,
+        },
+      });
+
+      expectForbidden(response);
+    });
+  });
+});
+
+describe('create-bank-account', () => {
+  it('success', async () => {
+    const company = await seedCompany();
+    const bankContact = await seedContact();
+    const bankAccountNumber = `${faker.finance.iban()} 111-222 33-3`;
+
+    const request: AcBankAccountCreateRequest = {
+      body: {
+        bankAccount: {
+          name: faker.finance.accountName(),
+          bankAccountNumber,
+          currencyCode: 'SGD',
+          openDate: faker.date.past().toDateString(),
+          companyId: company.id,
+          bankContactId: bankContact.id,
+        },
+      },
+    };
+
+    const responseBody = await testApi(create, request, { statusCode: 201 });
+
+    expect(responseBody.bankAccount).toMatchSchema({
+      bankAccountNumber: cleanBankAccountNumber(bankAccountNumber),
+      bankContactId: request.body.bankAccount.bankContactId,
+      companyId: request.body.bankAccount.companyId,
+      currencyCode: request.body.bankAccount.currencyCode,
+      name: request.body.bankAccount.name,
+      company: {
+        id: company.id,
+        branch: company.branch,
+        baseCurrency: company.baseCurrency,
+      },
+      contact: {
+        id: bankContact.id,
+        name: bankContact.name,
+        registrationNumber: bankContact.registrationNumber,
+        registrationCountryCode: bankContact.registrationCountryCode,
+      },
+    });
+  });
+
+  it('with empty openDate', async () => {
+    const company = await seedCompany();
+    const bankContact = await seedContact();
+    const bankAccountNumber = `${faker.finance.iban()} 111-222 33-3`;
+
+    await testApi(
+      create,
+      {
+        body: {
+          bankAccount: {
+            name: faker.finance.accountName(),
+            bankAccountNumber,
+            currencyCode: 'SGD',
+            companyId: company.id,
+            bankContactId: bankContact.id,
+          },
+        },
+      },
+      { statusCode: 201 },
+    );
+  });
+
+  describe('validation', () => {
+    it('datetime order', async () => {
+      const company = await seedCompany();
+      const bankContact = await seedContact();
+
+      const response = await testApiError(create, {
+        body: {
+          bankAccount: {
+            name: faker.finance.accountName(),
+            bankAccountNumber: faker.finance.iban(),
+            currencyCode: 'SGD',
+            openDate: faker.date.future().toDateString(),
+            closeDate: faker.date.past().toDateString(),
+            companyId: company.id,
+            bankContactId: bankContact.id,
+          },
+        },
+      });
+
+      expectValidationError(response, 'closeDate should be later than openDate');
+    });
+  });
+
+  describe('ACL', () => {
+    it('agent - success', async () => {
       const company = await seedCompany();
       const bankContact = await seedContact();
       const bankAccountNumber = `${faker.finance.iban()} 111-222 33-3`;
@@ -303,11 +348,15 @@ describe(__filename, () => {
       await testApi(
         create,
         {
+          requestContext: fakeAgentRequestContext({
+            permissions: [PermissionType.companiesWrite],
+          }),
           body: {
             bankAccount: {
               name: faker.finance.accountName(),
               bankAccountNumber,
               currencyCode: 'SGD',
+              openDate: faker.date.past().toDateString(),
               companyId: company.id,
               bankContactId: bankContact.id,
             },
@@ -317,226 +366,175 @@ describe(__filename, () => {
       );
     });
 
-    describe('validation', () => {
-      it('datetime order', async () => {
-        const company = await seedCompany();
-        const bankContact = await seedContact();
+    it('agent - fail w/o permissions', async () => {
+      const company = await seedCompany();
+      const bankContact = await seedContact();
 
-        const response = await testApiError(create, {
-          body: {
-            bankAccount: {
-              name: faker.finance.accountName(),
-              bankAccountNumber: faker.finance.iban(),
-              currencyCode: 'SGD',
-              openDate: faker.date.future().toDateString(),
-              closeDate: faker.date.past().toDateString(),
-              companyId: company.id,
-              bankContactId: bankContact.id,
-            },
+      const response = await testApiError(create, {
+        requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
+        body: {
+          bankAccount: {
+            name: faker.finance.accountName(),
+            bankAccountNumber: faker.finance.iban(),
+            currencyCode: 'SGD',
+            openDate: faker.date.past().toDateString(),
+            companyId: company.id,
+            bankContactId: bankContact.id,
           },
-        });
-
-        expectValidationError(response, 'closeDate should be later than openDate');
+        },
       });
+
+      expectForbidden(response);
     });
+  });
+});
 
-    describe('ACL', () => {
-      it('agent - success', async () => {
-        const company = await seedCompany();
-        const bankContact = await seedContact();
-        const bankAccountNumber = `${faker.finance.iban()} 111-222 33-3`;
+describe('update-bank-account', () => {
+  it('success', async () => {
+    const bankAccount = await seedBankAccount();
+    const newBankContact = await seedContact();
 
-        await testApi(
-          create,
-          {
-            requestContext: fakeAgentRequestContext({
-              permissions: [PermissionType.companiesWrite],
-            }),
-            body: {
-              bankAccount: {
-                name: faker.finance.accountName(),
-                bankAccountNumber,
-                currencyCode: 'SGD',
-                openDate: faker.date.past().toDateString(),
-                companyId: company.id,
-                bankContactId: bankContact.id,
-              },
-            },
-          },
-          { statusCode: 201 },
-        );
-      });
+    const request: AcBankAccountUpdateRequest = {
+      pathParameters: {
+        bankAccountId: bankAccount.id,
+      },
+      body: {
+        bankAccount: {
+          name: faker.finance.accountName(),
+          bankAccountNumber: faker.finance.iban(),
+          currencyCode: bankAccount.currencyCode,
+          companyId: bankAccount.companyId,
+          bankContactId: newBankContact.id,
+          openDate: new Date().toISOString(),
+        },
+      },
+    };
 
-      it('agent - fail w/o permissions', async () => {
-        const company = await seedCompany();
-        const bankContact = await seedContact();
+    const responseBody = await testApi(update, request);
 
-        const response = await testApiError(create, {
-          requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
-          body: {
-            bankAccount: {
-              name: faker.finance.accountName(),
-              bankAccountNumber: faker.finance.iban(),
-              currencyCode: 'SGD',
-              openDate: faker.date.past().toDateString(),
-              companyId: company.id,
-              bankContactId: bankContact.id,
-            },
-          },
-        });
-
-        expectForbidden(response);
-      });
+    expect(responseBody.bankAccount).toMatchObject({
+      bankAccountNumber: request.body.bankAccount.bankAccountNumber,
+      bankContactId: request.body.bankAccount.bankContactId,
+      companyId: request.body.bankAccount.companyId,
+      currencyCode: request.body.bankAccount.currencyCode,
+      name: request.body.bankAccount.name,
+      company: {
+        id: bankAccount.company.id,
+        branch: bankAccount.company.branch,
+        baseCurrency: bankAccount.company.baseCurrency,
+      },
+      contact: {
+        id: newBankContact.id,
+        name: newBankContact.name,
+        registrationNumber: newBankContact.registrationNumber,
+        registrationCountryCode: newBankContact.registrationCountryCode,
+      },
     });
   });
 
-  describe('update-bank-account', () => {
-    it('success', async () => {
-      const bankAccount = await seedBankAccount();
-      const newBankContact = await seedContact();
+  describe('errors', () => {
+    it('not found', async () => {
+      const response = await testApiError(update, {
+        pathParameters: {
+          bankAccountId: WRONG_ID,
+        },
+        body: {
+          bankAccount: {
+            name: faker.finance.accountName(),
+          },
+        },
+      });
 
-      const request: AcBankAccountUpdateRequest = {
+      expectNotFound(response);
+    });
+  });
+
+  describe('ACL', () => {
+    it('agent - success', async () => {
+      const { bankAccount } = await seedBankAccount();
+
+      await testApi(update, {
+        requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesWrite] }),
         pathParameters: {
           bankAccountId: bankAccount.id,
         },
         body: {
           bankAccount: {
             name: faker.finance.accountName(),
-            bankAccountNumber: faker.finance.iban(),
-            currencyCode: bankAccount.currencyCode,
-            companyId: bankAccount.companyId,
-            bankContactId: newBankContact.id,
-            openDate: new Date().toISOString(),
           },
-        },
-      };
-
-      const responseBody = await testApi(update, request);
-
-      expect(responseBody.bankAccount).toMatchObject({
-        bankAccountNumber: request.body.bankAccount.bankAccountNumber,
-        bankContactId: request.body.bankAccount.bankContactId,
-        companyId: request.body.bankAccount.companyId,
-        currencyCode: request.body.bankAccount.currencyCode,
-        name: request.body.bankAccount.name,
-        company: {
-          id: bankAccount.company.id,
-          branch: bankAccount.company.branch,
-          baseCurrency: bankAccount.company.baseCurrency,
-        },
-        contact: {
-          id: newBankContact.id,
-          name: newBankContact.name,
-          registrationNumber: newBankContact.registrationNumber,
-          registrationCountryCode: newBankContact.registrationCountryCode,
         },
       });
     });
 
-    describe('errors', () => {
-      it('not found', async () => {
-        const response = await testApiError(update, {
-          pathParameters: {
-            bankAccountId: WRONG_ID,
-          },
-          body: {
-            bankAccount: {
-              name: faker.finance.accountName(),
-            },
-          },
-        });
+    it('agent - fail w/o permissions', async () => {
+      const bankAccount = await seedBankAccount();
 
-        expectNotFound(response);
+      const response = await testApiError(update, {
+        requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
+        pathParameters: {
+          bankAccountId: bankAccount.id,
+        },
+        body: {
+          bankAccount: {
+            name: faker.finance.accountName(),
+          },
+        },
       });
+
+      expectForbidden(response);
+    });
+  });
+});
+
+describe('delete-bank-account', () => {
+  it('success', async () => {
+    const bankAccount = await seedBankAccount();
+
+    await testApiNoContent(destroy, {
+      pathParameters: {
+        bankAccountId: bankAccount.id,
+      },
     });
 
-    describe('ACL', () => {
-      it('agent - success', async () => {
-        const { bankAccount } = await seedBankAccount();
+    await bankAccount.reload({ paranoid: false });
+    expect(bankAccount.isSoftDeleted()).toBeTruthy();
+  });
 
-        await testApi(update, {
-          requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesWrite] }),
-          pathParameters: {
-            bankAccountId: bankAccount.id,
-          },
-          body: {
-            bankAccount: {
-              name: faker.finance.accountName(),
-            },
-          },
-        });
+  describe('errors', () => {
+    it('not found', async () => {
+      const response = await testApiError(destroy, {
+        pathParameters: {
+          bankAccountId: WRONG_ID,
+        },
       });
 
-      it('agent - fail w/o permissions', async () => {
-        const bankAccount = await seedBankAccount();
-
-        const response = await testApiError(update, {
-          requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
-          pathParameters: {
-            bankAccountId: bankAccount.id,
-          },
-          body: {
-            bankAccount: {
-              name: faker.finance.accountName(),
-            },
-          },
-        });
-
-        expectForbidden(response);
-      });
+      expectNotFound(response);
     });
   });
 
-  describe('delete-bank-account', () => {
-    it('success', async () => {
+  describe('ACL', () => {
+    it('agent - success', async () => {
       const bankAccount = await seedBankAccount();
 
       await testApiNoContent(destroy, {
+        requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesWrite] }),
+        pathParameters: {
+          bankAccountId: bankAccount.id,
+        },
+      });
+    });
+
+    it('agent - fail w/o permissions', async () => {
+      const bankAccount = await seedBankAccount();
+
+      const response = await testApiError(destroy, {
+        requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
         pathParameters: {
           bankAccountId: bankAccount.id,
         },
       });
 
-      await bankAccount.reload({ paranoid: false });
-      expect(bankAccount.isSoftDeleted()).toBeTruthy();
-    });
-
-    describe('errors', () => {
-      it('not found', async () => {
-        const response = await testApiError(destroy, {
-          pathParameters: {
-            bankAccountId: WRONG_ID,
-          },
-        });
-
-        expectNotFound(response);
-      });
-    });
-
-    describe('ACL', () => {
-      it('agent - success', async () => {
-        const bankAccount = await seedBankAccount();
-
-        await testApiNoContent(destroy, {
-          requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesWrite] }),
-          pathParameters: {
-            bankAccountId: bankAccount.id,
-          },
-        });
-      });
-
-      it('agent - fail w/o permissions', async () => {
-        const bankAccount = await seedBankAccount();
-
-        const response = await testApiError(destroy, {
-          requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
-          pathParameters: {
-            bankAccountId: bankAccount.id,
-          },
-        });
-
-        expectForbidden(response);
-      });
+      expectForbidden(response);
     });
   });
 });
