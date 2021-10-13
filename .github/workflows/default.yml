@@ -19,8 +19,14 @@ jobs:
       - name: Restore cache
         uses: c-hive/gha-npm-cache@v1
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install dependencies and check package-lock.json
+        run: |
+          cp package-lock.json package-lock.json.orig
+          npm install
+          if ! diff --color=always package-lock.json.orig package-lock.json ; then
+            echo "package-lock.json changed, failing build"
+            exit 1
+          fi
 
       - name: Run static checks
         run: npm run static-checks
