@@ -306,23 +306,21 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    ```typescript
    // bad
 
-   async function handleDocumentCreatedOrUpdated(snapshot: Document): Promise<void> {
-     if (!isRaf(snapshot)) {
+   async function handleDocumentUpdated(event: SnsDocumentUpdated): Promise<void> {
+     if (!isRaf(event.document.snapshot)) {
        return;
      }
-     const company = await Company.findByPk(snapshot.companyId, { rejectOnEmpty: true });
-     await updateRafDocument(company, snapshot); // using snapshot is not safe here
+     await updateRafDocument(event.document.snapshot); // using snapshot is not safe here
    }
 
    // good
 
-   async function handleDocumentCreatedOrUpdated(snapshot: Document): Promise<void> {
-     if (!isRaf(snapshot)) {
+   async function handleDocumentUpdated(event: SnsDocumentUpdated): Promise<void> {
+     if (!isRaf(event.document.snapshot)) {
        return;
      }
-     const document = await getCoreDocument(snapshot.id); // fetching actual data
-     const company = await Company.findByPk(document.companyId, { rejectOnEmpty: true });
-     await updateRafDocument(company, document); // using actual data
+     const document = await getCoreDocument(event.document.id); // fetching actual data
+     await updateRafDocument(document); // using actual data
    }
    ```
 
