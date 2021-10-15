@@ -318,11 +318,11 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
    async function handleDocumentCreatedOrUpdated(snapshot: Document): Promise<void> {
      if (!isRaf(snapshot)) {
-       return; // using snapshot for filtering events is ok
+       return;
      }
      const document = await getCoreDocument(snapshot.id); // fetching actual data
      const company = await Company.findByPk(document.companyId, { rejectOnEmpty: true });
-     await updateRafDocument(company, document); // usning actual data
+     await updateRafDocument(company, document); // using actual data
    }
    ```
 
