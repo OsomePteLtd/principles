@@ -528,19 +528,19 @@ Other:
 
 | Service / Feature | no parameter store SDK | standard CODEOWNERS | `main` branch | dependabot with auto-merge | migration check |
 | ----------------- | ---------------------- | ------------------- | ------------- | -------------------------- | --------------- |
-| analytix          | ❓                     | ❓                  | ❓            | ❓                         | ❓              |
-| auditor           | ❓                     | ❓                  | ❓            | ❓                         | ❓              |
+| analytix          | ❓                     | ❓                  | 🍏            | ❓                         | ❓              |
+| auditor           | ❓                     | ❓                  | 🍏            | ❓                         | ❓              |
 | billy             | ❓                     | ❓                  | 🍏            | ❓                         | ❓              |
-| bouncer           | ❓                     | ❓                  | ❓            | ❓                         | ❓              |
-| core              | ❓                     | 🍅                  | 🍅            | 🍅                         | ❓              |
+| bouncer           | ❓                     | ❓                  | 🍏            | ❓                         | ❓              |
+| core              | ❓                     | 🍅                  | 🍏            | 🍅                         | ❓              |
 | dealer            | 🍏                     | 🍏                  | 🍏            | 🍏                         | ❓              |
 | enrique           | 🍏                     | 🍏                  | 🍏            | 🍏                         | ❓              |
-| flexflow          | ❓                     | ❓                  | ❓            | ❓                         | ❓              |
+| flexflow          | ❓                     | ❓                  | 🍏            | ❓                         | ❓              |
 | hero              | ❓                     | ❓                  | 🍏            | ❓                         | ❓              |
 | jamal             | ❓                     | ❓                  | 🍏            | ❓                         | ❓              |
 | pablo             | 🍏                     | 🍏                  | 🍏            | 🍏                         | ❓              |
 | payot             | ❓                     | ❓                  | 🍏            | ❓                         | ❓              |
-| pechkin           | ❓                     | ❓                  | ❓            | ❓                         | ❓              |
-| scrooge           | ❓                     | ❓                  | ❓            | ❓                         | ❓              |
+| pechkin           | ❓                     | ❓                  | 🍏            | ❓                         | ❓              |
+| scrooge           | ❓                     | ❓                  | 🍏            | ❓                         | ❓              |
 | shiva             | 🍏                     | 🍏                  | 🍏            | 🍏                         | 🍏              |
-| tigerdocs         | ❓                     | ❓                  | ❓            | ❓                         | ❓              |
+| tigerdocs         | ❓                     | ❓                  | 🍏            | ❓                         | ❓              |
