@@ -310,7 +310,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
      if (!isRaf(event.document.snapshot)) { // it is OK to use snapshot to make a decision
        return;
      }
-     await updateRafDocument(event.document.snapshot); // using snapshot is not safe here
+     await updateRafDocument(event.document.snapshot); // using snapshot for updating is not safe
    }
 
    // good
