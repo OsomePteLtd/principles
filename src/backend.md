@@ -276,6 +276,55 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    }
    ```
 
+## Event Bus
+
+1. Use the Event Bus for asynchronous communication between services.
+
+1. Bear in mind that you could receive an outdated message if the first attempt to process it fails. So you can safely use only immutabe data (such `id`) from a message. Always fetch the actual data before using it. There is one exception - you can use a snapshot for filtering events.
+
+   SDK:
+
+   ```
+   // bad
+
+   SnsDocumentUpdated !{
+     document: Document,
+   }
+
+   // good
+
+   SnsDocumentUpdated !{
+     document: !{
+       id: i,
+       snapshot: Document,
+     },
+   }
+   ```
+
+   Service:
+
+   ```typescript
+   // bad
+
+   async function handleDocumentUpdated(event: SnsDocumentUpdated): Promise<void> {
+     if (!isRaf(event.document.snapshot)) {
+       // it is OK to use snapshot to make a decision
+       return;
+     }
+     await updateRafDocument(event.document.snapshot); // using snapshot for updating is not safe
+   }
+
+   // good
+
+   async function handleDocumentUpdated(event: SnsDocumentUpdated): Promise<void> {
+     if (!isRaf(event.document.snapshot)) {
+       return;
+     }
+     const document = await getCoreDocument(event.document.id); // fetching actual data
+     await updateRafDocument(document); // using actual data
+   }
+   ```
+
 ## Tests
 
 1. All HTTP endpoints, lambdas and jobs should be covered by tests.
