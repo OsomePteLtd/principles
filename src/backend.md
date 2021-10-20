@@ -21,7 +21,7 @@
    -- and we will decide to go with the enum solutiion
    ALTER TABLE subscriptions ADD COLUMN "isActive" BOOLEAN;
 
-    -- disaster
+   -- disaster
    -- day 1
    ALTER TABLE subscriptions ADD COLUMN "isActive" BOOLEAN;
    -- day 2. Now, we consistently need to check for isActive && isSuspended
