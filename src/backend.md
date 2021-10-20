@@ -13,6 +13,46 @@
    - We are saving raw data from an external service (for example, a Xero Invoice).
    - We are saving data with unpredictable nesting (for example, something like a form builder).
 
+1. Prefer enums and avoid booleans
+
+   ```sql
+   -- bad
+   -- highly likely, we will need a suspended status shortly,
+   -- and we will decide to go with the enum solutiion
+   ALTER TABLE subscriptions ADD COLUMN "isActive" BOOLEAN;
+
+    -- disaster
+   -- day 1
+   ALTER TABLE subscriptions ADD COLUMN "isActive" BOOLEAN;
+   -- day 2. Now, we consistently need to check for isActive && isSuspended
+   -- instead of simply status == 'active'. Both in the database and the code.
+   ALTER TABLE subscriptions ADD COLUMN "isSuspended" BOOLEAN;
+
+   -- good
+   -- we add just two options but prepare ourselves for the future, and it costs us nothing
+   -- also, it's better in terms of type checks even there are only two options
+   -- The database / programming language will protect us from using wrong values by mistake,
+   -- which will not happen if we use generic true/false
+   CREATE TYPE "subscriptionStatus" AS ENUM (
+    'active',
+    'pending'
+   );
+   ALTER TABLE "contacts" ADD COLUMN "status" "subscriptionStatus";
+
+   -- also good
+   -- here we're pretty sure it'll never be extended to more than two values
+   -- we don't have type checks here, but avoiding boolean at all is not practical
+   ALTER TABLE subscriptions ADD COLUMN "isRenewable" BOOLEAN;
+   ```
+
+   Read more:
+
+   https://stackoverflow.com/questions/4337942/using-enum-vs-boolean
+
+   https://betterprogramming.pub/dont-use-boolean-arguments-use-enums-c7cd7ab1876a
+
+   http://codeclimber.net.nz/archive/2012/11/19/why-you-should-never-use-a-boolean-field-use-an/
+
 ## Migrations
 
 1. If you want to drop a column:
