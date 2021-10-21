@@ -10,8 +10,9 @@
 
 1. Avoid JSON columns with a few exceptions:
 
-   - We are saving raw data from an external service (for example, a Xero Invoice).
-   - We are saving data with unpredictable nesting (for example, something like a form builder).
+   - We are saving raw data from an external service (for example, a Xero Invoice)
+   - We are saving raw data from another internal service (for example, core.company can have a column company.comlianceData to save raw data from Sherlock)
+   - We are saving data with unpredictable nesting (for example, something like a form builder)
 
 1. Prefer enums and avoid booleans
 
