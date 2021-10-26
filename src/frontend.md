@@ -46,20 +46,19 @@
 
 1. If you need to test complicated scenario, prefer e2e over unit tests.
 
-2. Mocks filename on frontend is `x.fake.ts`
+1. Mocks filename on frontend is `x.fake.ts`
 
 bad ❌
 
 ```typescript
-
 // seeds/ticket.seed.ts
 
 export function seedTicket() {}
 ```
 
 good ✅
-```typescript
 
+```typescript
 // fakes/ticket.fake.ts
 
 export function fakeTicket() {}
