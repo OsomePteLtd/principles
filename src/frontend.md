@@ -46,6 +46,25 @@
 
 1. If you need to test complicated scenario, prefer e2e over unit tests.
 
+2. Mocks filename on frontend is `x.fake.ts`
+
+bad ❌
+
+```typescript
+
+// seeds/ticket.seed.ts
+
+export function seedTicket() {}
+```
+
+good ✅
+```typescript
+
+// fakes/ticket.fake.ts
+
+export function fakeTicket() {}
+```
+
 ## Styles
 
 1. Avoid using nested tags or ids for styling. However, you can use nested tags for svg styles or external libraries components.
