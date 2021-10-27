@@ -11,7 +11,6 @@ import {
 import { format } from 'date-fns';
 import * as faker from 'faker';
 
-import { BankAccount } from '../../models';
 import { cleanBankAccountNumber } from '../../services/bankAccount.service';
 import { WRONG_ID } from '../../tests/helpers';
 import { seedBankAccount } from '../../tests/seeds/bankAccount.seed';
@@ -31,17 +30,22 @@ describe('get-bank-accounts', () => {
 
     expect(responseBody.bankAccounts).toMatchObject([
       {
-        id: bankAccount.id,
-        name: bankAccount.name,
         bankAccountNumber: bankAccount.bankAccountNumber,
         bankContactId: bankAccount.bankContactId,
         companyId: bankAccount.companyId,
         currencyCode: bankAccount.currencyCode,
+        id: bankAccount.id,
+        name: bankAccount.name,
+        company: {
+          id: bankAccount.company.id,
+          branch: bankAccount.company.branch,
+          baseCurrency: bankAccount.company.baseCurrency,
+        },
         contact: {
-          id: bankContact.id,
-          name: bankContact.name,
-          registrationNumber: bankContact.registrationNumber,
-          registrationCountryCode: bankContact.registrationCountryCode,
+          id: bankAccount.bankContact.id,
+          name: bankAccount.bankContact.name,
+          registrationNumber: bankAccount.bankContact.registrationNumber,
+          registrationCountryCode: bankAccount.bankContact.registrationCountryCode,
         },
       },
     ]);
@@ -50,13 +54,10 @@ describe('get-bank-accounts', () => {
   describe('filter', () => {
     it('bankAccountNumber', async () => {
       const bankAccountNumber = faker.finance.iban();
-      const bankAccount = await seedBankAccount({
-        overrides: {
-          bankAccountOverridesAttributes: { bankAccountNumber },
-        },
-      });
+      const bankAccount = await seedBankAccount({ bankAccountNumber });
       await seedBankAccount({
-        companyId: company.id,
+        companyId: bankAccount.companyId,
+        bankContactId: bankAccount.bankContactId,
         bankAccountNumber: bankAccountNumber + faker.finance.iban(),
       });
 
@@ -77,13 +78,10 @@ describe('get-bank-accounts', () => {
     });
 
     it('currencyCode', async () => {
-      const bankAccount = await seedBankAccount({
-        overrides: {
-          bankAccountOverridesAttributes: { currencyCode: 'SGD' },
-        },
-      });
+      const bankAccount = await seedBankAccount({ currencyCode: 'SGD' });
       await seedBankAccount({
         companyId: bankAccount.companyId,
+        bankContactId: bankAccount.bankContactId,
         currencyCode: 'USD',
       });
 
@@ -318,19 +316,14 @@ describe('create-bank-account', () => {
 
   describe('validation', () => {
     it('datetime order', async () => {
-      const company = await seedCompany();
-      const bankContact = await seedContact();
+      const requestBankAccount = await fakeCreate();
 
       const response = await testApiError(create, {
         body: {
           bankAccount: {
-            name: faker.finance.accountName(),
-            bankAccountNumber: faker.finance.iban(),
-            currencyCode: 'SGD',
+            ...requestBankAccount,
             openDate: faker.date.future().toDateString(),
             closeDate: faker.date.past().toDateString(),
-            companyId: company.id,
-            bankContactId: bankContact.id,
           },
         },
       });
@@ -341,9 +334,7 @@ describe('create-bank-account', () => {
 
   describe('ACL', () => {
     it('agent - success', async () => {
-      const company = await seedCompany();
-      const bankContact = await seedContact();
-      const bankAccountNumber = `${faker.finance.iban()} 111-222 33-3`;
+      const requestBankAccount = await fakeCreate();
 
       await testApi(
         create,
@@ -352,14 +343,7 @@ describe('create-bank-account', () => {
             permissions: [PermissionType.companiesWrite],
           }),
           body: {
-            bankAccount: {
-              name: faker.finance.accountName(),
-              bankAccountNumber,
-              currencyCode: 'SGD',
-              openDate: faker.date.past().toDateString(),
-              companyId: company.id,
-              bankContactId: bankContact.id,
-            },
+            bankAccount: requestBankAccount,
           },
         },
         { statusCode: 201 },
@@ -367,20 +351,12 @@ describe('create-bank-account', () => {
     });
 
     it('agent - fail w/o permissions', async () => {
-      const company = await seedCompany();
-      const bankContact = await seedContact();
+      const requestBankAccount = await fakeCreate();
 
       const response = await testApiError(create, {
         requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesRead] }),
         body: {
-          bankAccount: {
-            name: faker.finance.accountName(),
-            bankAccountNumber: faker.finance.iban(),
-            currencyCode: 'SGD',
-            openDate: faker.date.past().toDateString(),
-            companyId: company.id,
-            bankContactId: bankContact.id,
-          },
+          bankAccount: requestBankAccount,
         },
       });
 
@@ -391,6 +367,53 @@ describe('create-bank-account', () => {
 
 describe('update-bank-account', () => {
   it('success', async () => {
+    const bankAccount = await seedBankAccount();
+
+    const request: AcBankAccountUpdateRequest = {
+      pathParameters: {
+        bankAccountId: bankAccount.id,
+      },
+      body: {
+        bankAccount: {
+          name: faker.finance.accountName(),
+        },
+      },
+    };
+
+    const responseBody = await testApi(update, request);
+
+    expect(responseBody.bankAccount).toMatchObject({
+      name: request.body.bankAccount.name,
+      bankAccountNumber: bankAccount.bankAccountNumber,
+    });
+  });
+
+  it('nulls to undefined', async () => {
+    const bankAccount = await seedBankAccount();
+
+    const request: AcBankAccountUpdateRequest = {
+      pathParameters: {
+        bankAccountId: bankAccount.id,
+      },
+      body: {
+        bankAccount: {
+          bankAccountNumber: faker.finance.iban(),
+          name: null,
+          currencyCode: null,
+        },
+      },
+    };
+
+    const responseBody = await testApi(update, request);
+
+    expect(responseBody.bankAccount).toMatchObject({
+      bankAccountNumber: request.body.bankAccount.bankAccountNumber,
+      name: bankAccount.name,
+      currencyCode: bankAccount.currencyCode,
+    });
+  });
+
+  it('optional attributes', async () => {
     const bankAccount = await seedBankAccount();
     const newBankContact = await seedContact();
 
@@ -403,9 +426,10 @@ describe('update-bank-account', () => {
           name: faker.finance.accountName(),
           bankAccountNumber: faker.finance.iban(),
           currencyCode: bankAccount.currencyCode,
-          companyId: bankAccount.companyId,
+          openDate: new Date(2020, 0, 1).toISOString(),
+          closeDate: new Date(2021, 11, 31).toISOString(),
           bankContactId: newBankContact.id,
-          openDate: new Date().toISOString(),
+          companyId: bankAccount.companyId,
         },
       },
     };
@@ -413,21 +437,18 @@ describe('update-bank-account', () => {
     const responseBody = await testApi(update, request);
 
     expect(responseBody.bankAccount).toMatchObject({
+      name: request.body.bankAccount.name,
       bankAccountNumber: request.body.bankAccount.bankAccountNumber,
+      currencyCode: request.body.bankAccount.currencyCode,
+      openDate: '2020-01-01',
+      closeDate: '2021-12-31',
       bankContactId: request.body.bankAccount.bankContactId,
       companyId: request.body.bankAccount.companyId,
-      currencyCode: request.body.bankAccount.currencyCode,
-      name: request.body.bankAccount.name,
       company: {
         id: bankAccount.company.id,
-        branch: bankAccount.company.branch,
-        baseCurrency: bankAccount.company.baseCurrency,
       },
       contact: {
         id: newBankContact.id,
-        name: newBankContact.name,
-        registrationNumber: newBankContact.registrationNumber,
-        registrationCountryCode: newBankContact.registrationCountryCode,
       },
     });
   });
@@ -439,9 +460,7 @@ describe('update-bank-account', () => {
           bankAccountId: WRONG_ID,
         },
         body: {
-          bankAccount: {
-            name: faker.finance.accountName(),
-          },
+          bankAccount: fakeUpdate(),
         },
       });
 
@@ -451,7 +470,7 @@ describe('update-bank-account', () => {
 
   describe('ACL', () => {
     it('agent - success', async () => {
-      const { bankAccount } = await seedBankAccount();
+      const bankAccount = await seedBankAccount();
 
       await testApi(update, {
         requestContext: fakeAgentRequestContext({ permissions: [PermissionType.companiesWrite] }),
@@ -459,9 +478,7 @@ describe('update-bank-account', () => {
           bankAccountId: bankAccount.id,
         },
         body: {
-          bankAccount: {
-            name: faker.finance.accountName(),
-          },
+          bankAccount: fakeUpdate(),
         },
       });
     });
@@ -475,9 +492,7 @@ describe('update-bank-account', () => {
           bankAccountId: bankAccount.id,
         },
         body: {
-          bankAccount: {
-            name: faker.finance.accountName(),
-          },
+          bankAccount: fakeUpdate(),
         },
       });
 
@@ -539,28 +554,23 @@ describe('delete-bank-account', () => {
   });
 });
 
-// private
+// helpers
 
-async function seedBankAccount(
-  {
-    overrides: { bankAccountOverridesAttributes },
-  }: {
-    overrides: { bankAccountOverridesAttributes?: Partial<BankAccount> };
-  } = {
-    overrides: { bankAccountOverridesAttributes: {} },
-  },
-) {
+async function fakeCreate(): Promise<AcBankAccountCreateRequest['body']['bankAccount']> {
   const company = await seedCompany();
   const bankContact = await seedContact();
-  const bankAccount = await seedBankAccount({
+  return {
+    name: faker.finance.accountName(),
+    bankAccountNumber: faker.finance.iban(),
+    currencyCode: 'SGD',
+    openDate: faker.date.past().toDateString(),
     companyId: company.id,
     bankContactId: bankContact.id,
-    ...bankAccountOverridesAttributes,
-  });
+  };
+}
 
+function fakeUpdate(): AcBankAccountUpdateRequest['body']['bankAccount'] {
   return {
-    company,
-    bankContact,
-    bankAccount,
+    name: faker.finance.accountName(),
   };
 }
