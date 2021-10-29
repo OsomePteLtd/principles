@@ -3,12 +3,12 @@ import {
   expectForbidden,
   expectNotFound,
   expectValidationError,
+  expectValidationErrors,
   fakeAgentRequestContext,
   testApi,
   testApiError,
   testApiNoContent,
 } from '@osome/server-toolkit';
-import { format } from 'date-fns';
 import * as faker from 'faker';
 
 import { cleanBankAccountNumber } from '../../services/bankAccount.service';
@@ -101,14 +101,15 @@ describe('get-bank-accounts', () => {
   });
 
   describe('sort', () => {
-    it('closeDate and createdAt', async () => {
+    it('first open by createdAt, then closed by createdAt', async () => {
       const company = await seedCompany();
       const bankContact = await seedContact();
       await seedBankAccount({
         name: 'bankAccountClosed1',
         companyId: company.id,
         bankContactId: bankContact.id,
-        closeDate: format(faker.date.past(), 'yyyy-MM-dd'),
+        openDate: '2000-01-01',
+        closeDate: '2000-01-02',
       });
       await seedBankAccount({
         name: 'bankAccountOpen1',
@@ -119,7 +120,8 @@ describe('get-bank-accounts', () => {
         name: 'bankAccountClosed2',
         companyId: company.id,
         bankContactId: bankContact.id,
-        closeDate: format(faker.date.past(), 'yyyy-MM-dd'),
+        openDate: '2000-01-01',
+        closeDate: '2000-01-02',
       });
       await seedBankAccount({
         name: 'bankAccountOpen2',
@@ -263,7 +265,6 @@ describe('create-bank-account', () => {
           name: faker.finance.accountName(),
           bankAccountNumber,
           currencyCode: 'SGD',
-          openDate: faker.date.past().toDateString(),
           companyId: company.id,
           bankContactId: bankContact.id,
         },
@@ -272,7 +273,7 @@ describe('create-bank-account', () => {
 
     const responseBody = await testApi(create, request, { statusCode: 201 });
 
-    expect(responseBody.bankAccount).toMatchSchema({
+    expect(responseBody.bankAccount).toMatchObject({
       bankAccountNumber: cleanBankAccountNumber(bankAccountNumber),
       bankContactId: request.body.bankAccount.bankContactId,
       companyId: request.body.bankAccount.companyId,
@@ -292,10 +293,40 @@ describe('create-bank-account', () => {
     });
   });
 
+  it('optional attributes', async () => {
+    const company = await seedCompany();
+    const bankContact = await seedContact();
+
+    const request: AcBankAccountCreateRequest = {
+      body: {
+        bankAccount: {
+          name: faker.finance.accountName(),
+          bankAccountNumber: faker.finance.iban(),
+          currencyCode: 'SGD',
+          bankContactId: bankContact.id,
+          companyId: company.id,
+          openDate: new Date(2020, 0, 1).toISOString(),
+          closeDate: new Date(2021, 11, 31).toISOString(),
+        },
+      },
+    };
+
+    const responseBody = await testApi(create, request, { statusCode: 201 });
+
+    expect(responseBody.bankAccount).toMatchObject({
+      name: request.body.bankAccount.name,
+      bankAccountNumber: request.body.bankAccount.bankAccountNumber,
+      currencyCode: request.body.bankAccount.currencyCode,
+      bankContactId: request.body.bankAccount.bankContactId,
+      companyId: request.body.bankAccount.companyId,
+      openDate: '2020-01-01',
+      closeDate: '2021-12-31',
+    });
+  });
+
   it('with empty openDate', async () => {
     const company = await seedCompany();
     const bankContact = await seedContact();
-    const bankAccountNumber = `${faker.finance.iban()} 111-222 33-3`;
 
     await testApi(
       create,
@@ -303,7 +334,7 @@ describe('create-bank-account', () => {
         body: {
           bankAccount: {
             name: faker.finance.accountName(),
-            bankAccountNumber,
+            bankAccountNumber: faker.finance.iban(),
             currencyCode: 'SGD',
             companyId: company.id,
             bankContactId: bankContact.id,
@@ -315,6 +346,28 @@ describe('create-bank-account', () => {
   });
 
   describe('validation', () => {
+    it('basic', async () => {
+      const requestBankAccount = await fakeCreate();
+
+      const response = await testApiError(create, {
+        body: {
+          bankAccount: {
+            ...requestBankAccount,
+            openDate: '2021-10-111',
+            closeDate: '2021-10-222',
+          },
+        },
+      });
+
+      expectValidationErrors(response, {
+        message: "Validation errors: 'openDate' must be date, 'closeDate' must be date",
+        fields: [
+          { name: 'openDate', message: 'must be date' },
+          { name: 'closeDate', message: 'must be date' },
+        ],
+      });
+    });
+
     it('datetime order', async () => {
       const requestBankAccount = await fakeCreate();
 
@@ -328,7 +381,10 @@ describe('create-bank-account', () => {
         },
       });
 
-      expectValidationError(response, 'closeDate should be later than openDate');
+      expectValidationError(
+        response,
+        "Validation errors: 'closeDateAfterOpen' close date should be later than open date",
+      );
     });
   });
 
@@ -388,7 +444,7 @@ describe('update-bank-account', () => {
     });
   });
 
-  it('nulls to undefined', async () => {
+  it('null to undefined for non-nullable fields', async () => {
     const bankAccount = await seedBankAccount();
 
     const request: AcBankAccountUpdateRequest = {
