@@ -398,8 +398,6 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    }
    ```
 
-1. Do not seed common data for multiple tests in `beforeEach`, keep you tests isolated. More info [here](https://thoughtbot.com/blog/lets-not).
-
 1. Use `describe` blocks for each endpoint.
 
 1. A first test in a `describe` block should be a test for a basic scenario. The good name for this test will be `success`.
