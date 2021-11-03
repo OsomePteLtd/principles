@@ -41,13 +41,11 @@ export type BankAccountAttributesNew = Optional<
 export class BankAccount extends Model<BankAccountAttributes, BankAccountAttributesNew> {
   static modelName = 'BankAccount';
 
-  static company: Association;
-  static bankContact: Association;
+  static company: Association<BankAccount, Company>;
+  static bankContact: Association<BankAccount, Contact>;
 
   static associate() {
-    this.company = this.belongsTo(Company, {
-      foreignKey: 'companyId',
-    });
+    this.company = this.belongsTo(Company);
     this.bankContact = this.belongsTo(Contact, {
       as: 'bankContact',
       foreignKey: 'bankContactId',
