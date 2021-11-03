@@ -535,7 +535,7 @@ Tests:
 | hero              | 🍅   | ❓       | ❓                             |
 | jamal             | 🍏   | ❓       | ❓                             |
 | pablo             | 🍏   | 🍏       | 🍏                             |
-| payot             | 🍏   | 🍏       | ❓                             |
+| payot             | 🍏   | 🍏       | 🍏                             |
 | pechkin           | 🍏   | ❓       | ❓                             |
 | scrooge           | 🍏   | ❓       | ❓                             |
 | shiva             | 🍏   | 🍏       | ❓                             |
