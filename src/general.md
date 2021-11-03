@@ -133,6 +133,8 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
 
 ## Tests
 
+1. Do not seed common data, set nocks, or perform other business-logic preparations for multiple tests in `beforeEach`, keep you tests isolated. More info from [thoughtbot](https://thoughtbot.com/blog/lets-not) and [kentcdodds](https://kentcdodds.com/blog/avoid-nesting-when-youre-testing).
+
 1. Do not use `?` in tests, use `!`.
 
    ```typescript
