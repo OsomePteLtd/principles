@@ -522,24 +522,24 @@ Static checks:
 
 Tests:
 
-| Service / Feature | jest | no sinon |
-| ----------------- | ---- | -------- |
-| analytix          | 🍅   | ❓       |
-| auditor           | 🍏   | ❓       |
-| billy             | 🍏   | ❓       |
-| bouncer           | 🍅   | ❓       |
-| core              | 🍅   | 🍅       |
-| dealer            | 🍏   | 🍏       |
-| enrique           | 🍏   | 🍏       |
-| flexflow          | 🍅   | ❓       |
-| hero              | 🍅   | ❓       |
-| jamal             | 🍏   | ❓       |
-| pablo             | 🍏   | 🍏       |
-| payot             | 🍏   | 🍏       |
-| pechkin           | 🍏   | ❓       |
-| scrooge           | 🍏   | ❓       |
-| shiva             | 🍏   | 🍏       |
-| tigerdocs         | 🍅   | ❓       |
+| Service / Feature | jest | no sinon | global check for pending nocks |
+| ----------------- | ---- | -------- | ------------------------------ |
+| analytix          | 🍅   | ❓       | ❓                             |
+| auditor           | 🍏   | ❓       | ❓                             |
+| billy             | 🍏   | ❓       | ❓                             |
+| bouncer           | 🍅   | ❓       | ❓                             |
+| core              | 🍅   | 🍅       | ❓                             |
+| dealer            | 🍏   | 🍏       | ❓                             |
+| enrique           | 🍏   | 🍏       | ❓                             |
+| flexflow          | 🍅   | ❓       | ❓                             |
+| hero              | 🍅   | ❓       | ❓                             |
+| jamal             | 🍏   | ❓       | ❓                             |
+| pablo             | 🍏   | 🍏       | 🍏                             |
+| payot             | 🍏   | 🍏       | ❓                             |
+| pechkin           | 🍏   | ❓       | ❓                             |
+| scrooge           | 🍏   | ❓       | ❓                             |
+| shiva             | 🍏   | 🍏       | ❓                             |
+| tigerdocs         | 🍅   | ❓       | ❓                             |
 
 Infrastructure:
 
