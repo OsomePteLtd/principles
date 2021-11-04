@@ -39,8 +39,6 @@ export type BankAccountAttributesNew = Optional<
 >;
 
 export class BankAccount extends Model<BankAccountAttributes, BankAccountAttributesNew> {
-  static modelName = 'BankAccount';
-
   static company: Association<BankAccount, Company>;
   static bankContact: Association<BankAccount, Contact>;
 
