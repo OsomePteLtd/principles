@@ -430,7 +430,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 1. If you use a stub then you must check a call and/or calls arguments
 
-1. Don't check completed nocks manually, rely on a global check for pending nocks instead.
+1. Don't check completed nocks manually, rely on the global check for pending nocks instead.
 
    ```typescript
    // bad
