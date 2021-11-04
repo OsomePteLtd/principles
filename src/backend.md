@@ -11,7 +11,7 @@
 1. Avoid JSON columns with a few exceptions:
 
    - We are saving raw data from an external service (for example, a Xero Invoice)
-   - We are saving raw data from another internal service (for example, core.company can have a column company.comlianceData to save raw data from Sherlock)
+   - We are saving raw data from another internal service (for example, core.company can have a column company.complianceData to save raw data from Sherlock)
    - We are saving data with unpredictable nesting (for example, something like a form builder)
 
 1. Prefer enums and avoid booleans
@@ -19,7 +19,7 @@
    ```sql
    -- bad
    -- highly likely, we will need a suspended status shortly,
-   -- and we will decide to go with the enum solutiion
+   -- and we will decide to go with the enum solution
    ALTER TABLE subscriptions ADD COLUMN "isActive" BOOLEAN;
 
    -- disaster
@@ -60,7 +60,7 @@
 
    1. Make a PR with removing column usage from your code
    1. Release to Production
-   1. Make a PR with a migration that renames your column `mycolumn` => `mycolumn_dropme`
+   1. Make a PR with a migration that renames your column `myColumn` => `myColumn_dropme`
    1. Release to Production
    1. Wait a couple weeks
    1. Make a PR with completely dropping of the column
@@ -126,7 +126,7 @@ Example: migrate the data that was previously saved to jsonb field and should be
 
 Depending on the complexity of migration there are several ways to perform it:
 
-1. The same method is used for [schema migrations](#migrations)(sequalize migrations). This method is suitable for simple migrations when migration flow is the same for all table rows (there are no complex condition statements etc.)
+1. The same method is used for [schema migrations](#migrations)(sequelize migrations). This method is suitable for simple migrations when migration flow is the same for all table rows (there are no complex condition statements etc.)
 
 1. Migration with SQS message trigger
 
@@ -169,7 +169,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 1. Use 1 file per 1 resource.
 
-1. Exceptions should be handled universally in a middlware (for Koa / Express) or in a wrapper function (for microservices).
+1. Exceptions should be handled universally in a middleware (for Koa / Express) or in a wrapper function (for microservices).
 
    ```typescript
    // bad
@@ -254,7 +254,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 1. Use the following fields for list responses:
 
-   - entiry name in plural (for example `companyUsers`) - for entities
+   - entity name in plural (for example `companyUsers`) - for entities
    - `page` - for a page number, starts from 1
    - `perPage` - for a page size
    - `totalCount` - for a total count of entities found by a query
@@ -321,7 +321,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 1. Use the Event Bus for asynchronous communication between services.
 
-1. Bear in mind that you could receive an outdated message if the first attempt to process it fails. So you can safely use only immutabe data (such `id`) from a message. Always fetch the actual data before using it. There is one exception - you can use a snapshot for filtering events.
+1. Bear in mind that you could receive an outdated message if the first attempt to process it fails. So you can safely use only immutable data (such `id`) from a message. Always fetch the actual data before using it. There is one exception - you can use a snapshot for filtering events.
 
    SDK:
 
@@ -522,24 +522,24 @@ Static checks:
 
 Tests:
 
-| Service / Feature | jest | no sinon | global check for pending nocks |
-| ----------------- | ---- | -------- | ------------------------------ |
-| analytix          | 🍅   | ❓       | ❓                             |
-| auditor           | 🍏   | ❓       | ❓                             |
-| billy             | 🍏   | ❓       | ❓                             |
-| bouncer           | 🍅   | ❓       | ❓                             |
-| core              | 🍅   | 🍅       | ❓                             |
-| dealer            | 🍏   | 🍏       | ❓                             |
-| enrique           | 🍏   | 🍏       | ❓                             |
-| flexflow          | 🍅   | ❓       | ❓                             |
-| hero              | 🍅   | ❓       | ❓                             |
-| jamal             | 🍏   | ❓       | ❓                             |
-| pablo             | 🍏   | 🍏       | 🍏                             |
-| payot             | 🍏   | 🍏       | ❓                             |
-| pechkin           | 🍏   | ❓       | ❓                             |
-| scrooge           | 🍏   | ❓       | ❓                             |
-| shiva             | 🍏   | 🍏       | ❓                             |
-| tigerdocs         | 🍅   | ❓       | ❓                             |
+| Service / Feature | jest | no sinon | global check for pending nocks | disabled network |
+| ----------------- | ---- | -------- | ------------------------------ | ---------------- |
+| analytix          | 🍅   | ❓       | ❓                             | ❓               |
+| auditor           | 🍏   | ❓       | ❓                             | ❓               |
+| billy             | 🍏   | ❓       | ❓                             | ❓               |
+| bouncer           | 🍅   | ❓       | ❓                             | ❓               |
+| core              | 🍅   | 🍅       | ❓                             | ❓               |
+| dealer            | 🍏   | 🍏       | ❓                             | ❓               |
+| enrique           | 🍏   | 🍏       | ❓                             | ❓               |
+| flexflow          | 🍅   | ❓       | ❓                             | ❓               |
+| hero              | 🍅   | ❓       | ❓                             | ❓               |
+| jamal             | 🍏   | ❓       | ❓                             | ❓               |
+| pablo             | 🍏   | 🍏       | 🍏                             | 🍏               |
+| payot             | 🍏   | 🍏       | ❓                             | ❓               |
+| pechkin           | 🍏   | ❓       | ❓                             | ❓               |
+| scrooge           | 🍏   | ❓       | ❓                             | ❓               |
+| shiva             | 🍏   | 🍏       | ❓                             | ❓               |
+| tigerdocs         | 🍅   | ❓       | ❓                             | ❓               |
 
 Infrastructure:
 
