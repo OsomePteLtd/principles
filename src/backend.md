@@ -430,14 +430,16 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 1. If you use a stub then you must check a call and/or calls arguments
 
-1. Don't check completed nocks manually, add a global check for pending nocks instead.
+1. Don't check completed nocks manually, rely on a global check for pending nocks instead.
 
    ```typescript
    // bad
+   // src/jobs/autochargeNotification/autochargeNotificationPeriods.job.test.ts
 
    expect(nockCreateTicket.isDone()).toEqual(true);
 
    // good
+   // src/tests/setupTests.ts
 
    afterEach(() => {
      // eslint-disable-next-line jest/no-standalone-expect
@@ -445,14 +447,16 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    });
    ```
 
-1. Don't setup a nock if you expect it to be uncompleted, disable network for tests instead.
+1. Don't setup a nock if you expect it to be uncompleted, rely on disabled network for tests instead.
 
    ```typescript
    // bad
+   // src/jobs/subscription/subscriptionWithRenewalTickets.job.test.ts
 
    expect(companyUsersNock.isDone()).toEqual(false);
 
    // good
+   // src/tests/setupTests.ts
 
    beforeEach(() => {
      nock.disableNetConnect();
