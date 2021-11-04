@@ -1,0 +1,19 @@
+{
+  "version": "0.1",
+  "language": ["en"],
+  "dictionaries": ["typescript"],
+  "allowCompoundWords": true,
+  "words": [
+    "analytix",
+    "CRUDL",
+    "dropme",
+    "ecommerce",
+    "iban",
+    "kentcdodds",
+    "osome",
+    "payot",
+    "pechkin",
+    "TIMESTAMPTZ",
+    "Xero"
+  ]
+}
