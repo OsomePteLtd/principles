@@ -126,7 +126,7 @@ Example: migrate the data that was previously saved to jsonb field and should be
 
 Depending on the complexity of migration there are several ways to perform it:
 
-1. The same method is used for [schema migrations](#migrations)(sequalize migrations). This method is suitable for simple migrations when migration flow is the same for all table rows (there are no complex condition statements etc.)
+1. The same method is used for [schema migrations](#migrations)(sequelize migrations). This method is suitable for simple migrations when migration flow is the same for all table rows (there are no complex condition statements etc.)
 
 1. Migration with SQS message trigger
 
