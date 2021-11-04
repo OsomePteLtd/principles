@@ -430,6 +430,39 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 1. If you use a stub then you must check a call and/or calls arguments
 
+1. Don't check completed nocks manually, rely on the global check for pending nocks instead.
+
+   ```typescript
+   // bad
+   // src/jobs/autochargeNotification/autochargeNotificationPeriods.job.test.ts
+
+   expect(nockCreateTicket.isDone()).toEqual(true);
+
+   // good
+   // src/tests/setupTests.ts
+
+   afterEach(() => {
+     // eslint-disable-next-line jest/no-standalone-expect
+     expect(nock.pendingMocks()).toEqual([]);
+   });
+   ```
+
+1. Don't setup a nock if you expect it to be uncompleted, rely on disabled network for tests instead.
+
+   ```typescript
+   // bad
+   // src/jobs/subscription/subscriptionWithRenewalTickets.job.test.ts
+
+   expect(companyUsersNock.isDone()).toEqual(false);
+
+   // good
+   // src/tests/setupTests.ts
+
+   beforeEach(() => {
+     nock.disableNetConnect();
+   });
+   ```
+
 ## Microservices
 
 1. Don't post messages to other service SQS queues. Consider using 1) SNS event if the current service does not want to know about what happens with the event and who in fact uses it, 2) direct Lambda invocation if the service wants to know what happens and what is the result, 3) async Lambda invocation if the service knows what happens, but does not want to know the result, or can not afford waiting for the result.
