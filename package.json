@@ -5,9 +5,12 @@
   "private": true,
   "license": "Proprietary",
   "scripts": {
-    "static-checks": "prettier --check '**/*.md'"
+    "static-checks": "npm run prettier && npm run spell",
+    "prettier": "prettier --check 'src/**/*'",
+    "spell": "cspell --no-progress 'src/**/*'"
   },
   "devDependencies": {
+    "cspell": "^5.12.5",
     "prettier": "^2.2.1"
   }
 }
