@@ -188,3 +188,53 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    // good
    const failedAuthorizationPayload = 'authorization_failed';
    ```
+
+## Repository Settings
+
+### Merge button
+
+[ ] Allow merge commits
+
+[x] Allow squash merging
+
+[ ] Allow rebase merging
+
+[x] Allow auto-merge
+
+[x] Automatically delete head branches
+
+### Branch protection
+
+[x] Require a pull request before merging
+
+[x] Require approvals (1)
+
+[ ] Dismiss stale pull request approvals when new commits are pushed
+
+[x] Require review from Code Owners
+
+[ ] Restrict who can dismiss pull request reviews
+
+[x] Require status checks to pass before merging
+
+[x] Require branches to be up to date before merging
+
+Status checks that are required:
+
+- Static checks
+
+- Unit tests
+
+[ ] Require conversation resolution before merging
+
+[ ] Require signed commits
+
+[x] Require linear history
+
+[ ] Include administrators
+
+[ ] Restrict who can push to matching branches
+
+[ ] Allow force pushes
+
+[ ] Allow deletions
