@@ -503,7 +503,7 @@ Main:
 | enrique           | 🍅     | 🍏               | ❓           |
 | flexflow          | 🍅     | 🍅               | ❓           |
 | hero              | 🍏     | 🍏               | ❓           |
-| jamal             | 🍅     | 🍏               | ❓           |
+| jamal             | 🍅     | 🍏               | 🍏           |
 | pablo             | 🍏     | 🍏               | 🍏           |
 | payot             | 🍏     | 🍏               | 🍏           |
 | pechkin           | 🍅     | 🍏               | ❓           |
