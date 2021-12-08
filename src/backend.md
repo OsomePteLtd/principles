@@ -597,21 +597,21 @@ Infrastructure:
 
 Other:
 
-| Service / Feature | no parameter store SDK | standard CODEOWNERS | dependabot with auto-merge | migration check |
-| ----------------- | ---------------------- | ------------------- | -------------------------- | --------------- |
-| analytix          | ❓                     | ❓                  | ❓                         | ❓              |
-| auditor           | ❓                     | ❓                  | ❓                         | ❓              |
-| billy             | 🍏                     | ❓                  | ❓                         | ❓              |
-| bouncer           | ❓                     | ❓                  | ❓                         | ❓              |
-| core              | ❓                     | 🍅                  | 🍅                         | ❓              |
-| dealer            | 🍏                     | 🍏                  | 🍏                         | ❓              |
-| enrique           | 🍏                     | 🍏                  | 🍏                         | ❓              |
-| flexflow          | ❓                     | ❓                  | ❓                         | ❓              |
-| hero              | ❓                     | ❓                  | ❓                         | ❓              |
-| jamal             | 🍏                     | ❓                  | ❓                         | ❓              |
-| pablo             | 🍏                     | 🍏                  | 🍏                         | 🍏              |
-| payot             | ❓                     | ❓                  | ❓                         | ❓              |
-| pechkin           | ❓                     | ❓                  | ❓                         | ❓              |
-| scrooge           | ❓                     | ❓                  | ❓                         | ❓              |
-| shiva             | 🍏                     | 🍏                  | 🍏                         | 🍏              |
-| tigerdocs         | ❓                     | ❓                  | ❓                         | ❓              |
+| Service / Feature | no parameter store SDK | standard CODEOWNERS | dependabot with auto-merge | migration check | diff check |
+| ----------------- | ---------------------- | ------------------- | -------------------------- | --------------- | ---------- |
+| analytix          | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
+| auditor           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
+| billy             | 🍏                     | ❓                  | ❓                         | ❓              | ❓         |
+| bouncer           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
+| core              | ❓                     | 🍅                  | 🍅                         | ❓              | ❓         |
+| dealer            | 🍏                     | 🍏                  | 🍏                         | ❓              | ❓         |
+| enrique           | 🍏                     | 🍏                  | 🍏                         | ❓              | ❓         |
+| flexflow          | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
+| hero              | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
+| jamal             | 🍏                     | ❓                  | ❓                         | ❓              | ❓         |
+| pablo             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
+| payot             | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
+| pechkin           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
+| scrooge           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
+| shiva             | 🍏                     | 🍏                  | 🍏                         | 🍏              | ❓         |
+| tigerdocs         | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
