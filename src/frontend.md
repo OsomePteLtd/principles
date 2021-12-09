@@ -38,6 +38,25 @@
 
 1. When you touch `.js` file, convert it to `.ts`. But if you really need a hotfix or your PR already includes refactoring and additional refactoring can make your PR too swollen, you can add label `hotfix` to your PR, but don't abuse this label.
 
+## SDK
+
+1. Avoid `as` keyword for importing types from sdk
+
+good ✅
+
+```typescript
+import { Ticket } from '@osome/client-sdk';
+import * as sdk from '@osome/client-sdk';
+```
+
+bad ❌
+
+```typescript
+import { Ticket as SomeRandomName } from '@osome/client-sdk';
+import { Ticket as KekSdk } from '@osome/client-sdk';
+import { Ticket as TicketSdk } from '@osome/client-sdk';
+```
+
 ## Unit tests
 
 1. Unit tests should be really "unit". Tend to extract smaller components, hooks and functions for testing specific logic instead of testing a big one.
