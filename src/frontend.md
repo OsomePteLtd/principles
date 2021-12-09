@@ -40,13 +40,13 @@
 
 ## SDK
 
-1. Use convention for imports from sdk when you import with keyword 'as'.
+1. Avoid `as` keyword for importing types from sdk
 
 good ✅
 
 ```typescript
 import { Ticket } from '@osome/client-sdk';
-import { Ticket as TicketSdk } from '@osome/client-sdk';
+import * as sdk from '@osome/client-sdk';
 ```
 
 bad ❌
@@ -54,6 +54,7 @@ bad ❌
 ```typescript
 import { Ticket as SomeRandomName } from '@osome/client-sdk';
 import { Ticket as KekSdk } from '@osome/client-sdk';
+import { Ticket as TicketSdk } from '@osome/client-sdk';
 ```
 
 ## Unit tests
