@@ -7,7 +7,7 @@ src/
   components/ (can be dumb and smart)
     task/
       TaskTable/
-        [no children]
+        [no nested directories]
         TaskTable.ts
         TaskTable.test.ts
         TaskTableBadge.ts (child component)
