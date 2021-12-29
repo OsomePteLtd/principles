@@ -1,5 +1,25 @@
 # Frontend Development Principles
 
+## Project structure
+
+```
+src/
+  components/ (can be dumb and smart)
+    task/
+      TaskTable/
+        [no nested directories]
+        TaskTable.ts
+        TaskTable.test.ts
+        TaskTableBadge.ts (child component)
+        TaskTable.styled.ts
+    shared/
+      SomeNonEntityComponent/
+  pages/
+    TaskList/
+      TaskList.page.ts
+      TaskList.test.page.ts
+```
+
 ## Typescript
 
 1. Tend to write sound typings. It means you should never get into a state when your data mismatches your typings.
