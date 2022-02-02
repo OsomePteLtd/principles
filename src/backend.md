@@ -509,7 +509,7 @@ Main:
 | pechkin           | platform             | 🍅     | 🍏               | ❓           |
 | scrooge           | accounting           | 🍅     | 🍏               | ❓           |
 | shiva             | e-commerce           | 🍏     | 🍏               | 🍏           |
-| tigerdocs         | platform             | 🍅     | 🍅               | ❓           |
+| tigerdocs         | cust-x               | 🍅     | 🍅               | ❓           |
 
 Toolkit:
 
