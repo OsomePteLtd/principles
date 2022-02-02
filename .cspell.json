@@ -5,7 +5,8 @@
   "allowCompoundWords": true,
   "words": [
     "analytix",
-    "CRUDL",
+    "crudl",
+    "cust",
     "dropme",
     "ecommerce",
     "iban",
@@ -13,7 +14,7 @@
     "osome",
     "payot",
     "pechkin",
-    "TIMESTAMPTZ",
-    "Xero"
+    "timestamptz",
+    "xero"
   ]
 }

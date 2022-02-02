@@ -505,24 +505,24 @@ Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
 
 Main:
 
-| Service / Feature | TS 4.4 | relative imports | typed models |
-| ----------------- | ------ | ---------------- | ------------ |
-| analytix          | 🍅     | 🍏               | 🍅           |
-| auditor           | 🍅     | 🍏               | 🍅           |
-| billy             | 🍏     | 🍏               | 🍏           |
-| bouncer           | 🍅     | 🍏               | ❓           |
-| core              | 🍅     | 🍅               | 🍅           |
-| dealer            | 🍏     | 🍏               | 🍏           |
-| enrique           | 🍅     | 🍏               | ❓           |
-| flexflow          | 🍅     | 🍅               | ❓           |
-| hero              | 🍏     | 🍏               | ❓           |
-| jamal             | 🍅     | 🍏               | 🍏           |
-| pablo             | 🍏     | 🍏               | 🍏           |
-| payot             | 🍏     | 🍏               | 🍏           |
-| pechkin           | 🍅     | 🍏               | ❓           |
-| scrooge           | 🍅     | 🍏               | ❓           |
-| shiva             | 🍏     | 🍏               | 🍏           |
-| tigerdocs         | 🍅     | 🍅               | ❓           |
+| Service / Feature | Owner                | TS 4.4 | relative imports | typed models |
+| ----------------- | -------------------- | ------ | ---------------- | ------------ |
+| analytix          | platform             | 🍅     | 🍏               | 🍅           |
+| auditor           | platform             | 🍅     | 🍏               | 🍅           |
+| billy             | billing              | 🍏     | 🍏               | 🍏           |
+| bouncer           | platform             | 🍅     | 🍏               | ❓           |
+| core              | platform             | 🍅     | 🍅               | 🍅           |
+| dealer            | cust-x-sales         | 🍏     | 🍏               | 🍏           |
+| enrique           | documents-processing | 🍅     | 🍏               | ❓           |
+| flexflow          | platform             | 🍅     | 🍅               | ❓           |
+| hero              | accounting           | 🍏     | 🍏               | ❓           |
+| jamal             | documents-processing | 🍅     | 🍏               | 🍏           |
+| pablo             | factory              | 🍏     | 🍏               | 🍏           |
+| payot             | billing              | 🍏     | 🍏               | 🍏           |
+| pechkin           | platform             | 🍅     | 🍏               | ❓           |
+| scrooge           | accounting           | 🍅     | 🍏               | ❓           |
+| shiva             | e-commerce           | 🍏     | 🍏               | 🍏           |
+| tigerdocs         | cust-x               | 🍅     | 🍅               | ❓           |
 
 Toolkit:
 
