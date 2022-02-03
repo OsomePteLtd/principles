@@ -499,7 +499,7 @@ Main:
 | billy             | billing              | 🍏     | 🍏               | 🍏           |
 | bouncer           | platform             | 🍅     | 🍏               | ❓           |
 | core              | platform             | 🍅     | 🍅               | 🍅           |
-| dealer            | cust-x-sales         | 🍏     | 🍏               | 🍏           |
+| dealer            | agent-x-sales        | 🍏     | 🍏               | 🍏           |
 | enrique           | documents-processing | 🍅     | 🍏               | ❓           |
 | flexflow          | platform             | 🍅     | 🍅               | ❓           |
 | hero              | accounting           | 🍏     | 🍏               | ❓           |
@@ -509,7 +509,7 @@ Main:
 | pechkin           | platform             | 🍅     | 🍏               | ❓           |
 | scrooge           | accounting           | 🍅     | 🍏               | ❓           |
 | shiva             | e-commerce           | 🍏     | 🍏               | 🍏           |
-| tigerdocs         | cust-x               | 🍅     | 🍅               | ❓           |
+| tigerdocs         | agent-x              | 🍅     | 🍅               | ❓           |
 
 Toolkit:
 
