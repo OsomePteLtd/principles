@@ -321,7 +321,11 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 1. Use the Event Bus for asynchronous communication between services.
 
-1. Bear in mind that you could receive an outdated message if the first attempt to process it fails. So you can safely use only immutable data (such `id`) from a message. Always fetch the actual data before using it. There is one exception - you can use a snapshot for filtering events.
+1. Bear in mind that you could receive an outdated message. So you can safely use only immutable data (such `id`) from a message. Always fetch actual data before using it.
+
+1. There is one exception - you can use `snapshot` and `previousVersion` to make a decision about fast exit from an event handler (before fetching actual data, e.g. you may need only RAF documents and should ignore other types of documents).
+
+1. Don't use as a `snapshot` a full entity model (e.g. `Document`), use a special snapshot-model only with fields that are necessary for event filtering (e.g. `DocumentSnapshot`).
 
    SDK:
 
@@ -337,7 +341,16 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    SnsDocumentUpdated !{
      document: !{
        id: i,
-       snapshot: Document,
+     },
+   }
+
+   // also good
+
+   SnsDocumentUpdated !{
+     document: !{
+       id: i,
+       snapshot: DocumentSnapshot,
+       previousVersion: DocumentSnapshot,
      },
    }
    ```
