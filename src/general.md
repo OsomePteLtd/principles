@@ -169,6 +169,18 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    ]);
    ```
 
+1. If test file for controller become large (> 1500 rows) split it into separate files by describe blocks and place into tests folder
+```
+- controllers
+  - bankAccount
+    - bankAccount.controller.ts
+    - tests
+      - getBankAccounts.controller.test.ts
+      - getBankAccount.controller.test.ts
+      - createBankAccount.controller.test.ts
+      - updateBankAccount.controller.test.ts
+```
+
 ## Comments
 
 1. Use comments to add context or information that is not obvious from the code already. Don't use comments to explain the code itself - code (through proper naming) should be self-explanatory.
