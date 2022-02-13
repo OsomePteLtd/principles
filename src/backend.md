@@ -163,6 +163,21 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    });
    ```
 
+1. Use typed values ofr `attr` option for Sequelize requests. It will help to avoid misprints in field names:
+  ```typescript
+  // bad
+
+  const users = await User.findAll({
+    attrs: ['id', 'name', 'sex']
+  });
+
+  // good
+
+  const users = await User.findAll({
+    atts: <Array<keyof UserAttributes>>['id', 'name', 'sex']
+  });
+```
+
 ## Controllers
 
 1. Use the [Lambda Controller Sample](https://github.com/OsomePteLtd/principles/blob/main/src/samples/lambda/controllers/bankAccount.controller.ts) to create a CRUDL scaffolding controller.
