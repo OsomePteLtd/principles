@@ -170,6 +170,7 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    ```
 
 1. If test file for controller becomes large (> 1500 rows) split it into separate files by `describe` blocks and place into tests folder
+
 ```
 - controllers
   - bankAccount
