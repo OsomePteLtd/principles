@@ -165,7 +165,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 1. Use typed values of `attributes` option for Sequelize requests. It will help to avoid misprints in field names:
 
-```typescript
+````typescript
 // bad
 
 const users = await User.findAll({
@@ -203,7 +203,7 @@ const users = await User.findAll({
        next(err);
      }
    }
-   ```
+````
 
 1. Validate requests by schemas.
 
