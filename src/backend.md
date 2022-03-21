@@ -628,3 +628,27 @@ Other:
 | scrooge           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | shiva             | 🍏                     | 🍏                  | 🍏                         | 🍏              | ❓         |
 | tigerdocs         | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
+
+## Idempotency
+
+Idempotency at the database level:
+
+- API:
+
+  - POST method accepts an additional property `uniqueKey`, e.g. `POST /tickets ticket: { "uniqueKey": { "contractId": 101, "subscriptionId": 201 }}`
+  - the endpoint returns status code `409 Conflict` in case of already existing record with the same `uniqueKey`
+
+- database:
+
+  - add `uniqueKey:JSONB` column with a unique index;
+
+- controller:
+
+  - do not try to query manually for existing records, rely on the database/ORM instead
+  - catch `UniqueConstraintError`, check the fields, and return `409 Conflict` if the fields property includes `uniqueKey`
+  - no need to search for and then return the existing record
+
+- consumer:
+
+  - treat `409` status code as an idempotency error
+  - usually it means that we can do nothing and return early
