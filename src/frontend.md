@@ -15,9 +15,10 @@ src/
     shared/
       SomeNonEntityComponent/
   pages/
-    TaskList/
-      TaskList.page.ts
-      TaskList.test.page.ts
+    task/
+      TaskList/
+        TaskList.page.ts
+        TaskList.test.page.ts
 ```
 
 ## Typescript
