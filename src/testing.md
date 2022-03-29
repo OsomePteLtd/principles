@@ -54,7 +54,7 @@ good ✅
 page.locator(`[aria-label="ticket-assignee"]:text("Test")`)
 ```
 
-1. Avoid using test `data` attributes as much as possible. Use it only if you can not the selectors described above. But if you have to use `data` attributes, use `data-testid` attribute.
+1. Avoid using test `data` attributes as much as possible. Use it only if you can not use the selectors described above. But if you have to use `data` attributes, please, use `data-testid` attribute.
 
 bad ❌
 ```
