@@ -15,6 +15,7 @@
     "payot",
     "pechkin",
     "timestamptz",
-    "xero"
+    "xero",
+    "testid"
   ]
 }
