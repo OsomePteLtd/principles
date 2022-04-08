@@ -5,20 +5,20 @@
 ```
 src/
   components/ (can be dumb and smart)
-    task/
-      TaskTable/
+    bankAccount/
+      BankAccountTable/
         [no nested directories]
-        TaskTable.ts
-        TaskTable.test.ts
-        TaskTableBadge.ts (child component)
-        TaskTable.styled.ts
+        BankAccountTable.ts
+        BankAccountTable.test.ts
+        BankAccountTableBadge.ts (child component)
+        BankAccountTable.styled.ts
     shared/
       SomeNonEntityComponent/
   pages/
-    task/
-      TaskList/
-        TaskList.page.ts
-        TaskList.test.page.ts
+    bankAccount/
+      BankAccountList/
+        BankAccountList.page.ts
+        BankAccountList.test.page.ts
 ```
 
 ## Typescript
