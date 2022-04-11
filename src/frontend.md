@@ -19,7 +19,7 @@ src/
       BankAccountList/
         BankAccountList.page.ts
         BankAccountList.test.page.ts
-  quieries/
+  queries/
     bankAccount/
       useGetBankAccountQuery.ts
       usePostBankAccountQuery.ts
