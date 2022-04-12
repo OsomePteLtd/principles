@@ -21,8 +21,7 @@ src/
         BankAccountList.test.page.ts
   queries/
     bankAccount/
-      useGetBankAccountQuery.ts
-      usePostBankAccountQuery.ts
+      bankAccount.query.ts
   services/
     [can be splitted into several files]
     bankAccount/
