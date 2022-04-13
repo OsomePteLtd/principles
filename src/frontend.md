@@ -19,6 +19,15 @@ src/
       BankAccountList/
         BankAccountList.page.ts
         BankAccountList.test.page.ts
+  queries/
+    bankAccount.query.ts
+  services/
+    [can be splitted into several files]
+    bankAccount/
+      bankAccount.service.ts
+      bankAccountJournal.service.ts
+    [or single file]
+    auditLog.service.ts
 ```
 
 ## Typescript
