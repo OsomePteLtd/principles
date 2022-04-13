@@ -20,8 +20,7 @@ src/
         BankAccountList.page.ts
         BankAccountList.test.page.ts
   queries/
-    bankAccount/
-      bankAccount.query.ts
+    bankAccount.query.ts
   services/
     [can be splitted into several files]
     bankAccount/
