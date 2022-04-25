@@ -663,3 +663,7 @@ Environments:
 | scrooge           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | shiva             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | tigerdocs         | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
+
+## Idempotency
+
+1. Idempotency key template is `fullModelName-${id}-actionName`, e.g. `biContract-123-paymentDeclined`.
