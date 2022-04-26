@@ -16,7 +16,7 @@
    1. we split one service into several smaller ones, which will still belong to the same team
    1. we don't clearly understand the scope of the service
 
-1. If any given solution involves less services, ceteris paribus, it's a better solution than the others. For example, we need to update some record in Service B when a record in Service A was updated, and we know that no other services are involved in this scenario.
+1. If any given solution involves less services, ceteris paribus, it's a better solution than the others. For example, we need to update some record in Service B when a record in Service A was updated, and Service A knows that records in Service B need to be updated.
 
    ```
    // bad (two services)
