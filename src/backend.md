@@ -56,6 +56,10 @@
 
 ## Migrations
 
+1. Add `SET lock_timeout TO '2s';` to each migration:
+
+   Migrations usually obtain exclusive lock on the table, and when applied alongside already running transactions, can drive whole database into deadlock.
+
 1. If you want to drop a column:
 
    1. Make a PR with removing column usage from your code
@@ -71,8 +75,11 @@
 
    - Make a migration with a commented out body
    - Run the query manually from an SQL client
+   - Consider using `CONCURRENTLY` keyword
 
    You should do it because all migrations are running in a single DB transaction. Your huge update will lock many DB objects. And Production will be down for the entire duration of the migration.
+   Postgres supports some operations with `CONCURRENTLY` keyword, for example creating indexes. In this case a long migration will not affect production.
+   However these operations do not work inside transactions.
 
 1. Leave `down` migrations empty. They are not actually used, so it is not worth wasting time on them.
 
