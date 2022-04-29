@@ -87,7 +87,16 @@ import { Ticket as KekSdk } from '@osome/client-sdk';
 import { Ticket as TicketSdk } from '@osome/client-sdk';
 ```
 
-## Unit tests
+## Tests
+
+Related articles:
+
+- [Static vs Unit vs Integration vs E2E Testing for Frontend Apps](https://kentcdodds.com/blog/static-vs-unit-vs-integration-vs-e2e-tests)
+- [The Testing Trophy and Testing Classifications](https://kentcdodds.com/blog/the-testing-trophy-and-testing-classifications)
+- [Testing Implementation Details](https://kentcdodds.com/blog/testing-implementation-details)
+- [Common mistakes with React Testing Library](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
+- [Making your UI tests resilient to change](https://kentcdodds.com/blog/making-your-ui-tests-resilient-to-change)
+- [Write fewer, longer tests](https://kentcdodds.com/blog/write-fewer-longer-tests)
 
 1. Unit tests should be really "unit". Tend to extract smaller components, hooks and functions for testing specific logic instead of testing a big one.
 
