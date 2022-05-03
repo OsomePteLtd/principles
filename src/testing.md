@@ -11,6 +11,10 @@ Our testing approach is not a ▲ "testing pyramid" but a 🏆 "testing trophy".
 
 ![The Testing Trophy](https://pbs.twimg.com/media/DVUoM94VQAAzuws?format=jpg&name=900x900)
 
+## Process
+
+1. E2E tests can be added after the feature has been released
+
 ## Playwright selectors
 
 1. Tend to avoid any complex selectors to increase the resilience of tests.
