@@ -1,5 +1,17 @@
 # General Testing Principles
 
+Related articles:
+
+- [Write tests. Not too many. Mostly integration.](https://kentcdodds.com/blog/write-tests)
+- [The Testing Trophy and Testing Classifications](https://kentcdodds.com/blog/the-testing-trophy-and-testing-classifications)
+- [Static vs Unit vs Integration vs E2E Testing for Frontend Apps](https://kentcdodds.com/blog/static-vs-unit-vs-integration-vs-e2e-tests)
+- [Write fewer, longer tests](https://kentcdodds.com/blog/write-fewer-longer-tests)
+- [Avoid Nesting when you're Testing](https://kentcdodds.com/blog/avoid-nesting-when-youre-testing)
+- [Common Testing Mistakes](https://kentcdodds.com/blog/common-testing-mistakes)
+- [UI Testing Myths](https://kentcdodds.com/blog/ui-testing-myths)
+- [The Merits of Mocking](https://kentcdodds.com/blog/the-merits-of-mocking)
+- [Why you've been bad about testing](https://kentcdodds.com/blog/why-youve-been-bad-about-testing)
+
 ## Strategy
 
 Our testing approach is not a ▲ "testing pyramid" but a 🏆 "testing trophy". That means:
