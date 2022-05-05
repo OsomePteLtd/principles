@@ -483,6 +483,22 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    });
    ```
 
+1. Don't forget to restore mocked function implementations before each test.
+
+   ```typescript
+   // bad
+
+   beforeEach(() => {
+     jest.resetAllMocks(); // Does NOT restore original implementations
+   });
+
+   // good
+
+   beforeEach(() => {
+     jest.restoreAllMocks();
+   });
+   ```
+
 ## Microservices
 
 1. Don't post messages to other service SQS queues. Consider using 1) SNS event if the current service does not want to know about what happens with the event and who in fact uses it, 2) direct Lambda invocation if the service wants to know what happens and what is the result, 3) async Lambda invocation if the service knows what happens, but does not want to know the result, or can not afford waiting for the result.
@@ -677,3 +693,7 @@ Environments:
 | shiva             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | skyler            | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  |
 | tigerdocs         | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
+
+## Idempotency
+
+1. Idempotency key template is `fullModelName-${id}-actionName`, e.g. `biContract-123-paymentDeclined`.
