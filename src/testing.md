@@ -27,6 +27,10 @@ Our testing approach is not a ▲ "testing pyramid" but a 🏆 "testing trophy".
 
 1. E2E tests can be added after the feature has been released
 
+## Set Up and Tear Down
+
+1. There is no need to implement tear-down blocks or delete anywhere entities created in the tests.
+
 ## Playwright selectors
 
 1. Tend to avoid any complex selectors to increase the resilience of tests.
