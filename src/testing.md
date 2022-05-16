@@ -50,6 +50,8 @@ Examples of good E2E test candidates:
 
 ## Playwright selectors
 
+Based on the [priorities](https://testing-library.com/docs/queries/about/#priority) from testing-library.
+
 1. Tend to avoid any complex selectors to increase the resilience of tests.
 
 bad ❌
