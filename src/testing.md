@@ -28,6 +28,7 @@ Examples of good E2E test candidates:
 - sign up / log in
 - payment
 - core features like "create ticket", "send messages"
+- micro frontends smoke tests
 
 ## Process
 
