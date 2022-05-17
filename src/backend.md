@@ -505,13 +505,11 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 ## Microservices
 
+1. Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
+
 1. Don't post messages to other service SQS queues. Consider using 1) SNS event if the current service does not want to know about what happens with the event and who in fact uses it, 2) direct Lambda invocation if the service wants to know what happens and what is the result, 3) async Lambda invocation if the service knows what happens, but does not want to know the result, or can not afford waiting for the result.
 
    By the moment, there are usages like this, but they are deprecated.
-
-### Canonical Microservice
-
-Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
 
 ### Timeouts
 
@@ -528,9 +526,9 @@ Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
 
   - if you need some other value of timeout please add a comment why you need it.
 
-### Best Practices Checklist
+## Best Practices Checklist
 
-Main:
+### Main
 
 | Service / Feature | Owner                | TS 4.4 | relative imports | typed models |
 | ----------------- | -------------------- | ------ | ---------------- | ------------ |
@@ -543,6 +541,7 @@ Main:
 | dealer            | agent-x-sales        | 🍏     | 🍏               | 🍏           |
 | enrique           | documents-processing | 🍅     | 🍏               | ❓           |
 | flexflow          | platform             | 🍅     | 🍅               | ❓           |
+| hermes            | platform             | ❓     | ❓               | ❓           |
 | hero              | accounting           | 🍏     | 🍏               | ❓           |
 | invoker           | invoice-n-payments   | 🍏     | 🍏               | 🍏           |
 | jamal             | documents-processing | 🍅     | 🍏               | 🍏           |
@@ -554,7 +553,7 @@ Main:
 | skyler            | reporting            | 🍏     | 🍏               | 🍏           |
 | tigerdocs         | agent-x              | 🍅     | 🍅               | ❓           |
 
-Toolkit:
+### Toolkit
 
 | Service / Feature | wrappers | logger | ACL | lambda | eventBus | migrate | retry DLQ | sentry |
 | ----------------- | -------- | ------ | --- | ------ | -------- | ------- | --------- | ------ |
@@ -567,6 +566,7 @@ Toolkit:
 | dealer            | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍅        | 🍅     |
 | enrique           | ❓       | ❓     | 🍏  | 🍏     | 🍏       | 🍏      | 🍅        | ❓     |
 | flexflow          | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     |
+| hermes            | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     |
 | hero              | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
 | invoker           | 🍏       | 🍏     | 🍏  | 🍏     | ❓       | ❓      | ❓        | ❓     |
 | jamal             | 🍅       | 🍏     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
@@ -578,7 +578,7 @@ Toolkit:
 | skyler            | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | ❓      | 🍏        | 🍏     |
 | tigerdocs         | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     |
 
-Static checks:
+### Static checks
 
 | Service / Feature | eslint config | depcheck | unused-exports | type-check | type-coverage | build | separate steps in CI | editorconfig | spell check |
 | ----------------- | ------------- | -------- | -------------- | ---------- | ------------- | ----- | -------------------- | ------------ | ----------- |
@@ -591,6 +591,7 @@ Static checks:
 | dealer            | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | enrique           | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | flexflow          | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
+| hermes            | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
 | hero              | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
 | invoker           | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | jamal             | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
@@ -602,7 +603,7 @@ Static checks:
 | skyler            | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | tigerdocs         | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
 
-Tests:
+### Tests
 
 | Service / Feature | jest | no sinon | global check for pending nocks | disabled network | anti flaky |
 | ----------------- | ---- | -------- | ------------------------------ | ---------------- | ---------- |
@@ -615,6 +616,7 @@ Tests:
 | dealer            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | enrique           | 🍏   | 🍏       | ❓                             | ❓               | 🍅         |
 | flexflow          | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
+| hermes            | ❓   | ❓       | ❓                             | ❓               | ❓         |
 | hero              | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
 | invoker           | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | jamal             | 🍏   | 🍅       | 🍅                             | 🍏               | 🍅         |
@@ -626,7 +628,7 @@ Tests:
 | skyler            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | tigerdocs         | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
 
-Infrastructure:
+### Infrastructure
 
 | Service / Feature | own database instance | LTS Node | TS SLS config | SLS separate handlers | canary |
 | ----------------- | --------------------- | -------- | ------------- | --------------------- | ------ |
@@ -639,6 +641,7 @@ Infrastructure:
 | dealer            | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
 | enrique           | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
 | flexflow          | ❓                    | 🍅       | ❓            | ❓                    | 🍅     |
+| hermes            | ❓                    | ❓       | ❓            | ❓                    | ❓     |
 | hero              | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
 | invoker           | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
 | jamal             | 🍏                    | 🍏       | 🍏            | 🍅                    | 🍏     |
@@ -650,7 +653,7 @@ Infrastructure:
 | skyler            | 🍅                    | 🍏       | 🍏            | 🍏                    | 🍏     |
 | tigerdocs         | ❓                    | 🍏       | ❓            | ❓                    | 🍅     |
 
-Other:
+### Other
 
 | Service / Feature | no parameter store SDK | standard CODEOWNERS | dependabot with auto-merge | migration check | diff check |
 | ----------------- | ---------------------- | ------------------- | -------------------------- | --------------- | ---------- |
@@ -663,6 +666,7 @@ Other:
 | dealer            | 🍏                     | 🍏                  | 🍏                         | ❓              | 🍏         |
 | enrique           | 🍏                     | 🍏                  | 🍏                         | ❓              | ❓         |
 | flexflow          | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
+| hermes            | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | hero              | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | invoker           | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | jamal             | 🍏                     | ❓                  | ❓                         | ❓              | ❓         |
@@ -674,7 +678,7 @@ Other:
 | skyler            | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | tigerdocs         | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 
-Environments:
+### Environments
 
 | Service / Feature | Production | Stage | T1  | T2  | T3  | T4  | T5  | T6  | T7  | T8  | T9  |
 | ----------------- | ---------- | ----- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -687,6 +691,7 @@ Environments:
 | dealer            | 🍏         | 🍏    | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  |
 | enrique           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | flexflow          | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
+| hermes            | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | hero              | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | invoker           | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  |
 | jamal             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
