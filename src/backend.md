@@ -4,9 +4,9 @@
 
 1. Use foreign key constraints for foreign keys.
 
-1. Use `TIMESTAMP WITH TIME ZONE` (`TIMESTAMPTZ`) for timestamps. Name of such columns should end with `At` (example – `resolvedAt`).
+1. Use `TIMESTAMP WITH TIME ZONE` (`TIMESTAMPTZ`) for timestamps. Name of such column should end with `At` (example – `resolvedAt`).
 
-1. Use `DATE` (not TIMESTAMP!) for dates. Name of such columns should end with `Date` (example – `incorporationDate`).
+1. Use `DATE` (not TIMESTAMP!) for dates. Name of such column should end with `Date` (example – `incorporationDate`).
 
 1. Avoid JSON columns with a few exceptions:
 
