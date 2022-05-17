@@ -6,7 +6,11 @@
 
 1. Use `TIMESTAMP WITH TIME ZONE` (`TIMESTAMPTZ`) for timestamps.
 
+1. Name of a timestamp column should end with `At` (example – `resolvedAt`).
+
 1. Use `DATE` (not TIMESTAMP!) for dates.
+
+1. Name of a date column should end with `Date` (example – `incorporationDate`).
 
 1. Avoid JSON columns with a few exceptions:
 
