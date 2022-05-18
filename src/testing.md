@@ -44,7 +44,7 @@ Examples of good E2E test candidates:
 
    - DRY very common steps like "log in". The signed-in state can be saved using the built-in features of the testing tool. For example, playwrite supports [storageState](https://playwright.dev/docs/test-auth#reuse-signed-in-state).
    - DRY common steps for some pages. It can be a sign of too many small tests instead of [fewer longer tests](https://kentcdodds.com/blog/write-fewer-longer-tests).
-   - hide complex selectors from the tests. Often, page objects extract nested selectors with css classes because they are too complex to repeat them. But, it's better to use selectors as a user sees them, e.g. select by text, input label, or placeholder. This makes the tests more [resilient to change](https://kentcdodds.com/blog/making-your-ui-tests-resilient-to-change).
+   - hide complex selectors from the tests. Often, page objects extract nested selectors with css classes because they are too complex to repeat them. But, it's better to use selectors as a user sees them, e.g. select by text, input label, or placeholder. This makes the tests more [resilient to change](https://kentcdodds.com/blog/making-your-ui-tests-resilient-to-change). Read more in the _Playwright selectors_ chapter.
 
    See also: [Kent C. Dodds's Q&A session script](https://frontendmasters.com/courses/testing-practices-principles/additional-resources-and-q-a/)
 
