@@ -33,7 +33,7 @@ Examples of good E2E test candidates:
 ## Process
 
 1. E2E tests can be added after the feature has been released
-1. Anybody can skip a failing test because it's very important that the tests make life easier, not harder.
+1. Anybody can skip a failing in the `main` branch test because it's very important that the tests make life easier, not harder.
 
 ## Set Up and Tear Down
 
