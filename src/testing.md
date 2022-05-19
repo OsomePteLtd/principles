@@ -2,9 +2,6 @@
 
 Related articles:
 
-- [Write tests. Not too many. Mostly integration.](https://kentcdodds.com/blog/write-tests)
-- [The Testing Trophy and Testing Classifications](https://kentcdodds.com/blog/the-testing-trophy-and-testing-classifications)
-- [Static vs Unit vs Integration vs E2E Testing for Frontend Apps](https://kentcdodds.com/blog/static-vs-unit-vs-integration-vs-e2e-tests)
 - [Write fewer, longer tests](https://kentcdodds.com/blog/write-fewer-longer-tests)
 - [Avoid Nesting when you're Testing](https://kentcdodds.com/blog/avoid-nesting-when-youre-testing)
 - [Common Testing Mistakes](https://kentcdodds.com/blog/common-testing-mistakes)
@@ -22,6 +19,12 @@ Our testing approach is not a ▲ "testing pyramid" but a 🏆 "testing trophy".
 1.  Static programming language helps to avoid too many tests for every corner case
 
 ![The Testing Trophy](https://pbs.twimg.com/media/DVUoM94VQAAzuws?format=jpg&name=900x900)
+
+Related articles:
+
+- [Write tests. Not too many. Mostly integration.](https://kentcdodds.com/blog/write-tests)
+- [The Testing Trophy and Testing Classifications](https://kentcdodds.com/blog/the-testing-trophy-and-testing-classifications)
+- [Static vs Unit vs Integration vs E2E Testing for Frontend Apps](https://kentcdodds.com/blog/static-vs-unit-vs-integration-vs-e2e-tests)
 
 Examples of good E2E test candidates:
 
@@ -50,6 +53,8 @@ Examples of good E2E test candidates:
    See also: [Kent C. Dodds's Q&A session script](https://frontendmasters.com/courses/testing-practices-principles/additional-resources-and-q-a/)
 
 ## Playwright selectors
+
+Based on the [best practices](https://playwright.dev/docs/selectors#best-practices) from playwright.
 
 1. Tend to avoid any complex selectors to increase the resilience of tests.
 
