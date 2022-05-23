@@ -2,7 +2,6 @@
 
 Related articles:
 
-- [Write fewer, longer tests](https://kentcdodds.com/blog/write-fewer-longer-tests)
 - [Avoid Nesting when you're Testing](https://kentcdodds.com/blog/avoid-nesting-when-youre-testing)
 - [Common Testing Mistakes](https://kentcdodds.com/blog/common-testing-mistakes)
 - [UI Testing Myths](https://kentcdodds.com/blog/ui-testing-myths)
@@ -51,6 +50,14 @@ Examples of good E2E test candidates:
    - hide complex selectors from the tests. Often, page objects extract nested selectors with css classes because they are too complex to repeat them. But, it's better to use selectors as a user sees them, e.g. select by text, input label, or placeholder. This makes the tests more [resilient to change](https://kentcdodds.com/blog/making-your-ui-tests-resilient-to-change). Read more in the _Playwright selectors_ chapter.
 
    See also: [Kent C. Dodds's Q&A session script](https://frontendmasters.com/courses/testing-practices-principles/additional-resources-and-q-a/)
+
+1. Write fewer, longer tests instead of the anti-pattern approach of "one assertion per test".
+
+   > Think of a test case workflow for a manual tester and try to make each of your test cases include all parts to that workflow. This often results in multiple actions and assertions which is fine.
+
+   > There's the old "Arrange" "Act" "Assert" model for structuring tests. I typically suggest that you have a single "Arrange" per test, and as many "Act" and "Asserts" as necessary for the workflow you're trying to get confidence about.
+
+   Kent C. Dodds, [Write fewer, longer tests](https://kentcdodds.com/blog/write-fewer-longer-tests)
 
 ## Playwright selectors
 
