@@ -16,15 +16,15 @@
    1. we split one service into several smaller ones, which will still belong to the same team
    1. we don't clearly understand the scope of the service
 
-1. If any given solution involves less services, ceteris paribus, it's a better solution than the others. For example, we need to update some record in Service B when a record in Service A was updated, and Service A knows that records in Service B need to be updated.
+1. If any given solution requires less services to be modified, ceteris paribus, it's a better solution than the others. For example, we need to update some record in Service B when a record in Service A was updated, and Service A knows that records in Service B need to be updated.
 
    ```
-   // bad (two services)
+   // bad (two services affected)
 
    1. Service A broadcasts an event
    2. Service B subscribes on the event and updates its records internally
 
-   // good (one service)
+   // good (one service affected)
 
    1. Service A updates records in Service B via direct API/lambda call
    ```
