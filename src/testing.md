@@ -37,6 +37,32 @@ Examples of good E2E test candidates:
 1. E2E tests can be added after the feature has been released
 1. Anybody can skip a failing in the `main` branch test because it's very important that the tests make life easier, not harder.
 
+## General
+
+1. Do not seed common data, set nocks, or perform other business-logic preparations for multiple tests in `beforeEach`, keep you tests isolated. More info from [thoughtbot](https://thoughtbot.com/blog/lets-not) and [kentcdodds](https://kentcdodds.com/blog/avoid-nesting-when-youre-testing).
+
+1. Do not use `?` in tests, use `!`.
+
+   ```typescript
+   // bad
+
+   expect(journal.journalEntries?.map((je) => je.toJSON())).toMatchObject([
+     {
+       debitAccountId: templateDebitAccount.id,
+       creditAccountId: lineItemAccount.id,
+     },
+   ]);
+
+   // good
+
+   expect(journal.journalEntries!.map((je) => je.toJSON())).toMatchObject([
+     {
+       debitAccountId: templateDebitAccount.id,
+       creditAccountId: lineItemAccount.id,
+     },
+   ]);
+   ```
+
 ## Set Up and Tear Down
 
 1. There is no need to implement tear-down blocks or delete anywhere entities created in the tests.
