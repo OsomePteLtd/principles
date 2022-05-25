@@ -2,7 +2,6 @@
 
 Related articles:
 
-- [Avoid Nesting when you're Testing](https://kentcdodds.com/blog/avoid-nesting-when-youre-testing)
 - [Common Testing Mistakes](https://kentcdodds.com/blog/common-testing-mistakes)
 - [UI Testing Myths](https://kentcdodds.com/blog/ui-testing-myths)
 - [The Merits of Mocking](https://kentcdodds.com/blog/the-merits-of-mocking)
