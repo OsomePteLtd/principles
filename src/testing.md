@@ -5,7 +5,6 @@ Related articles:
 - [Common Testing Mistakes](https://kentcdodds.com/blog/common-testing-mistakes)
 - [UI Testing Myths](https://kentcdodds.com/blog/ui-testing-myths)
 - [The Merits of Mocking](https://kentcdodds.com/blog/the-merits-of-mocking)
-- [Why you've been bad about testing](https://kentcdodds.com/blog/why-youve-been-bad-about-testing)
 
 ## Strategy
 
