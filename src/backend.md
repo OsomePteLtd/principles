@@ -632,26 +632,26 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 | Service / Feature | own database instance | LTS Node | TS SLS config | SLS separate handlers | canary |
 | ----------------- | --------------------- | -------- | ------------- | --------------------- | ------ |
-| alfred            | 🍏                    | 🍏       | 🍏            | ❓                    | 🍏     |
-| analytix          | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
-| auditor           | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
-| billy             | 🍏                    | 🍏       | 🍏            | ❓                    | 🍏     |
-| bouncer           | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
-| core              | ❓                    | 🍏       | ❓            | ❓                    | 🍅     |
-| dealer            | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
-| enrique           | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
+| alfred            | 🍏                    | 🍅       | 🍏            | ❓                    | 🍏     |
+| analytix          | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
+| auditor           | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
+| billy             | 🍏                    | 🍅       | 🍏            | ❓                    | 🍏     |
+| bouncer           | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
+| core              | ❓                    | 🍅       | ❓            | ❓                    | 🍅     |
+| dealer            | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
+| enrique           | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
 | flexflow          | ❓                    | 🍅       | ❓            | ❓                    | 🍅     |
-| hermes            | ❓                    | ❓       | ❓            | ❓                    | ❓     |
-| hero              | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
-| invoker           | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
-| jamal             | 🍏                    | 🍏       | 🍏            | 🍅                    | 🍏     |
-| pablo             | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
-| payot             | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
-| pechkin           | 🍏                    | 🍏       | 🍏            | 🍅                    | 🍏     |
-| scrooge           | ❓                    | 🍏       | 🍏            | ❓                    | 🍏     |
-| shiva             | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
-| skyler            | 🍅                    | 🍏       | 🍏            | 🍏                    | 🍏     |
-| tigerdocs         | ❓                    | 🍏       | ❓            | ❓                    | 🍅     |
+| hermes            | ❓                    | 🍅       | ❓            | ❓                    | ❓     |
+| hero              | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
+| invoker           | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
+| jamal             | 🍏                    | 🍅       | 🍏            | 🍅                    | 🍏     |
+| pablo             | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
+| payot             | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
+| pechkin           | 🍏                    | 🍅       | 🍏            | 🍅                    | 🍏     |
+| scrooge           | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
+| shiva             | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
+| skyler            | 🍅                    | 🍅       | 🍏            | 🍏                    | 🍏     |
+| tigerdocs         | ❓                    | 🍅       | ❓            | ❓                    | 🍅     |
 
 ### Other
 
