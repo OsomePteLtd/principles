@@ -68,7 +68,7 @@ Examples of good E2E test candidates:
 
 1. The Page Object pattern should be avoided due to loss of simplicity. There are some goals to use them, but they can be achieved easier:
 
-   - DRY very common steps like "log in". The signed-in state can be saved using the built-in features of the testing tool. For example, playwrite supports [storageState](https://playwright.dev/docs/test-auth#reuse-signed-in-state).
+   - DRY very common steps like "log in". The signed-in state can be saved using the built-in features of the testing tool. For example, playwright supports [storageState](https://playwright.dev/docs/test-auth#reuse-signed-in-state).
    - DRY common steps for some pages. It can be a sign of too many small tests instead of [fewer longer tests](https://kentcdodds.com/blog/write-fewer-longer-tests).
    - hide complex selectors from the tests. Often, page objects extract nested selectors with css classes because they are too complex to repeat them. But, it's better to use selectors as a user sees them, e.g. select by text, input label, or placeholder. This makes the tests more [resilient to change](https://kentcdodds.com/blog/making-your-ui-tests-resilient-to-change). Read more in the _Playwright selectors_ chapter.
 
@@ -84,7 +84,7 @@ Examples of good E2E test candidates:
 
 ## E2E
 
-1. Do not run repeatable steps like authentication in every test. Modern tools like playwrite support sharing authenticated state, which should be used instead. This way, the tests become faster and less brittle.
+1. Do not run repeatable steps like authentication in every test. Modern tools like playwright support sharing authenticated state, which should be used instead. This way, the tests become faster and less brittle.
 
    Related articles: [UI Testing Myths](https://kentcdodds.com/blog/ui-testing-myths)
 
