@@ -503,6 +503,19 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    });
    ```
 
+1. If test file for controller becomes large (for example more then 1500 rows) it can be splitted into separate files by `describe` blocks and placed into tests folder
+
+```
+- controllers
+  - bankAccount
+    - bankAccount.controller.ts
+    - tests
+      - getBankAccounts.controller.test.ts
+      - getBankAccount.controller.test.ts
+      - createBankAccount.controller.test.ts
+      - updateBankAccount.controller.test.ts
+```
+
 ## Microservices
 
 1. Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
