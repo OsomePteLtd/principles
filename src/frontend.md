@@ -18,7 +18,7 @@ src/
     bankAccount/
       BankAccountList/
         BankAccountList.page.ts
-        BankAccountList.test.page.ts
+        BankAccountList.page.test.ts
   queries/
     bankAccount.query.ts
   services/
