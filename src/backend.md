@@ -503,7 +503,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    });
    ```
 
-1. If test file for controller becomes large (> 1500 rows) split it into separate files by `describe` blocks and place into tests folder
+1. If test file for controller becomes large (for example more then 1500 rows) it can be  splitted into separate files by `describe` blocks and placed into tests folder
 
 ```
 - controllers
