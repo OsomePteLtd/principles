@@ -7,3 +7,4 @@ Osome Development Principles
 - [Architecture Development Principles](src/architecture.md)
 - [Backend Development Principles](src/backend.md)
 - [Frontend Development Principles](src/frontend.md)
+- [General Testing Principles](src/testing.md)

@@ -5,19 +5,29 @@
 ```
 src/
   components/ (can be dumb and smart)
-    task/
-      TaskTable/
+    bankAccount/
+      BankAccountTable/
         [no nested directories]
-        TaskTable.ts
-        TaskTable.test.ts
-        TaskTableBadge.ts (child component)
-        TaskTable.styled.ts
+        BankAccountTable.ts
+        BankAccountTable.test.ts
+        BankAccountTableBadge.ts (child component)
+        BankAccountTable.styled.ts
     shared/
       SomeNonEntityComponent/
   pages/
-    TaskList/
-      TaskList.page.ts
-      TaskList.test.page.ts
+    bankAccount/
+      BankAccountList/
+        BankAccountList.page.ts
+        BankAccountList.page.test.ts
+  queries/
+    bankAccount.query.ts
+  services/
+    [can be splitted into several files]
+    bankAccount/
+      bankAccount.service.ts
+      bankAccountJournal.service.ts
+    [or single file]
+    auditLog.service.ts
 ```
 
 ## Typescript

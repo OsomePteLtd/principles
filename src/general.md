@@ -63,7 +63,7 @@ The primary language for development is American English. We use it because, de 
 
 In the UI, the language should be local. For the UK, Singapore, and HK, it's British English.
 
-## Clean Code
+## Naming
 
 1. Do not use abbreviations for names (variables, functions, etc). Exceptions are `map` / `reduce`. For such case use 1 letter abbreviations.
 
@@ -105,6 +105,18 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    KycCheck
    ```
 
+1. Do not use capitalization and snake case for constants.
+
+   ```typescript
+   // bad
+   const FAILED_AUTHORIZATION_PAYLOAD = 'authorization_failed';
+
+   // good
+   const failedAuthorizationPayload = 'authorization_failed';
+   ```
+
+## Clean Code
+
 1. Pattern "Loop + Function". If you have more then 1 line of code inside a loop, it is a sign that you need to extract a function.
 
    ```typescript
@@ -143,32 +155,6 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    function createUser(attributes, { auditLogs }: { auditLogs: boolean })
    ```
 
-## Tests
-
-1. Do not seed common data, set nocks, or perform other business-logic preparations for multiple tests in `beforeEach`, keep you tests isolated. More info from [thoughtbot](https://thoughtbot.com/blog/lets-not) and [kentcdodds](https://kentcdodds.com/blog/avoid-nesting-when-youre-testing).
-
-1. Do not use `?` in tests, use `!`.
-
-   ```typescript
-   // bad
-
-   expect(journal.journalEntries?.map((je) => je.toJSON())).toMatchObject([
-     {
-       debitAccountId: templateDebitAccount.id,
-       creditAccountId: lineItemAccount.id,
-     },
-   ]);
-
-   // good
-
-   expect(journal.journalEntries!.map((je) => je.toJSON())).toMatchObject([
-     {
-       debitAccountId: templateDebitAccount.id,
-       creditAccountId: lineItemAccount.id,
-     },
-   ]);
-   ```
-
 ## Comments
 
 1. Use comments to add context or information that is not obvious from the code already. Don't use comments to explain the code itself - code (through proper naming) should be self-explanatory.
@@ -176,18 +162,6 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
 1. Use TODO prefix in comments to track and document technical debt - things that are worth doing, but not done yet.
 
 1. It's considered a bad practice to comment out raw code. Commented code causes ["broken windows"](https://blog.codinghorror.com/pragmatic-programming/), increases cognitive load on developers, lacks support (commented code almost always doesn't work) and lacks test coverage. For detailed explanation, see [link 1](https://www.markhneedham.com/blog/2009/01/17/the-danger-of-commenting-out-code/), [link 2](https://kentcdodds.com/blog/please-dont-commit-commented-out-code)
-
-## Constants
-
-1. Do not use capitalization and snake case for constants.
-
-   ```typescript
-   // bad
-   const FAILED_AUTHORIZATION_PAYLOAD = 'authorization_failed';
-
-   // good
-   const failedAuthorizationPayload = 'authorization_failed';
-   ```
 
 ## Repository Settings
 
