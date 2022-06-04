@@ -36,7 +36,7 @@ BkConnection !{
   updatedAt: d,
   companyId: i,
   status: BkConnectionStatus,
-  company: Company
+  company?: Company,
 }
 
 BkConnectionStatus (
@@ -44,13 +44,13 @@ BkConnectionStatus (
   disconnected
 )
 
-BkConnectionInclude (
-  company
-)
-
 BkConnectionFilter !{
   companyId: i,
 }
+
+BkConnectionInclude (
+  company
+)
 
 BkConnectionIndexRequest {
   queryStringParameters: BkConnectionIndexRequestQuery,
