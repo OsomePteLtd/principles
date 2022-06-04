@@ -516,7 +516,6 @@ For serverless projects - method 3 is preferred, but not always. When you have a
       - updateBankAccount.controller.test.ts
 ```
 
-
 ## Microservices
 
 1. Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
