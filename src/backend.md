@@ -476,6 +476,19 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    });
    ```
 
+1. If test file for controller becomes large (> 1500 rows) split it into separate files by `describe` blocks and place into tests folder
+
+```
+- controllers
+  - bankAccount
+    - bankAccount.controller.ts
+    - tests
+      - getBankAccounts.controller.test.ts
+      - getBankAccount.controller.test.ts
+      - createBankAccount.controller.test.ts
+      - updateBankAccount.controller.test.ts
+```
+
 ## Microservices
 
 1. Don't post messages to other service SQS queues. Consider using 1) SNS event if the current service does not want to know about what happens with the event and who in fact uses it, 2) direct Lambda invocation if the service wants to know what happens and what is the result, 3) async Lambda invocation if the service knows what happens, but does not want to know the result, or can not afford waiting for the result.
