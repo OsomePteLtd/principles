@@ -53,6 +53,8 @@ We believe it describes very precisely what we’re doing here: we’re creating
 
    Why? We have a practice that the reviewer adds minor comments and approves the pull request. In this case, you will not have a chance to fix them before merging.
 
+1. Keepers review a PR after the team has reviewed it.
+
 ## Branches
 
 Now we are working in different countries (`branch` attribute) and it is important to understand that we have no concept of "default branch" in any scenarios. A branch always and everywhere must be explicitly received, since all countries are equal and there is no fallback, for example, to Singapore, if a person has a company in the UK.
