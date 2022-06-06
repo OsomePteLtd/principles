@@ -46,7 +46,7 @@ We believe it describes very precisely what we’re doing here: we’re creating
 
    // good
 
-   Create a pull request, get all required approves.
+   Create a pull request, get all required approves, enable auto-merge.
    ```
 
    If there is a small change like a typo fix or rename, push a fix and enable auto-merge.
