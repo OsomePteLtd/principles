@@ -662,7 +662,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | payot             | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
 | pechkin           | 🍏                    | 🍅       | 🍏            | 🍅                    | 🍏     |
 | scrooge           | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
-| shiva             | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
+| shiva             | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
 | skyler            | 🍅                    | 🍅       | 🍏            | 🍏                    | 🍏     |
 | tigerdocs         | ❓                    | 🍅       | ❓            | ❓                    | 🍅     |
 
