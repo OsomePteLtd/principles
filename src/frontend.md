@@ -346,4 +346,4 @@ export function fakeTicket() {}
 
 ## Module federation
 
-1. Use entryPoints folder to expose components of your microfrontend
+1. Use `entryPoints` folder to expose components of your microfrontend
