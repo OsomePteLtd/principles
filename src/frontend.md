@@ -30,6 +30,16 @@ src/
     auditLog.service.ts
 ```
 
+## Module federation project structure (for services which exports Components)
+
+Same as above but with some new folders:
+
+```
+src/
+  entryPoints/
+    
+```
+
 ## Typescript
 
 1. Tend to write sound typings. It means you should never get into a state when your data mismatches your typings.
@@ -333,3 +343,7 @@ export function fakeTicket() {}
 
    export default class extends Component {}
    ```
+
+## Module federation
+
+1. Use entryPoints folder to expose components of your microfrontend
