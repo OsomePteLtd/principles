@@ -36,6 +36,7 @@ BkConnection !{
   updatedAt: d,
   companyId: i,
   status: BkConnectionStatus,
+  company?: Company,
 }
 
 BkConnectionStatus (
@@ -47,12 +48,17 @@ BkConnectionFilter !{
   companyId: i,
 }
 
+BkConnectionInclude (
+  company
+)
+
 BkConnectionIndexRequest {
   queryStringParameters: BkConnectionIndexRequestQuery,
 }
 
 BkConnectionIndexRequestQuery !{
   filter: BkConnectionFilter,
+  include?: BkConnectionInclude[],
 }
 
 BkConnectionListResponse !{
@@ -69,6 +75,7 @@ Here we have the following names:
 
 - `${Entity}` – for the entity
 - `${Entity}Filter` – for the filter parameters
+- `${Entity}Include` – for the include parameters
 - `${Entity}IndexRequest` – for the "index" request
 - `${Entity}IndexRequestQuery` – for the "index" query string parameters
 - `${Entity}ListResponse` – for the list response body. For paginated responses, inherit from the shared `PaginatedResponse` model.
