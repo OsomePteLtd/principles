@@ -37,7 +37,7 @@ Same as above but with some new folders:
 ```
 src/
   entryPoints/
-    
+
 ```
 
 ## Typescript
