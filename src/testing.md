@@ -2,7 +2,6 @@
 
 Related articles:
 
-- [Common Testing Mistakes](https://kentcdodds.com/blog/common-testing-mistakes)
 - [The Merits of Mocking](https://kentcdodds.com/blog/the-merits-of-mocking)
 
 ## Strategy
@@ -60,6 +59,10 @@ Examples of good E2E test candidates:
    ]);
    ```
 
+1. Prefer to write tests in the way as the end-user or API client interacts with the app, not implementation details.
+
+   Related articles: [Avoid the Test User](https://kentcdodds.com/blog/avoid-the-test-user) and [Common Testing Mistakes](https://kentcdodds.com/blog/common-testing-mistakes)
+
 ## Set Up and Tear Down
 
 1. There is no need to implement tear-down blocks or delete anywhere entities created in the tests.
@@ -72,7 +75,7 @@ Examples of good E2E test candidates:
    - DRY common steps for some pages. It can be a sign of too many small tests instead of [fewer longer tests](https://kentcdodds.com/blog/write-fewer-longer-tests).
    - hide complex selectors from the tests. Often, page objects extract nested selectors with css classes because they are too complex to repeat them. But, it's better to use selectors as a user sees them, e.g. select by text, input label, or placeholder. This makes the tests more [resilient to change](https://kentcdodds.com/blog/making-your-ui-tests-resilient-to-change). Read more in the _Playwright selectors_ chapter.
 
-   Related articles: [UI Testing Myths](https://kentcdodds.com/blog/ui-testing-myths) and [Kent C. Dodds's Q&A session script](https://frontendmasters.com/courses/testing-practices-principles/additional-resources-and-q-a/)
+   Related articles: [UI Testing Myths](https://kentcdodds.com/blog/ui-testing-myths), [Common Testing Mistakes](https://kentcdodds.com/blog/common-testing-mistakes) and [Kent C. Dodds's Q&A session script](https://frontendmasters.com/courses/testing-practices-principles/additional-resources-and-q-a/)
 
 1. Write fewer, longer tests instead of the anti-pattern approach of "one assertion per test".
 
