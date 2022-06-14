@@ -91,6 +91,8 @@ Examples of good E2E test candidates:
 
    Related articles: [UI Testing Myths](https://kentcdodds.com/blog/ui-testing-myths)
 
+1. Call backend API directly if it's unpractical to set up initial data via UI.
+
 ## Playwright selectors
 
 Based on the [best practices](https://playwright.dev/docs/selectors#best-practices) from playwright.
