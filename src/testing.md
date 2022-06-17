@@ -1,9 +1,5 @@
 # General Testing Principles
 
-Related articles:
-
-- [The Merits of Mocking](https://kentcdodds.com/blog/the-merits-of-mocking)
-
 ## Strategy
 
 Our testing approach is not a ▲ "testing pyramid" but a 🏆 "testing trophy". That means:
@@ -84,6 +80,16 @@ Examples of good E2E test candidates:
    > There's the old "Arrange" "Act" "Assert" model for structuring tests. I typically suggest that you have a single "Arrange" per test, and as many "Act" and "Asserts" as necessary for the workflow you're trying to get confidence about.
 
    Kent C. Dodds, [Write fewer, longer tests](https://kentcdodds.com/blog/write-fewer-longer-tests)
+
+## Mocking
+
+1. For E2E tests, avoid mocking anything (except for the backend hitting fake or test services and not actual credit card services, for example).
+
+   Related articles: [The Merits of Mocking](https://kentcdodds.com/blog/the-merits-of-mocking)
+
+1. For integration and unit tests (both backend and frontend), never make actual network calls, instead use libraries like `nock` or `mockiavelli`.
+
+   Related articles: [The Merits of Mocking](https://kentcdodds.com/blog/the-merits-of-mocking)
 
 ## E2E
 
