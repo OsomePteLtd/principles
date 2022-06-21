@@ -28,6 +28,9 @@ Examples of good E2E test candidates:
 
 1. E2E tests can be added after the feature has been released
 1. Anybody can skip a failing in the `main` branch test because it's very important that the tests make life easier, not harder.
+1. The whole E2E test suite must run within 10 minutes in CI. Otherwise, some of the tests can be optimized or converted to integration tests.
+
+   The integration tests should cover most of the use cases, while E2E tests are slow, and it's ok to cover only the most critical use cases of the app. This way, the time limit also limits the amount of the test the suit contains.
 
 ## General
 
