@@ -585,7 +585,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
    Such column names should have the following form – `serviceprefixData`, for example `corpsecData` and `robertoData`.
 
-1. Data Replication should be implemented via the [service bus](#event%20bus).
+1. Data replication should be implemented via the [service bus](#event-bus).
 
 ## Best Practices Checklist
 
