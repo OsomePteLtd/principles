@@ -539,6 +539,56 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
   - if you need some other value of timeout please add a comment why you need it.
 
+### Data Replication
+
+1. Every entity should be owned by a single service. The owner is the one who generates the `id`.
+
+1. A service can store copies of foreign entities in the own database. The table should have the following structure:
+
+   ```
+   "id" INTEGER PRIMARY KEY,
+   "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   "rawData" JSONB NOT NULL
+   ```
+
+   - The table name should be equal to the original table name (for example, `companies`, not `coCompanies`).
+
+   - `id` should be equal to the original entity ID.
+
+   - `createdAt` and `updatedAt` timestamps should be own.
+
+   - `rawData` should contain serialized original data (with a type from SDK, for example `Company`).
+
+1. A service can extend the original entity with some fields, for example:
+
+   ```
+   "id" INTEGER PRIMARY KEY,
+   "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   "rawData" JSONB NOT NULL,
+   "rafStatus" VARCHAR,
+   "rafAnswers" JSONB,
+   "rafDocument" JSONB,
+   "riskLevel" VARCHAR,
+   "kycStatus" BOOLEAN
+   ```
+
+1. The owner service can back-replicate extended entities by other services, for example:
+
+   ```
+   "id" SERIAL PRIMARY KEY,
+   "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   -- ... original fields ...
+   "corpsecData" JSONB,
+   "robertoData" JSONB,
+   ```
+
+   `serviceprefixData` should contain serialized foreign data (with a type from SDK, for example `CoCompany` and `AxCompany`). Such column names should have the following form – `serviceprefixData`, for example `corpsecData` and `robertoData`.
+
+1. Data replication should be implemented via the [service bus](#event-bus).
+
 ## Best Practices Checklist
 
 ### Main
