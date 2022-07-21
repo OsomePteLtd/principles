@@ -552,15 +552,13 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    "rawData" JSONB NOT NULL
    ```
 
-   The table name should be equal to the original table name (for example, `companies`, not `coCompanies`).
+   - The table name should be equal to the original table name (for example, `companies`, not `coCompanies`).
 
-   `id` should be equal to the original entity ID.
+   - `id` should be equal to the original entity ID.
 
-   `createdAt` and `updatedAt` timestamps should be own.
+   - `createdAt` and `updatedAt` timestamps should be own.
 
-   `rawData` should contain serialized original data (with a type from SDK, for example `Company`).
-
-   The column name should be `rawData` when it is a copy of the original entity.
+   - `rawData` should contain serialized original data (with a type from SDK, for example `Company`). The column name should be `rawData` when it is a copy of the original entity.
 
 1. A service can extend the original entity with some fields, for example:
 
@@ -587,9 +585,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    "robertoData" JSONB,
    ```
 
-   `serviceprefixData` should contain serialized foreign data (with a type from SDK, for example `CoCompany` and `AxCompany`).
-
-   Such column names should have the following form – `serviceprefixData`, for example `corpsecData` and `robertoData`.
+   `serviceprefixData` should contain serialized foreign data (with a type from SDK, for example `CoCompany` and `AxCompany`). Such column names should have the following form – `serviceprefixData`, for example `corpsecData` and `robertoData`.
 
 1. Data replication should be implemented via the [service bus](#event-bus).
 
