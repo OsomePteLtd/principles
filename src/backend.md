@@ -552,6 +552,12 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    "rawData" JSONB NOT NULL
    ```
 
+   The table name should be equal to the original table name (for example, `companies`, not `coCompanies`).
+
+   `id` should be equal to the original entity ID.
+
+   `createdAt` and `updatedAt` timestamps should be own.
+
    `rawData` should contain serialized original data (with a type from SDK, for example `Company`).
 
    The column name should be `rawData` when it is a copy of the original entity.
