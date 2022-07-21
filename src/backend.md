@@ -558,7 +558,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
    - `createdAt` and `updatedAt` timestamps should be own.
 
-   - `rawData` should contain serialized original data (with a type from SDK, for example `Company`). The column name should be `rawData` when it is a copy of the original entity.
+   - `rawData` should contain serialized original data (with a type from SDK, for example `Company`).
 
 1. A service can extend the original entity with some fields, for example:
 
