@@ -734,7 +734,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | invoker           | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | jamal             | 🍏                     | ❓                  | ❓                         | ❓              | ❓         |
 | pablo             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
-| payot             | ❓                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
+| payot             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | pechkin           | 🍏                     | 🍏                  | 🍅                         | 🍅              | 🍅         |
 | scrooge           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | shiva             | 🍏                     | 🍏                  | 🍏                         | 🍏              | ❓         |
