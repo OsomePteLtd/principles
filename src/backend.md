@@ -598,7 +598,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | alfred            | partner-solutions    | 🍏     | 🍏               | 🍏           |
 | analytix          | platform             | 🍅     | 🍏               | 🍅           |
 | auditor           | platform             | 🍅     | 🍏               | 🍅           |
-| billy             | billing              | 🍏     | 🍏               | 🍏           |
+| billy             | retention            | 🍏     | 🍏               | 🍏           |
 | bouncer           | platform             | 🍅     | 🍏               | ❓           |
 | core              | platform             | 🍅     | 🍅               | 🍅           |
 | dealer            | agent-x-sales        | 🍏     | 🍏               | 🍏           |
@@ -609,7 +609,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | invoker           | invoice-n-payments   | 🍏     | 🍏               | 🍏           |
 | jamal             | documents-processing | 🍅     | 🍏               | 🍏           |
 | pablo             | factory              | 🍏     | 🍏               | 🍏           |
-| payot             | billing              | 🍏     | 🍏               | 🍏           |
+| payot             | retention            | 🍏     | 🍏               | 🍏           |
 | pechkin           | platform             | 🍅     | 🍏               | ❓           |
 | scrooge           | accounting           | 🍅     | 🍏               | ❓           |
 | shiva             | e-commerce           | 🍏     | 🍏               | 🍏           |
@@ -623,7 +623,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | alfred            | ❓       | 🍏     | 🍏  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     |
 | analytix          | ❓       | ❓     | ❓  | ❓     | ❓       | 🍅      | ❓        | ❓     |
 | auditor           | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     |
-| billy             | 🍏       | 🍏     | 🍅  | 🍅     | 🍅       | 🍏      | 🍏        | ❓     |
+| billy             | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     |
 | bouncer           | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
 | core              | 🍅       | ❓     | ❓  | ❓     | 🍏       | ❓      | ❓        | ❓     |
 | dealer            | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍅        | 🍅     |
@@ -634,7 +634,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | invoker           | 🍏       | 🍏     | 🍏  | 🍏     | ❓       | ❓      | ❓        | ❓     |
 | jamal             | 🍅       | 🍏     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
 | pablo             | 🍏       | 🍏     | 🍅  | 🍅     | 🍏       | 🍏      | 🍏        | 🍏     |
-| payot             | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍏        | ❓     |
+| payot             | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     |
 | pechkin           | 🍅       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍅        | 🍅     |
 | scrooge           | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
 | shiva             | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | 🍏      | 🍏        | ❓     |
@@ -673,7 +673,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | alfred            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | analytix          | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
 | auditor           | 🍏   | ❓       | ❓                             | ❓               | 🍅         |
-| billy             | 🍏   | ❓       | 🍏                             | 🍏               | 🍅         |
+| billy             | 🍏   | 🍅       | 🍏                             | 🍏               | 🍅         |
 | bouncer           | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
 | core              | 🍅   | 🍅       | ❓                             | ❓               | 🍅         |
 | dealer            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
@@ -723,7 +723,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | alfred            | 🍏                     | 🍏                  | 🍏                         | ❓              | 🍏         |
 | analytix          | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | auditor           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
-| billy             | 🍏                     | ❓                  | ❓                         | ❓              | 🍏         |
+| billy             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | bouncer           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | core              | ❓                     | 🍅                  | 🍅                         | ❓              | ❓         |
 | dealer            | 🍏                     | 🍏                  | 🍏                         | ❓              | 🍏         |
@@ -734,7 +734,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | invoker           | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | jamal             | 🍏                     | ❓                  | ❓                         | ❓              | ❓         |
 | pablo             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
-| payot             | ❓                     | ❓                  | ❓                         | ❓              | 🍏         |
+| payot             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | pechkin           | 🍏                     | 🍏                  | 🍅                         | 🍅              | 🍅         |
 | scrooge           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | shiva             | 🍏                     | 🍏                  | 🍏                         | 🍏              | ❓         |
@@ -748,7 +748,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | alfred            | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | ❓  | ❓  | ❓  |
 | analytix          | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | auditor           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| billy             | 🍏         | 🍏    | 🍏  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  |
+| billy             | 🍏         | 🍏    | 🍏  | 🍏  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  |
 | bouncer           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | core              | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  |
 | dealer            | 🍏         | 🍏    | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  |
@@ -759,7 +759,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | invoker           | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  |
 | jamal             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | pablo             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| payot             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
+| payot             | 🍏         | 🍏    | 🍏  | 🍏  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | pechkin           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | scrooge           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | shiva             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
