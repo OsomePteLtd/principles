@@ -347,3 +347,11 @@ export function fakeTicket() {}
 ## Module federation
 
 1. Use `entryPoints` folder to expose components of your microfrontend
+
+1. Make microfrontends working without copying `.example.env` to `.env`. Provide defaults in your sandbox code. `.env` file is not forbidden but shouldn't obligatory for sandbox. It helps to use microfrontend for developers from other teams and QA who write integration tests.
+
+   ```typescript
+   // sandbox code
+   // good
+   const companyId = process.env.companyId || 12345;
+   ```
