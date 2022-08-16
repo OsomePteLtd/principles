@@ -304,13 +304,19 @@ export function fakeTicket() {}
 
 1. Prefer UX over DX.
 
-1. Prefer absolute imports where it's possible. But it's reasonable to use relative imports for files from current or parent directory, they can be considered as module and imported files aren't imported outside.
+1. Always use relative imports.
 
    ```typescript
-   // good
+   // bad
    import { DocumentPreview } from 'components/documents/DocumentPreview';
+   ```
+   
+   ```typescript
+   // good
+   import { DocumentPreview } from '../../components/documents/DocumentPreview';
    import { MyBlock } from './MyComponent.styled.ts';
    ```
+
 
 1. Report unexpected errors to bugsnag. Pay attention to your try/catch blocks:
 
