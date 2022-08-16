@@ -310,13 +310,12 @@ export function fakeTicket() {}
    // bad
    import { DocumentPreview } from 'components/documents/DocumentPreview';
    ```
-   
+
    ```typescript
    // good
    import { DocumentPreview } from '../../components/documents/DocumentPreview';
    import { MyBlock } from './MyComponent.styled.ts';
    ```
-
 
 1. Report unexpected errors to bugsnag. Pay attention to your try/catch blocks:
 
