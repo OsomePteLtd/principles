@@ -390,7 +390,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    }
    ```
 
-1. Use the [Lambda Event Sample](samples/lambda/events/ticket/ticket.event.ts) as a sample of the proper event handler.
+1. Use the [Lambda Event Sample](samples/lambda/events/ticket.event.ts) as a sample of the proper event handler.
 
 ## Tests
 
