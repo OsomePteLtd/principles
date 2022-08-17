@@ -390,6 +390,8 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    }
    ```
 
+1. Use the [Lambda Event Sample](samples/lambda/events/ticket/ticket.event.ts) as a sample of the proper event handler.
+
 ## Tests
 
 1. All HTTP endpoints, lambdas and jobs should be covered by tests.
