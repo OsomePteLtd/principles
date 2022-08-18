@@ -318,8 +318,19 @@ export function fakeTicket() {}
    ```
 
    Absolute imports allowed for cases:
+
    1. when we import from `legacy` folder,
    2. when we work inside `legacy` folder.
+
+   ```typescript
+   // ok
+   // src/legacy/some/path/components/Foo.tsx
+   import { Bar } from 'src/components/Bar';
+
+   // ok
+   // src/components/Bar.tsx
+   import { Baz } from 'src/legacy/some/path/components/Baz';
+   ```
 
 1. Report unexpected errors to bugsnag. Pay attention to your try/catch blocks:
 
