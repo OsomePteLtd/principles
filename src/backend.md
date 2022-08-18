@@ -613,8 +613,8 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | pablo             | factory              | 🍏     | 🍏               | 🍏           |
 | payot             | retention            | 🍏     | 🍏               | 🍏           |
 | pechkin           | platform             | 🍅     | 🍏               | ❓           |
-| scrooge           | accounting           | 🍅     | 🍏               | ❓           |
-| shiva             | e-commerce           | 🍏     | 🍏               | 🍏           |
+| scrooge           | integrations         | 🍅     | 🍏               | ❓           |
+| shiva             | integrations         | 🍏     | 🍏               | 🍏           |
 | skyler            | reporting            | 🍏     | 🍏               | 🍏           |
 | tigerdocs         | agent-x              | 🍅     | 🍅               | ❓           |
 
