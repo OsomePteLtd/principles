@@ -304,7 +304,7 @@ export function fakeTicket() {}
 
 1. Prefer UX over DX.
 
-1. Always use relative imports.
+1. Prefer relative imports.
 
    ```typescript
    // bad
@@ -316,6 +316,10 @@ export function fakeTicket() {}
    import { DocumentPreview } from '../../components/documents/DocumentPreview';
    import { MyBlock } from './MyComponent.styled.ts';
    ```
+
+   Absolute imports allowed for cases:
+   1. when we import from `legacy` folder,
+   2. when we work inside `legacy` folder.
 
 1. Report unexpected errors to bugsnag. Pay attention to your try/catch blocks:
 
