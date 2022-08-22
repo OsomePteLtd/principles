@@ -375,3 +375,5 @@ export function fakeTicket() {}
    // good
    const companyId = process.env.companyId || 12345;
    ```
+
+1. If microfrontend has several sandboxes, microfrontend should have main page with list of links to sandboxes. It provides ability to test different sandboxes during CI and improves experience for developers and QA.
