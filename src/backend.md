@@ -610,14 +610,14 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | hero              | platform             | 🍏     | 🍏               | ❓           |
 | invoker           | invoice-n-payments   | 🍏     | 🍏               | 🍏           |
 | jamal             | documents-processing | 🍅     | 🍏               | 🍏           |
+| nano              | accounting           | ❓     | ❓               | ❓           |
 | pablo             | factory              | 🍏     | 🍏               | 🍏           |
 | payot             | retention            | 🍏     | 🍏               | 🍏           |
 | pechkin           | platform             | 🍅     | 🍏               | ❓           |
 | scrooge           | integrations         | 🍅     | 🍏               | ❓           |
 | shiva             | integrations         | 🍏     | 🍏               | 🍏           |
-| skyler            | factory/accounting   | 🍏     | 🍏               | 🍏           |
+| skyler            | factory              | 🍏     | 🍏               | 🍏           |
 | tigerdocs         | agent-x              | 🍅     | 🍅               | ❓           |
-| nano              | accounting           | ❓     | ❓               | ❓           |
 
 ### Toolkit
 
@@ -636,6 +636,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | hero              | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
 | invoker           | 🍏       | 🍏     | 🍏  | 🍏     | ❓       | ❓      | ❓        | ❓     |
 | jamal             | 🍅       | 🍏     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
+| nano              | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | 🍅        | ❓     |
 | pablo             | 🍏       | 🍏     | 🍅  | 🍅     | 🍏       | 🍏      | 🍏        | 🍏     |
 | payot             | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     |
 | pechkin           | 🍅       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍅        | 🍅     |
@@ -643,7 +644,6 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | shiva             | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | 🍏      | 🍏        | ❓     |
 | skyler            | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | ❓      | 🍏        | 🍏     |
 | tigerdocs         | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     |
-| nano              | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | 🍅        | ❓     |
 
 ### Static checks
 
@@ -662,6 +662,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | hero              | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
 | invoker           | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | jamal             | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
+| nano              | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
 | pablo             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | payot             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | pechkin           | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
@@ -669,7 +670,6 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | shiva             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | skyler            | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | tigerdocs         | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
-| nano              | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
 
 ### Tests
 
@@ -688,6 +688,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | hero              | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
 | invoker           | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | jamal             | 🍏   | 🍅       | 🍅                             | 🍏               | 🍅         |
+| nano              | ❓   | ❓       | ❓                             | ❓               | ❓         |
 | pablo             | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | payot             | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | pechkin           | 🍏   | 🍅       | 🍅                             | 🍏               | 🍏         |
@@ -695,7 +696,6 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | shiva             | 🍏   | 🍏       | ❓                             | ❓               | 🍅         |
 | skyler            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | tigerdocs         | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
-| nano              | ❓   | ❓       | ❓                             | ❓               | ❓         |
 
 ### Infrastructure
 
@@ -714,6 +714,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | hero              | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
 | invoker           | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
 | jamal             | 🍏                    | 🍅       | 🍏            | 🍅                    | 🍏     |
+| nano              | ❓                    | ❓       | ❓            | ❓                    | ❓     |
 | pablo             | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
 | payot             | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
 | pechkin           | 🍏                    | 🍅       | 🍏            | 🍅                    | 🍏     |
@@ -721,7 +722,6 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | shiva             | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
 | skyler            | 🍅                    | 🍅       | 🍏            | 🍏                    | 🍏     |
 | tigerdocs         | ❓                    | 🍅       | ❓            | ❓                    | 🍅     |
-| nano              | ❓                    | ❓       | ❓            | ❓                    | ❓     |
 
 ### Other
 
@@ -740,6 +740,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | hero              | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | invoker           | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | jamal             | 🍏                     | ❓                  | ❓                         | ❓              | ❓         |
+| nano              | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | pablo             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | payot             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | pechkin           | 🍏                     | 🍏                  | 🍅                         | 🍅              | 🍅         |
@@ -747,7 +748,6 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | shiva             | 🍏                     | 🍏                  | 🍏                         | 🍏              | ❓         |
 | skyler            | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | tigerdocs         | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
-| nano              | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 
 ### Environments
 
@@ -766,6 +766,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | hero              | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | invoker           | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  |
 | jamal             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
+| nano              | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | pablo             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | payot             | 🍏         | 🍏    | 🍏  | 🍏  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | pechkin           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
@@ -773,7 +774,6 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | shiva             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | skyler            | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  |
 | tigerdocs         | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| nano              | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 
 ## Idempotency
 
