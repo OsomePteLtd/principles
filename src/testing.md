@@ -84,6 +84,15 @@ Examples of good E2E test candidates:
 
    Kent C. Dodds, [Write fewer, longer tests](https://kentcdodds.com/blog/write-fewer-longer-tests)
 
+## Frontend testing tools
+
+Use different testing tools for certain tests types:
+
+1. /e2e/ - use playwright for E2E tests.
+1. /src/pages/ — use playwright & mockiavelli for integration tests.
+1. /src/components — use react testing library for unit tests if it's really necessary to check a lot of corner cases. By default prefer integration tests.
+1. /src/services, rest - use vanilla jest for init tests.
+
 ## Mocking
 
 1. For E2E tests, avoid mocking anything (except for the backend hitting fake or test services and not actual credit card services, for example).
