@@ -29,15 +29,19 @@ export const CompanyAcBankAccounts = (props: CompanyAcBankAccountsProps) => {
     [],
   );
 
-  const { mutate: mutateCreateAcBankAccount, isLoading: isSubmittingCreateBankAccount } =
-    useCreateAcBankAccount();
+  const {
+    mutate: mutateCreateAcBankAccount,
+    isLoading: isSubmittingCreateBankAccount,
+  } = useCreateAcBankAccount();
   const handleSubmitAddBankAccount = useCallback(
     (acBankAccountNew: AcBankAccountNew) => mutateCreateAcBankAccount(acBankAccountNew),
     [mutateCreateAcBankAccount],
   );
 
-  const { mutate: mutateEditAcBankAccount, isLoading: isSubmittingEditBankAccount } =
-    usePatchAcBankAccount(view.mode === 'edit' ? view.acBankAccount.id : 0);
+  const {
+    mutate: mutateEditAcBankAccount,
+    isLoading: isSubmittingEditBankAccount,
+  } = usePatchAcBankAccount(view.mode === 'edit' ? view.acBankAccount.id : 0);
   const handleSubmitEditBankAccount = useCallback(
     (acBankAccountUpdate: AcBankAccountUpdate) => mutateEditAcBankAccount(acBankAccountUpdate),
     [mutateEditAcBankAccount],
