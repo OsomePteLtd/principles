@@ -8,9 +8,9 @@ import { useGetCompany } from '../../queries/company.service';
 import { useGetMe } from '../../queries/user.service';
 import { hasUserAccessToCompany } from '../../services/company.service';
 
-type CompanyAcBankAccountsPageProps = {
+interface CompanyAcBankAccountsPageProps {
   companyId: number;
-};
+}
 
 export const CompanyAcBankAccountsPage = (props: CompanyAcBankAccountsPageProps) => {
   const { companyId } = props;

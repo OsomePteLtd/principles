@@ -8,9 +8,9 @@ import {
   usePatchAcBankAccount,
 } from '../../queries/acBankAccount.query';
 
-type CompanyAcBankAccountsProps = {
+interface CompanyAcBankAccountsProps {
   companyId: number;
-};
+}
 
 type ViewMode = { mode: 'list' } | { mode: 'add' } | { mode: 'edit'; acBankAccount: AcBankAccount };
 
