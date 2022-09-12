@@ -22,7 +22,7 @@ export const CompanyAcBankAccountsPage = (props: CompanyAcBankAccountsPageProps)
   const user = userQuery.data?.user;
 
   // prefetch bank accounts
-  useGetAcCompanyBankAccounts(companyId);
+  const { error } = useGetAcCompanyBankAccounts(companyId);
 
   if (!company || !user) {
     return <PageSkeleton />;
@@ -30,7 +30,7 @@ export const CompanyAcBankAccountsPage = (props: CompanyAcBankAccountsPageProps)
 
   const hasAccess = hasUserAccessToCompany(user, company);
 
-  if (!hasAccess) {
+  if (!hasAccess || error?.code === 403) {
     return <Redirect to="/companies" />;
   }
 
