@@ -2,7 +2,7 @@ import { PageLayout, PageTitle, PageSkeleton } from '@osome/ui-kit';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { CompanyAcBankAccounts } from '../../components/acBankAccount/CompanyAcBankAccounts/CompanyAcBankAccounts';
+import { CompanyAcBankAccounts } from '../../components/acBankAccount/CompanyAcBankAccounts';
 import { useGetAcCompanyBankAccounts } from '../../queries/acBankAccount.query';
 import { useGetCompany } from '../../queries/company.service';
 import { useGetMe } from '../../queries/user.service';
