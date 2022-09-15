@@ -1,5 +1,5 @@
 import { AcBankAccount, AcBankAccountNew, AcBankAccountUpdate } from '@osome/sdk';
-import { Card, Button } from '@osome/ui-kit';
+import { Card, Button, Preloader } from '@osome/ui-kit';
 import React, { useCallback, useState } from 'react';
 
 import {
@@ -19,7 +19,9 @@ export const CompanyAcBankAccounts = (props: CompanyAcBankAccountsProps) => {
 
   const [view, setView] = useState<ViewMode>({ mode: 'list' });
 
-  const { data: acBankAccounts } = useGetAcCompanyBankAccounts(companyId);
+  const { data: acBankAccounts, isLoading: areBankAccountsLoading } = useGetAcCompanyBankAccounts(
+    companyId,
+  );
 
   const handleAddBankAccount = useCallback(
     () =>
@@ -62,6 +64,10 @@ export const CompanyAcBankAccounts = (props: CompanyAcBankAccountsProps) => {
       }),
     [],
   );
+
+  if (areBankAccountsLoading) {
+    return <Preloader />;
+  }
 
   if (!acBankAccounts) {
     return null;
