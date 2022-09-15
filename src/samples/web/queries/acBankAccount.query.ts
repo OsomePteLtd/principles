@@ -1,6 +1,5 @@
 import { AcBankAccountNew, AcBankAccountResponse, AcBankAccountUpdate } from '@osome/sdk';
-import { AxiosError } from 'axios';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient, QueryClient } from 'react-query';
 
 import { sdk } from '../services/sdk.service';
 
@@ -10,8 +9,8 @@ const companyAcBankAccountsCacheKey = (companyId: number) => ['acCompanyBankAcco
 export function useCreateAcBankAccount() {
   const queryClient = useQueryClient();
 
-  return useMutation<AcBankAccountResponse, AxiosError, AcBankAccountNew>(
-    (bankAccountNew) =>
+  return useMutation(
+    (bankAccountNew: AcBankAccountNew) =>
       sdk.accounting.companies
         .companyId(bankAccountNew.companyId)
         .bank_accounts.post({ bankAccount: bankAccountNew }),
@@ -39,8 +38,9 @@ export function usePatchAcBankAccount(bankAccountId: number) {
       sdk.accounting.bank_accounts.id(bankAccountId).patch({ bankAccount: bankAccountUpdate }),
     {
       onSuccess(responseBody) {
-        const { id, companyId } = responseBody.bankAccount;
-        queryClient.setQueryData(acBankAccountCacheKey(id), responseBody);
+        const { companyId } = responseBody.bankAccount;
+        updateAcBankAccountCache(queryClient, responseBody);
+        updateAcBankAccountCache(queryClient, responseBody);
         queryClient.invalidateQueries(companyAcBankAccountsCacheKey(companyId));
       },
     },
@@ -68,11 +68,13 @@ export function useGetAcCompanyBankAccounts(companyId: number) {
     {
       onSuccess(responseBody) {
         responseBody.bankAccounts.forEach((bankAccount) =>
-          queryClient.setQueryData(acBankAccountCacheKey(bankAccount.id), {
-            bankAccount,
-          }),
+          updateAcBankAccountCache(queryClient, { bankAccount }),
         );
       },
     },
   );
+}
+
+function updateAcBankAccountCache(queryClient: QueryClient, responseBody: AcBankAccountResponse) {
+  queryClient.setQueryData(acBankAccountCacheKey(responseBody.bankAccount.id), responseBody);
 }
