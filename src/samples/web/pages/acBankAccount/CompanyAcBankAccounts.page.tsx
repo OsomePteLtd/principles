@@ -18,7 +18,7 @@ export const CompanyAcBankAccountsPage = (props: CompanyAcBankAccountsPageProps)
   const companyQuery = useGetCompany(companyId);
   const company = companyQuery.data?.company;
 
-  const userQuery = useGetMe(companyId);
+  const userQuery = useGetMe();
   const user = userQuery.data?.user;
 
   // prefetch bank accounts

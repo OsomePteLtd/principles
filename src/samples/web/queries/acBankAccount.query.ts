@@ -34,8 +34,8 @@ export function useGetAcBankAccount(bankAccountId: number) {
 export function usePatchAcBankAccount(bankAccountId: number) {
   const queryClient = useQueryClient();
 
-  return useMutation<AcBankAccountResponse, AxiosError, AcBankAccountUpdate>(
-    (bankAccountUpdate) =>
+  return useMutation(
+    (bankAccountUpdate: AcBankAccountUpdate) =>
       sdk.accounting.bank_accounts.id(bankAccountId).patch({ bankAccount: bankAccountUpdate }),
     {
       onSuccess(responseBody) {
@@ -50,16 +50,13 @@ export function usePatchAcBankAccount(bankAccountId: number) {
 export function useDeleteAcBankAccount(bankAccountId: number) {
   const queryClient = useQueryClient();
 
-  return useMutation<AcBankAccountResponse, AxiosError, AcBankAccountUpdate>(
-    (requestBody) => sdk.accounting.bank_accounts.id(bankAccountId).delete(requestBody),
-    {
-      onSuccess(responseBody) {
-        const { id, companyId } = responseBody.bankAccount;
-        queryClient.removeQueries(acBankAccountCacheKey(id));
-        queryClient.invalidateQueries(companyAcBankAccountsCacheKey(companyId));
-      },
+  return useMutation(() => sdk.accounting.bank_accounts.id(bankAccountId).delete(), {
+    onSuccess(responseBody) {
+      const { id, companyId } = responseBody.bankAccount;
+      queryClient.removeQueries(acBankAccountCacheKey(id));
+      queryClient.invalidateQueries(companyAcBankAccountsCacheKey(companyId));
     },
-  );
+  });
 }
 
 export function useGetAcCompanyBankAccounts(companyId: number) {
