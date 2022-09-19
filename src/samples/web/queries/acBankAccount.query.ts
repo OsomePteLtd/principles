@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient, QueryClient } from 'react-query'
 
 import { sdk } from '../services/sdk.service';
 
-const acBankAccountCacheKey = (bankAccountId: number) => ['acBankAccount', bankAccountId];
+const getAcBankAccountCacheKey = (bankAccountId: number) => ['acBankAccount', bankAccountId];
 const companyAcBankAccountsCacheKey = (companyId: number) => ['acCompanyBankAccounts', companyId];
 
 export function useCreateAcBankAccount() {
@@ -17,7 +17,7 @@ export function useCreateAcBankAccount() {
     {
       onSuccess(responseBody) {
         const { id, companyId } = responseBody.bankAccount;
-        queryClient.setQueryData(acBankAccountCacheKey(id), responseBody);
+        queryClient.setQueryData(getAcBankAccountCacheKey(id), responseBody);
         queryClient.invalidateQueries(companyAcBankAccountsCacheKey(companyId));
       },
     },
@@ -25,7 +25,7 @@ export function useCreateAcBankAccount() {
 }
 
 export function useGetAcBankAccount(bankAccountId: number) {
-  return useQuery(acBankAccountCacheKey(bankAccountId), () =>
+  return useQuery(getAcBankAccountCacheKey(bankAccountId), () =>
     sdk.accounting.bank_accounts.id(bankAccountId).get(),
   );
 }
@@ -53,7 +53,7 @@ export function useDeleteAcBankAccount(bankAccountId: number) {
   return useMutation(() => sdk.accounting.bank_accounts.id(bankAccountId).delete(), {
     onSuccess(responseBody) {
       const { id, companyId } = responseBody.bankAccount;
-      queryClient.removeQueries(acBankAccountCacheKey(id));
+      queryClient.removeQueries(getAcBankAccountCacheKey(id));
       queryClient.invalidateQueries(companyAcBankAccountsCacheKey(companyId));
     },
   });
@@ -76,5 +76,5 @@ export function useGetAcCompanyBankAccounts(companyId: number) {
 }
 
 function updateAcBankAccountCache(queryClient: QueryClient, responseBody: AcBankAccountResponse) {
-  queryClient.setQueryData(acBankAccountCacheKey(responseBody.bankAccount.id), responseBody);
+  queryClient.setQueryData(getAcBankAccountCacheKey(responseBody.bankAccount.id), responseBody);
 }
