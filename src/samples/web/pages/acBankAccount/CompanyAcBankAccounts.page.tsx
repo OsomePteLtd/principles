@@ -15,11 +15,11 @@ interface CompanyAcBankAccountsPageProps {
 export const CompanyAcBankAccountsPage = (props: CompanyAcBankAccountsPageProps) => {
   const { companyId } = props;
 
-  const companyQuery = useGetCompany(companyId);
-  const company = companyQuery.data?.company;
+  const { data: companyData } = useGetCompany(companyId);
+  const company = companyData?.company;
 
-  const userQuery = useGetMe();
-  const user = userQuery.data?.user;
+  const { data: userData } = useGetMe();
+  const user = userData?.user;
 
   // prefetch bank accounts
   const { error } = useGetAcCompanyBankAccounts(companyId);
