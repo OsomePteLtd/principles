@@ -64,7 +64,7 @@ Examples of good E2E test candidates:
 
 ## Set Up and Tear Down
 
-1. There is no need to implement tear-down blocks or delete anywhere entities created in the tests.
+1. Tear-down blocks and cleaning up entities created in tests are good, but not required.
 
 ## UI testing
 
