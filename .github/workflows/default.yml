@@ -40,3 +40,11 @@ jobs:
 
       - name: Run static checks
         run: npm run static-checks
+
+      - name: Check table of contents
+        run: |
+          missedTableOfContents=cat src/backend.md |  grep -E "^#{2,5} " | sed -E 's/(#+) (.+)/\1:\2:\2/g' | awk -F ":" '{ gsub(/#/,"    ",$1); gsub(/[ ]/,"-",$3); gsub(/^        /,"",$1); print $1 "- [" $2 "](#" tolower($3) ")" }' | diff --changed-group-format='%<' --unchanged-group-format=''  - src/backend.md
+          if ! $missedTableOfContents ; then
+            echo "Table of contents is not correct, missed elements: $missedTableOfContents"
+            exit 1
+          fi
