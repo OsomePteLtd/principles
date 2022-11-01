@@ -623,7 +623,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 | Service / Feature | wrappers | logger | ACL | lambda | eventBus | migrate | retry DLQ | sentry | telemetry | ssmWrapper |
 | ----------------- | -------- | ------ | --- | ------ | -------- | ------- | --------- | ------ | --------- | ---------- |
-| alfred            | ❓       | 🍏     | 🍏  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     | ❓        | 🍅         |
+| alfred            | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     | 🍏        | 🍏         |
 | analytix          | ❓       | ❓     | ❓  | ❓     | ❓       | 🍅      | ❓        | ❓     | ❓        | 🍅         |
 | auditor           | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     | ❓        | 🍏         |
 | billy             | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     | ❓        | 🍏         |
