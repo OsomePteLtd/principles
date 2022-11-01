@@ -16,7 +16,7 @@
   - [Main](#main)
   - [Toolkit](#toolkit)
   - [Static checks](#static-checks)
-  - [Tests](#tests-1)
+  - [Tests](#tests)
   - [Infrastructure](#infrastructure)
   - [Other](#other)
   - [Environments](#environments)
