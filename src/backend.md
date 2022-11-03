@@ -720,7 +720,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 | Service / Feature | no parameter store SDK | standard CODEOWNERS | dependabot with auto-merge | migration check | diff check |
 | ----------------- | ---------------------- | ------------------- | -------------------------- | --------------- | ---------- |
-| alfred            | 🍏                     | 🍏                  | 🍏                         | ❓              | 🍏         |
+| alfred            | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | analytix          | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | auditor           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | billy             | 🍏                     | ❓                  | ❓                         | ❓              | 🍏         |
