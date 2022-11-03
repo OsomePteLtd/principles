@@ -621,7 +621,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 ### Toolkit
 
-| Service / Feature | wrappers | logger | ACL | lambda | eventBus | migrate | retry DLQ | sentry | telemetry | [ssmWrapper](https://www.notion.so/osome/SSM-Wrapper-56823b69e1104d608a1ed876b94bbdfd) |
+| Service / Feature | wrappers | logger | ACL | lambda | eventBus | migrate | retry DLQ | sentry | telemetry | ssmWrapper |
 | ----------------- | -------- | ------ | --- | ------ | -------- | ------- | --------- | ------ | --------- | ---------- |
 | alfred            | ❓       | 🍏     | 🍏  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     | ❓        | 🍅         |
 | analytix          | ❓       | ❓     | ❓  | ❓     | ❓       | 🍅      | ❓        | ❓     | ❓        | 🍅         |
