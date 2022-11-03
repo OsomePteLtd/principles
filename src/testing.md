@@ -94,7 +94,7 @@ Examples of good E2E test candidates:
 
    Related articles: [The Merits of Mocking](https://kentcdodds.com/blog/the-merits-of-mocking)
 
-2. Common fakes and mocks (for example [mocking auth requests](https://github.com/OsomePteLtd/websome-kit/blob/main/src/tests/mocks/auth.mock.ts)) for multiple micro frontends should be stored in [websome-kit](https://github.com/OsomePteLtd/websome-kit/tree/main/src/tests) or [agent-kit](https://github.com/OsomePteLtd/agent-kit/tree/main/src/tests). But domain specific fakes and mocks (for example [mocking common requests](https://github.com/OsomePteLtd/websome/blob/main/src/tests/mocks/common.mock.ts)) should be stored only in appropriate repo.
+1. Common fakes and mocks (for example [mocking auth requests](https://github.com/OsomePteLtd/websome-kit/blob/main/src/tests/mocks/auth.mock.ts)) for multiple micro frontends should be stored in [websome-kit](https://github.com/OsomePteLtd/websome-kit/tree/main/src/tests) or [agent-kit](https://github.com/OsomePteLtd/agent-kit/tree/main/src/tests). But domain specific fakes and mocks (for example [mocking common requests](https://github.com/OsomePteLtd/websome/blob/main/src/tests/mocks/common.mock.ts)) should be stored only in appropriate repo.
 
 ## E2E
 
