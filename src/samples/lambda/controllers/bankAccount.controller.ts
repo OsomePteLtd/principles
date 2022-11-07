@@ -1,14 +1,4 @@
-import {
-  AcBankAccountCreateRequest,
-  AcBankAccountDeleteRequest,
-  AcBankAccountGetRequest,
-  AcBankAccountIndexRequest,
-  AcBankAccountListResponse,
-  AcBankAccountRequest,
-  AcBankAccountResponse,
-  AcBankAccountUpdateRequest,
-  schemas,
-} from '@osome/sdk';
+import { AcBankAccountIndexRequest, AcBankAccountRequest, schemas } from '@osome/sdk';
 import {
   authorizeModel,
   authorizeRead,
@@ -26,7 +16,7 @@ import {
   updateBankAccount,
 } from '../../services/bankAccount.service';
 
-export const index = api<AcBankAccountIndexRequest, AcBankAccountListResponse>(
+export const index = api(
   schemas.AcBankAccountIndexRequest,
   schemas.AcBankAccountListResponse,
   async ({ request, event }) => {
@@ -37,7 +27,7 @@ export const index = api<AcBankAccountIndexRequest, AcBankAccountListResponse>(
   },
 );
 
-export const show = api<AcBankAccountGetRequest, AcBankAccountResponse>(
+export const show = api(
   schemas.AcBankAccountGetRequest,
   schemas.AcBankAccountResponse,
   async ({ request, event }) => {
@@ -49,7 +39,7 @@ export const show = api<AcBankAccountGetRequest, AcBankAccountResponse>(
   },
 );
 
-export const create = api<AcBankAccountCreateRequest, AcBankAccountResponse>(
+export const create = api(
   schemas.AcBankAccountCreateRequest,
   schemas.AcBankAccountResponse,
   async ({ request, event }) => {
@@ -62,7 +52,7 @@ export const create = api<AcBankAccountCreateRequest, AcBankAccountResponse>(
   },
 );
 
-export const update = api<AcBankAccountUpdateRequest, AcBankAccountResponse>(
+export const update = api(
   schemas.AcBankAccountUpdateRequest,
   schemas.AcBankAccountResponse,
   async ({ request, event }) => {
@@ -75,7 +65,7 @@ export const update = api<AcBankAccountUpdateRequest, AcBankAccountResponse>(
   },
 );
 
-export const destroy = apiNoContent<AcBankAccountDeleteRequest>(
+export const destroy = apiNoContent(
   schemas.AcBankAccountDeleteRequest,
   async ({ request, event }) => {
     const bankAccount = await findBankAccount(request);
