@@ -727,7 +727,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 | Service / Feature | own database instance | LTS Node | TS SLS config | SLS separate handlers | canary |
 | ----------------- | --------------------- | -------- | ------------- | --------------------- | ------ |
-| alfred            | 🍏                    | 🍅       | 🍏            | ❓                    | 🍏     |
+| alfred            | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
 | analytix          | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
 | auditor           | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
 | billy             | 🍏                    | 🍅       | 🍏            | ❓                    | 🍏     |
