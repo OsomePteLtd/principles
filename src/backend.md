@@ -671,6 +671,8 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | skyler            | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | ❓      | 🍏        | 🍏     | ❓        | 🍅         |
 | tigerdocs         | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     | ❓        | 🍅         |
 
+[ssmWrapper](https://www.notion.so/osome/SSM-Wrapper-56823b69e1104d608a1ed876b94bbdfd)
+
 ### Static checks
 
 | Service / Feature | eslint config | depcheck | unused-exports | type-check | type-coverage | build | separate steps in CI | editorconfig | spell check |
