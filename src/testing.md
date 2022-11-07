@@ -94,7 +94,33 @@ Examples of good E2E test candidates:
 
    Related articles: [The Merits of Mocking](https://kentcdodds.com/blog/the-merits-of-mocking)
 
-1. Common fakes and mocks (for example [mocking auth requests](https://github.com/OsomePteLtd/websome-kit/blob/main/src/tests/mocks/auth.mock.ts)) for multiple micro frontends should be stored in [websome-kit](https://github.com/OsomePteLtd/websome-kit/tree/main/src/tests) or [agent-kit](https://github.com/OsomePteLtd/agent-kit/tree/main/src/tests). But domain specific fakes and mocks (for example [mocking common requests](https://github.com/OsomePteLtd/websome/blob/main/src/tests/mocks/common.mock.ts)) should be stored only in appropriate repo.
+1. Common fakes and mocks for multiple micro frontends should be stored in [websome-kit](https://github.com/OsomePteLtd/websome-kit/tree/main/src/tests) or [agent-kit](https://github.com/OsomePteLtd/agent-kit/tree/main/src/tests). For example, mocking auth is using in integration tests in several micro frontends:
+
+   ```typescript
+   export function mockAuth(mockiavelli: Mockiavelli, user: DeepPartial<User>) {
+     mockiavelli.mockPOST(`/auth/sms/send_code`, {
+       status: 200,
+       body: { verificationToken: 'verificationToken' },
+     });
+   }
+   ```
+
+   And to avoid duplication you can import `mockAuth` and `fakeUser` in your tests:
+
+   ```typescript
+   import { fakes, mocks } from '@osomepteltd/websome-kit/tests';
+   const user = fakes.fakeUser();
+   mocks.mockAuth(mockiavelli, user);
+   ```
+
+1. Domain specific fakes and mocks should be stored only in appropriate repo. For example, request `/ecommerce/amazon/install` is using only in `websome-ecommerce`, and mock for this request should be stored in `websome-ecommerce`:
+
+   ```typescript
+   mockiavelli.mockPOST('/ecommerce/amazon/install', {
+     status: 200,
+     body: { url: 'https://osome.com' },
+   });
+   ```
 
 ## E2E
 
