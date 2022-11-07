@@ -1,5 +1,31 @@
 # Backend Development Principles
 
+- [Database](#database)
+- [Migrations](#migrations)
+- [Data migration](#data-migration)
+- [Models](#models)
+- [Controllers](#controllers)
+- [Services](#services)
+- [Jobs](#jobs)
+- [Event Bus](#event-bus)
+- [Tests](#tests)
+- [Microservices](#microservices)
+  - [Timeouts](#timeouts)
+  - [Data Replication](#data-replication)
+- [Best Practices Checklist](#best-practices-checklist)
+  - [Main](#main)
+  - [Toolkit](#toolkit)
+  - [Static checks](#static-checks)
+  - [Tests](#tests-1)
+  - [Infrastructure](#infrastructure)
+  - [Other](#other)
+  - [Environments](#environments)
+- [Idempotency](#idempotency)
+
+<!---
+Table of contents can be generated in services like http://ecotrust-canada.github.io/markdown-toc/
+-->
+
 ## Database
 
 1. Use foreign key constraints for foreign keys.
@@ -390,6 +416,8 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    }
    ```
 
+1. Use the [Lambda Event Sample](samples/lambda/events/ticket.event.ts) as a sample of the proper event handler.
+
 ## Tests
 
 1. All HTTP endpoints, lambdas and jobs should be covered by tests.
@@ -598,54 +626,56 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | alfred            | partner-solutions    | 🍏     | 🍏               | 🍏           |
 | analytix          | platform             | 🍅     | 🍏               | 🍅           |
 | auditor           | platform             | 🍅     | 🍏               | 🍅           |
-| billy             | billing              | 🍏     | 🍏               | 🍏           |
+| billy             | retention            | 🍏     | 🍏               | 🍏           |
 | bouncer           | platform             | 🍅     | 🍏               | ❓           |
 | core              | platform             | 🍅     | 🍅               | 🍅           |
 | dealer            | agent-x-sales        | 🍏     | 🍏               | 🍏           |
 | enrique           | documents-processing | 🍅     | 🍏               | ❓           |
 | flexflow          | platform             | 🍅     | 🍅               | ❓           |
 | hermes            | platform             | ❓     | ❓               | ❓           |
-| hero              | accounting           | 🍏     | 🍏               | ❓           |
+| hero              | platform             | 🍏     | 🍏               | ❓           |
 | invoker           | invoice-n-payments   | 🍏     | 🍏               | 🍏           |
 | jamal             | documents-processing | 🍅     | 🍏               | 🍏           |
+| nano              | accounting           | ❓     | ❓               | ❓           |
 | pablo             | factory              | 🍏     | 🍏               | 🍏           |
-| payot             | billing              | 🍏     | 🍏               | 🍏           |
+| payot             | retention            | 🍏     | 🍏               | 🍏           |
 | pechkin           | platform             | 🍅     | 🍏               | ❓           |
-| scrooge           | accounting           | 🍅     | 🍏               | ❓           |
-| shiva             | e-commerce           | 🍏     | 🍏               | 🍏           |
-| skyler            | reporting            | 🍏     | 🍏               | 🍏           |
+| scrooge           | integrations         | 🍅     | 🍏               | ❓           |
+| shiva             | integrations         | 🍏     | 🍏               | 🍏           |
+| skyler            | accounting           | 🍏     | 🍏               | 🍏           |
 | tigerdocs         | agent-x              | 🍅     | 🍅               | ❓           |
 
 ### Toolkit
 
-| Service / Feature | wrappers | logger | ACL | lambda | eventBus | migrate | retry DLQ | sentry |
-| ----------------- | -------- | ------ | --- | ------ | -------- | ------- | --------- | ------ |
-| alfred            | ❓       | 🍏     | 🍏  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     |
-| analytix          | ❓       | ❓     | ❓  | ❓     | ❓       | 🍅      | ❓        | ❓     |
-| auditor           | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     |
-| billy             | 🍏       | 🍏     | 🍅  | 🍅     | 🍅       | 🍏      | 🍏        | ❓     |
-| bouncer           | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
-| core              | 🍅       | ❓     | ❓  | ❓     | 🍏       | ❓      | ❓        | ❓     |
-| dealer            | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍅        | 🍅     |
-| enrique           | ❓       | ❓     | 🍏  | 🍏     | 🍏       | 🍏      | 🍅        | ❓     |
-| flexflow          | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     |
-| hermes            | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     |
-| hero              | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
-| invoker           | 🍏       | 🍏     | 🍏  | 🍏     | ❓       | ❓      | ❓        | ❓     |
-| jamal             | 🍅       | 🍏     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
-| pablo             | 🍏       | 🍏     | 🍅  | 🍅     | 🍏       | 🍏      | 🍏        | 🍏     |
-| payot             | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍏        | ❓     |
-| pechkin           | 🍅       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍅        | 🍅     |
-| scrooge           | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
-| shiva             | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | 🍏      | 🍏        | ❓     |
-| skyler            | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | ❓      | 🍏        | 🍏     |
-| tigerdocs         | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     |
+| Service / Feature | wrappers | logger | ACL | lambda | eventBus | migrate | retry DLQ | sentry | telemetry | ssmWrapper |
+| ----------------- | -------- | ------ | --- | ------ | -------- | ------- | --------- | ------ | --------- | ---------- |
+| alfred            | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     | 🍏        | 🍏         |
+| analytix          | ❓       | ❓     | ❓  | ❓     | ❓       | 🍅      | ❓        | ❓     | ❓        | 🍅         |
+| auditor           | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     | ❓        | 🍏         |
+| billy             | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     | ❓        | 🍏         |
+| bouncer           | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     | ❓        | 🍅         |
+| core              | 🍅       | ❓     | ❓  | ❓     | 🍏       | ❓      | ❓        | ❓     | ❓        | 🍏         |
+| dealer            | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍅        | 🍅     | ❓        | 🍅         |
+| enrique           | ❓       | ❓     | 🍏  | 🍏     | 🍏       | 🍏      | 🍅        | ❓     | 🍏        | 🍅         |
+| flexflow          | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     | ❓        | 🍅         |
+| hermes            | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     | ❓        | 🍏         |
+| hero              | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     | ❓        | 🍅         |
+| invoker           | 🍏       | 🍏     | 🍏  | 🍏     | ❓       | ❓      | ❓        | ❓     | ❓        | 🍏         |
+| jamal             | 🍅       | 🍏     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     | ❓        | 🍅         |
+| nano              | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | 🍅        | ❓     | ❓        | 🍅         |
+| pablo             | 🍏       | 🍏     | 🍅  | 🍅     | 🍏       | 🍏      | 🍏        | 🍏     | 🍏        | 🍏         |
+| payot             | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     | ❓        | 🍅         |
+| pechkin           | 🍅       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍅        | 🍅     | 🍏        | 🍅         |
+| scrooge           | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     | ❓        | 🍅         |
+| shiva             | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | 🍏      | 🍏        | ❓     | ❓        | 🍏         |
+| skyler            | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | ❓      | 🍏        | 🍏     | ❓        | 🍅         |
+| tigerdocs         | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     | ❓        | 🍅         |
 
 ### Static checks
 
 | Service / Feature | eslint config | depcheck | unused-exports | type-check | type-coverage | build | separate steps in CI | editorconfig | spell check |
 | ----------------- | ------------- | -------- | -------------- | ---------- | ------------- | ----- | -------------------- | ------------ | ----------- |
-| alfred            | 🍏            | 🍏       | 🍏             | 🍏         | ❓            | ❓    | 🍏                   | 🍏           | 🍏          |
+| alfred            | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | analytix          | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
 | auditor           | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
 | billy             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
@@ -658,6 +688,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | hero              | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
 | invoker           | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | jamal             | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
+| nano              | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
 | pablo             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | payot             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | pechkin           | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
@@ -673,7 +704,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | alfred            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | analytix          | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
 | auditor           | 🍏   | ❓       | ❓                             | ❓               | 🍅         |
-| billy             | 🍏   | ❓       | 🍏                             | 🍏               | 🍅         |
+| billy             | 🍏   | 🍅       | 🍏                             | 🍏               | 🍅         |
 | bouncer           | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
 | core              | 🍅   | 🍅       | ❓                             | ❓               | 🍅         |
 | dealer            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
@@ -683,6 +714,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | hero              | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
 | invoker           | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | jamal             | 🍏   | 🍅       | 🍅                             | 🍏               | 🍅         |
+| nano              | ❓   | ❓       | ❓                             | ❓               | ❓         |
 | pablo             | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | payot             | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | pechkin           | 🍏   | 🍅       | 🍅                             | 🍏               | 🍏         |
@@ -708,6 +740,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | hero              | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
 | invoker           | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
 | jamal             | 🍏                    | 🍅       | 🍏            | 🍅                    | 🍏     |
+| nano              | ❓                    | ❓       | ❓            | ❓                    | ❓     |
 | pablo             | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
 | payot             | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
 | pechkin           | 🍏                    | 🍅       | 🍏            | 🍅                    | 🍏     |
@@ -723,7 +756,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | alfred            | 🍏                     | 🍏                  | 🍏                         | ❓              | 🍏         |
 | analytix          | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | auditor           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
-| billy             | 🍏                     | ❓                  | ❓                         | ❓              | 🍏         |
+| billy             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | bouncer           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | core              | ❓                     | 🍅                  | 🍅                         | ❓              | ❓         |
 | dealer            | 🍏                     | 🍏                  | 🍏                         | ❓              | 🍏         |
@@ -733,8 +766,9 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | hero              | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | invoker           | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | jamal             | 🍏                     | ❓                  | ❓                         | ❓              | ❓         |
+| nano              | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | pablo             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
-| payot             | ❓                     | ❓                  | ❓                         | ❓              | 🍏         |
+| payot             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | pechkin           | 🍏                     | 🍏                  | 🍅                         | 🍅              | 🍅         |
 | scrooge           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | shiva             | 🍏                     | 🍏                  | 🍏                         | 🍏              | ❓         |
@@ -748,7 +782,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | alfred            | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | ❓  | ❓  | ❓  |
 | analytix          | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | auditor           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| billy             | 🍏         | 🍏    | 🍏  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  |
+| billy             | 🍏         | 🍏    | 🍏  | 🍏  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  |
 | bouncer           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | core              | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  |
 | dealer            | 🍏         | 🍏    | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  |
@@ -758,8 +792,9 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | hero              | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | invoker           | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  |
 | jamal             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
+| nano              | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | pablo             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| payot             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
+| payot             | 🍏         | 🍏    | 🍏  | 🍏  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | pechkin           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | scrooge           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | shiva             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
