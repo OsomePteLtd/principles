@@ -304,12 +304,32 @@ export function fakeTicket() {}
 
 1. Prefer UX over DX.
 
-1. Prefer absolute imports where it's possible. But it's reasonable to use relative imports for files from current or parent directory, they can be considered as module and imported files aren't imported outside.
+1. Prefer relative imports.
+
+   ```typescript
+   // bad
+   import { DocumentPreview } from 'components/documents/DocumentPreview';
+   ```
 
    ```typescript
    // good
-   import { DocumentPreview } from 'components/documents/DocumentPreview';
+   import { DocumentPreview } from '../../components/documents/DocumentPreview';
    import { MyBlock } from './MyComponent.styled.ts';
+   ```
+
+   Absolute imports allowed for cases:
+
+   1. when we import from `legacy` folder,
+   2. when we work inside `legacy` folder.
+
+   ```typescript
+   // ok
+   // src/legacy/some/path/components/Foo.tsx
+   import { Bar } from 'src/components/Bar';
+
+   // ok
+   // src/components/Bar.tsx
+   import { Baz } from 'src/legacy/some/path/components/Baz';
    ```
 
 1. Report unexpected errors to bugsnag. Pay attention to your try/catch blocks:
@@ -347,3 +367,13 @@ export function fakeTicket() {}
 ## Module federation
 
 1. Use `entryPoints` folder to expose components of your microfrontend
+
+1. Make microfrontends working without copying `.example.env` to `.env`. Provide defaults in your sandbox code. `.env` file is not forbidden but shouldn't obligatory for sandbox. It helps to use microfrontend for developers from other teams and QA who write integration tests.
+
+   ```typescript
+   // sandbox code
+   // good
+   const companyId = process.env.companyId || 12345;
+   ```
+
+1. If microfrontend has several sandboxes, microfrontend should have main page with list of links to sandboxes. It provides ability to test different sandboxes during CI and improves experience for developers and QA.
