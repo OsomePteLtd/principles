@@ -642,7 +642,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | pechkin           | platform             | 🍅     | 🍏               | ❓           |
 | scrooge           | integrations         | 🍅     | 🍏               | ❓           |
 | shiva             | integrations         | 🍏     | 🍏               | 🍏           |
-| skyler            | accounting           | 🍏     | 🍏               | 🍏           |
+| skyler            | factory              | 🍏     | 🍏               | 🍏           |
 | tigerdocs         | agent-x              | 🍅     | 🍅               | ❓           |
 
 ### Toolkit
