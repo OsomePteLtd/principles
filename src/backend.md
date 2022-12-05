@@ -629,10 +629,10 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | billy             | retention            | 🍏     | 🍏               | 🍏           |
 | bouncer           | platform             | 🍅     | 🍏               | ❓           |
 | core              | platform             | 🍅     | 🍅               | 🍅           |
-| dealer            | agent-x-sales        | 🍏     | 🍏               | 🍏           |
+| dealer            | sales-platform       | 🍏     | 🍏               | 🍏           |
 | enrique           | documents-processing | 🍅     | 🍏               | ❓           |
 | flexflow          | platform             | 🍅     | 🍅               | ❓           |
-| hermes            | platform             | ❓     | ❓               | ❓           |
+| hermes            | newborn              | ❓     | ❓               | ❓           |
 | hero              | platform             | 🍏     | 🍏               | ❓           |
 | invoker           | invoice-n-payments   | 🍏     | 🍏               | 🍏           |
 | jamal             | documents-processing | 🍅     | 🍏               | 🍏           |
