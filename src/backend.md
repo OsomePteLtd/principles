@@ -634,7 +634,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | flexflow          | platform             | 🍅     | 🍅               | ❓           |
 | hermes            | platform             | ❓     | ❓               | ❓           |
 | hero              | platform             | 🍏     | 🍏               | ❓           |
-| invoker           | invoice-n-payments   | 🍏     | 🍏               | 🍏           |
+| invoker           | business-tools       | 🍏     | 🍏               | 🍏           |
 | jamal             | documents-processing | 🍅     | 🍏               | 🍏           |
 | nano              | accounting           | ❓     | ❓               | ❓           |
 | pablo             | factory              | 🍏     | 🍏               | 🍏           |
