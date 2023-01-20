@@ -52,7 +52,7 @@ src/
    type DocumentsById = Partial<Record<Document['id'], Document>>;
    ```
 
-1. Prefer specific types instead of common ones. It allows us to prevent more errors or development stage.
+2. Prefer specific types instead of common ones. It allows us to prevent more errors or development stage.
 
    ```typescript
    // bad
@@ -74,9 +74,24 @@ src/
    function doSomething(entity: SomeEntity, options?: DoSomethingOptions);
    ```
 
-1. Tend to increase typescript coverage, avoid `any` and implicit `any`.
+3. Tend to increase typescript coverage, avoid `any` and implicit `any`.
 
-1. When you touch `.js` file, convert it to `.ts`. But if you really need a hotfix or your PR already includes refactoring and additional refactoring can make your PR too swollen, you can add label `hotfix` to your PR, but don't abuse this label.
+4. When you touch `.js` file, convert it to `.ts`. But if you really need a hotfix or your PR already includes refactoring and additional refactoring can make your PR too swollen, you can add label `hotfix` to your PR, but don't abuse this label.
+
+5. Don't use FC to define react component types. if you need to define children, then use `PropsWithChildren` or define manually
+   ```ts
+   // Bad
+   type SelectProps = FC<{ value: string; }>;
+   
+   // Good: manually
+   interface SelectProps {
+        value: string;
+        children?: ReactNode;
+   }
+   
+   // Good: with PropsWithChildren
+   type SelectProps = PropsWithChildren<{ value: string; }>
+   ```
 
 ## SDK
 
