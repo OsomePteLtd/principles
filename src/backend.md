@@ -641,6 +641,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | pablo             | factory              | 🍏     | 🍏               | 🍏           |
 | payot             | retention            | 🍏     | 🍏               | 🍏           |
 | pechkin           | platform             | 🍅     | 🍏               | ❓           |
+| roberto           | accounting           | ❓     | ❓               | ❓           |
 | scrooge           | integrations         | 🍅     | 🍏               | ❓           |
 | shiva             | integrations         | 🍏     | 🍏               | 🍏           |
 | skyler            | factory              | 🍏     | 🍏               | 🍏           |
@@ -667,6 +668,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | pablo             | 🍏       | 🍏     | 🍅  | 🍅     | 🍏       | 🍏      | 🍏        | 🍏     | 🍏        | 🍏         |
 | payot             | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     | ❓        | 🍏         |
 | pechkin           | 🍅       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍅        | 🍅     | 🍏        | 🍏         |
+| roberto           | 🍅       | ❓     | ❓  | ❓     | 🍏       | ❓      | ❓        | ❓     | ❓        | 🍏         |
 | scrooge           | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     | ❓        | 🍏         |
 | shiva             | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | 🍏      | 🍏        | ❓     | ❓        | 🍏         |
 | skyler            | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | ❓      | 🍏        | 🍏     | ❓        | 🍏         |
@@ -695,6 +697,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | pablo             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | payot             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | pechkin           | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
+| roberto           | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | 🍏                   | 🍏           | ❓          |
 | scrooge           | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
 | shiva             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
 | skyler            | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
@@ -721,6 +724,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | pablo             | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | payot             | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
 | pechkin           | 🍏   | 🍅       | 🍅                             | 🍏               | 🍏         |
+| roberto           | 🍅   | 🍅       | ❓                             | ❓               | 🍅         |
 | scrooge           | 🍏   | ❓       | ❓                             | ❓               | 🍅         |
 | shiva             | 🍏   | 🍏       | ❓                             | ❓               | 🍅         |
 | skyler            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
@@ -747,6 +751,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | pablo             | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
 | payot             | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
 | pechkin           | 🍏                    | 🍅       | 🍏            | 🍅                    | 🍏     |
+| roberto           | ❓                    | 🍅       | ❓            | ❓                    | 🍅     |
 | scrooge           | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
 | shiva             | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
 | skyler            | 🍅                    | 🍅       | 🍏            | 🍏                    | 🍏     |
@@ -773,6 +778,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | pablo             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | payot             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
 | pechkin           | 🍏                     | 🍏                  | 🍅                         | 🍅              | 🍅         |
+| roberto           | ❓                     | 🍅                  | 🍅                         | ❓              | ❓         |
 | scrooge           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
 | shiva             | 🍏                     | 🍏                  | 🍏                         | 🍏              | ❓         |
 | skyler            | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
@@ -799,6 +805,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | pablo             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | payot             | 🍏         | 🍏    | 🍏  | 🍏  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | pechkin           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
+| roberto           | 🍏         | ❓    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | scrooge           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | shiva             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
 | skyler            | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  |
