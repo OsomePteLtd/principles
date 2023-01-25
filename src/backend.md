@@ -630,12 +630,13 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | bouncer           | platform             | 🍅     | 🍏               | ❓           |
 | core              | platform             | 🍅     | 🍅               | 🍅           |
 | dealer            | sales-platform       | 🍏     | 🍏               | 🍏           |
-| enrique           | documents-processing | 🍅     | 🍏               | ❓           |
+| enrique           | factory-automation   | 🍅     | 🍏               | ❓           |
 | flexflow          | platform             | 🍅     | 🍅               | ❓           |
 | hermes            | newborn              | ❓     | ❓               | ❓           |
 | hero              | platform             | 🍏     | 🍏               | ❓           |
 | invoker           | business-tools       | 🍏     | 🍏               | 🍏           |
 | jamal             | documents-processing | 🍅     | 🍏               | 🍏           |
+| lilith            | documents-processing | 🐍     | 🐍               | 🐍           |
 | nano              | accounting           | ❓     | ❓               | ❓           |
 | pablo             | factory              | 🍏     | 🍏               | 🍏           |
 | payot             | retention            | 🍏     | 🍏               | 🍏           |
