@@ -622,7 +622,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 ### Main
 
 | Service / Feature | Owner                | TS 4.4 | relative imports | typed models |
-| ----------------- | -------------------- | ------ | ---------------- | ------------ |
+| ----------------- |----------------------| ------ | ---------------- | ------------ |
 | alfred            | partner-solutions    | 🍏     | 🍏               | 🍏           |
 | analytix          | platform             | 🍅     | 🍏               | 🍅           |
 | auditor           | platform             | 🍅     | 🍏               | 🍅           |
@@ -644,7 +644,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 | shiva             | integrations         | 🍏     | 🍏               | 🍏           |
 | skyler            | factory              | 🍏     | 🍏               | 🍏           |
 | tigerdocs         | agent-x              | 🍅     | 🍅               | ❓           |
-| roberto           | platform, accounting | ❓     | ❓               | ❓           |
+| roberto           | accounting           | ❓     | ❓               | ❓           |
 
 ### Toolkit
 
