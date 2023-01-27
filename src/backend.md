@@ -12,14 +12,6 @@
 - [Microservices](#microservices)
   - [Timeouts](#timeouts)
   - [Data Replication](#data-replication)
-- [Best Practices Checklist](#best-practices-checklist)
-  - [Main](#main)
-  - [Toolkit](#toolkit)
-  - [Static checks](#static-checks)
-  - [Tests](#tests-1)
-  - [Infrastructure](#infrastructure)
-  - [Other](#other)
-  - [Environments](#environments)
 - [Idempotency](#idempotency)
 
 <!---
@@ -616,7 +608,6 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    `serviceprefixData` should contain serialized foreign data (with a type from SDK, for example `CoCompany` and `AxCompany`). Such column names should have the following form – `serviceprefixData`, for example `corpsecData` and `robertoData`.
 
 1. Data replication should be implemented via the [service bus](#event-bus).
-
 
 ## Idempotency
 
