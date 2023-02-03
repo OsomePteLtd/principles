@@ -81,7 +81,11 @@ src/
 5. Don't use FC to define react component types. if you need to define children, then use `PropsWithChildren` or define manually
    ```ts
    // Bad
-   type SelectProps = FC<{ value: string; }>;
+   type SelectProps = { value: string; };
+   
+   export const Select: FC<SelectProps> = (props) => {
+        // ...
+   };
    
    // Good: manually
    interface SelectProps {
@@ -89,8 +93,16 @@ src/
         children?: ReactNode;
    }
    
+   export const Select = (props: SelectProps) => {
+        // ...
+   };
+   
    // Good: with PropsWithChildren
    type SelectProps = PropsWithChildren<{ value: string; }>
+
+   export const Select = (props: SelectProps) => {
+        // ...
+   };
    ```
 
 ## SDK
