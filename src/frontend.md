@@ -78,6 +78,34 @@ src/
 
 1. When you touch `.js` file, convert it to `.ts`. But if you really need a hotfix or your PR already includes refactoring and additional refactoring can make your PR too swollen, you can add label `hotfix` to your PR, but don't abuse this label.
 
+1. Don't use FC to define react component types. if you need to define children, then use `PropsWithChildren` or define manually
+
+   ```ts
+   // Bad
+   type SelectProps = { value: string };
+
+   export const Select: FC<SelectProps> = (props) => {
+     // ...
+   };
+
+   // Good: manually
+   interface SelectProps {
+     value: string;
+     children?: ReactNode;
+   }
+
+   export const Select = (props: SelectProps) => {
+     // ...
+   };
+
+   // Good: with PropsWithChildren
+   type SelectProps = PropsWithChildren<{ value: string }>;
+
+   export const Select = (props: SelectProps) => {
+     // ...
+   };
+   ```
+
 ## SDK
 
 1. Avoid `as` keyword for importing types from sdk
