@@ -10,14 +10,13 @@ src/
       BankAccountTable/
         [no nested directories]
         [avoid index.ts]
+        [other files should be placed in queries or services]
         BankAccountTable.ts
         BankAccountTable.test.ts
         BankAccountTableBadge.ts (child component)
         BankAccountTable.styled.ts
         BankAccountTable.hook.ts (ui hook used only in the current component)
         icon.svg (the icon used only in the current component)
-        [avoid index.ts]
-        [other files should be placed in queries or services]
     shared/
       SomeNonEntityComponent/
       media/ (shared icons)
@@ -27,11 +26,10 @@ src/
     bankAccount/
       BankAccountList/
         [no nested directories]
-
+        [other files should be placed in queries or services]
+        [components for the page should be placed in components folder]
         BankAccountList.page.ts
         BankAccountList.page.test.ts
-        [components for the page should be placed in components folder]
-        [other files should be placed in queries or services]
   queries/
     bankAccount.query.ts (query hook)
   services/
