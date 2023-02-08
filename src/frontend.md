@@ -5,30 +5,55 @@
 ```
 src/
   components/ (can be dumb and smart)
-    bankAccount/
+    [All components should be placed in some entity folder or shared folder]
+    bankAccount/ (entity, module, .etc)
       BankAccountTable/
         [no nested directories]
+        [avoid index.ts]
         BankAccountTable.ts
         BankAccountTable.test.ts
         BankAccountTableBadge.ts (child component)
         BankAccountTable.styled.ts
+        BankAccountTable.hook.ts (ui hook used only in the current component)
+        icon.svg (the icon used only in the current component)
+        [avoid index.ts]
+        [other files should be placed in queries or services]
     shared/
       SomeNonEntityComponent/
+      media/ (shared icons)
+        [no nested directories]
+        icon.svg
   pages/
     bankAccount/
       BankAccountList/
+        [no nested directories]
+
         BankAccountList.page.ts
         BankAccountList.page.test.ts
+        [components for the page should be placed in components folder]
+        [other files should be placed in queries or services]
   queries/
-    bankAccount.query.ts
+    bankAccount.query.ts (query hook)
   services/
     [can be splitted into several files]
-    bankAccount/
+    bankAccount/ (utils, helpers, all the things that should not be put in the components folder)
+      [no nested directories]
       bankAccount.service.ts
       bankAccountJournal.service.ts
+      bankAccount.hook.ts (entity hook)
     [or single file]
     auditLog.service.ts
+    hook.ts (common hook)
 ```
+
+Notes:
+
+- **avoid adding additional folders to the project**;
+- component ui hook [example](https://github.com/OsomePteLtd/agent-factory-tickets/blob/7ca56a50993592d1dbfc62a272559423e0b16303/src/components/reconciliation/shared/Basket/Basket.tsx);
+- query hook [example](https://github.com/OsomePteLtd/agent/blob/main/src/queries/auditLog.query.ts);
+- entity hook [example](https://github.com/OsomePteLtd/websome/blob/main/src/hooks/ticket/useTicketNavigation.ts);
+- common hook [example](https://github.com/OsomePteLtd/websome-accounting/blob/2e48a950f2694145211dd3f3c3183c23b43e3158/src/hooks/useEventOnReady.ts);
+- service [example](https://github.com/OsomePteLtd/websome/blob/main/src/services/company.service.ts)
 
 ## Module federation project structure (for services which exports Components)
 
