@@ -14,14 +14,15 @@ src/
         BankAccountTable.ts
         BankAccountTable.test.ts
         BankAccountTableBadge.ts (child component)
+        useBankAccountTableBadge.ts (ui hook used only in the current component)
         BankAccountTable.styled.ts
-        BankAccountTable.hook.ts (ui hook used only in the current component)
-        icon.svg (the icon used only in the current component)
+        useBankAccountTable.ts (ui hook used only in the current component)
+        icon.svg|png|jpeg... (the icon or any static file used only in the current component)
     shared/
       SomeNonEntityComponent/
-      media/ (shared icons)
+      media/ (shared static files)
         [no nested directories]
-        icon.svg
+        icon.svg|png|jpeg...
   pages/
     bankAccount/
       BankAccountList/
