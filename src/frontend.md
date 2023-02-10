@@ -12,7 +12,8 @@ src/
         [avoid index.ts]
         [other files should be placed in queries or services]
         BankAccountTable.ts
-        BankAccountTable.test.ts
+        BankAccountTable.test.ts (unit tests)
+        BankAccountTable.spec.ts (integration tests)
         BankAccountTableBadge.ts (child component)
         useBankAccountTableBadge.ts (ui hook used only in the current component)
         BankAccountTable.styled.ts
@@ -32,17 +33,18 @@ src/
         BankAccountList.page.ts
         BankAccountList.page.test.ts
   queries/
-    bankAccount.query.ts (query hook)
+    [hooks use react-query, sdk, include mutations, some data normalisation, .etc]
+    bankAccount.query.ts
   services/
     [can be splitted into several files]
     bankAccount/ (utils, helpers, all the things that should not be put in the components folder)
       [no nested directories]
       bankAccount.service.ts
       bankAccountJournal.service.ts
-      bankAccount.hook.ts (entity hook)
+      useBankAccount.ts (hooks used onle in bankAccount, don't make requests directly)
     [or single file]
     auditLog.service.ts
-    hook.ts (common hook)
+    useEventOnReady.ts (common hooks not bound to a specific component, used in more than one component, don't make requests directly)
 ```
 
 Notes:
