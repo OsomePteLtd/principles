@@ -5,12 +5,12 @@
 ```
 src/
   components/ (can be dumb and smart)
-    [All components should be placed in some entity folder or shared folder]
+    [All components should be placed in some entity directory or shared directory]
     bankAccount/ (entity, module, .etc)
       BankAccountTable/
         [no nested directories]
         [avoid index.ts]
-        [other files should be placed in queries or services]
+        [other files, but component files .tsx, styled.tsx, local ui hooks, .test.ts, spec.ts, local static files should be placed in queries or services]
         BankAccountTable.ts
         BankAccountTable.test.ts (unit tests)
         BankAccountTable.spec.ts (integration tests)
@@ -29,7 +29,7 @@ src/
       BankAccountList/
         [no nested directories]
         [other files should be placed in queries or services]
-        [components for the page should be placed in components folder]
+        [components for the page should be placed in components directory]
         BankAccountList.page.ts
         BankAccountList.page.test.ts
   queries/
@@ -37,7 +37,7 @@ src/
     bankAccount.query.ts
   services/
     [can be splitted into several files]
-    bankAccount/ (utils, helpers, all the things that should not be put in the components folder)
+    bankAccount/ (utils, helpers, all the things that should not be put in the components directory)
       [no nested directories]
       bankAccount.service.ts
       bankAccountJournal.service.ts
@@ -49,7 +49,7 @@ src/
 
 Notes:
 
-- **avoid adding additional folders to the project**;
+- **avoid adding additional top-level directories to the project**;
 - component ui hook [example](https://github.com/OsomePteLtd/agent-factory-tickets/blob/7ca56a50993592d1dbfc62a272559423e0b16303/src/components/reconciliation/shared/Basket/Basket.tsx);
 - query hook [example](https://github.com/OsomePteLtd/agent/blob/main/src/queries/auditLog.query.ts);
 - entity hook [example](https://github.com/OsomePteLtd/websome/blob/main/src/hooks/ticket/useTicketNavigation.ts);
@@ -58,7 +58,7 @@ Notes:
 
 ## Module federation project structure (for services which exports Components)
 
-Same as above but with some new folders:
+Same as above but with some new directory:
 
 ```
 src/
@@ -373,8 +373,8 @@ export function fakeTicket() {}
 
    Absolute imports allowed for cases:
 
-   1. when we import from `legacy` folder,
-   2. when we work inside `legacy` folder.
+   1. when we import from `legacy` directory,
+   2. when we work inside `legacy` directory.
 
    ```typescript
    // ok
@@ -420,7 +420,7 @@ export function fakeTicket() {}
 
 ## Module federation
 
-1. Use `entryPoints` folder to expose components of your microfrontend
+1. Use `entryPoints` directory to expose components of your microfrontend
 
 1. Make microfrontends working without copying `.example.env` to `.env`. Provide defaults in your sandbox code. `.env` file is not forbidden but shouldn't obligatory for sandbox. It helps to use microfrontend for developers from other teams and QA who write integration tests.
 
