@@ -41,10 +41,10 @@ src/
       [no nested directories]
       bankAccount.service.ts
       bankAccountJournal.service.ts
-      useBankAccount.ts (hooks used onle in bankAccount, don't make requests directly)
+      useBankAccount.service.ts (hooks used only in bankAccount, don't make requests directly)
     [or single file]
     auditLog.service.ts
-    useEventOnReady.ts (common hooks not bound to a specific component, used in more than one component, don't make requests directly)
+    useEventOnReady.service.ts (common hooks not bound to a specific component, used in more than one component, don't make requests directly)
 ```
 
 Notes:
