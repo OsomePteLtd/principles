@@ -10,13 +10,14 @@ src/
       BankAccountTable/
         [no nested directories]
         [avoid index.ts]
-        [other files, but component files .tsx, styled.tsx, local ui hooks, .test.ts, spec.ts, local static files should be placed in queries or services]
+        [other files, but component files .tsx, styled.tsx, stories.tsx, local ui hooks, .test.ts, spec.ts, local static files should be placed in queries or services]
         BankAccountTable.ts
         BankAccountTable.test.ts (unit tests)
         BankAccountTable.spec.ts (integration tests)
         BankAccountTableBadge.ts (child component)
         useBankAccountTableBadge.ts (ui hook used only in the current component)
         BankAccountTable.styled.ts
+        BankAccountTable.stories.tsx
         useBankAccountTable.ts (ui hook used only in the current component)
         icon.svg|png|jpeg... (the icon or any static file used only in the current component)
     shared/
@@ -31,7 +32,8 @@ src/
         [other files should be placed in queries or services]
         [components for the page should be placed in components directory]
         BankAccountList.page.ts
-        BankAccountList.page.test.ts
+        BankAccountList.page.styled.tsx
+        BankAccountList.page.spec.ts (integration tests)
   queries/
     [hooks use react-query, sdk, include mutations, some data normalisation, .etc]
     bankAccount.query.ts
