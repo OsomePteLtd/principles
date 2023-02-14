@@ -12,13 +12,13 @@ src/
         [avoid index.ts]
         [other files, but component files .tsx, styled.tsx, stories.tsx, local ui hooks, .test.ts, spec.ts, local static files should be placed in queries or services]
         BankAccountTable.ts
+        BankAccountTable.styled.ts
+        useBankAccountTable.ts (ui hook used only in the current component)
+        BankAccountTable.stories.tsx
         BankAccountTable.test.ts (unit tests)
         BankAccountTable.spec.ts (integration tests)
         BankAccountTableBadge.ts (child component)
         useBankAccountTableBadge.ts (ui hook used only in the current component)
-        BankAccountTable.styled.ts
-        BankAccountTable.stories.tsx
-        useBankAccountTable.ts (ui hook used only in the current component)
         icon.svg|png|jpeg... (the icon or any static file used only in the current component)
     shared/
       SomeNonEntityComponent/
