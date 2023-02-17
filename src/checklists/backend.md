@@ -4,31 +4,31 @@
 
 ### Main
 
-| Service / Feature | Owner                | TS 4.4 | relative imports | typed models |
-| ----------------- | -------------------- | ------ | ---------------- | ------------ |
-| alfred            | partner-solutions    | 🍏     | 🍏               | 🍏           |
-| analytix          | platform             | 🍅     | 🍏               | 🍅           |
-| auditor           | platform             | 🍅     | 🍏               | 🍅           |
-| billy             | retention            | 🍏     | 🍏               | 🍏           |
-| bouncer           | platform             | 🍅     | 🍏               | ❓           |
-| core              | platform             | 🍅     | 🍅               | 🍅           |
-| dealer            | sales-platform       | 🍏     | 🍏               | 🍏           |
-| enrique           | factory-automation   | 🍅     | 🍏               | ❓           |
-| flexflow          | platform             | 🍅     | 🍅               | ❓           |
-| hermes            | newborn              | ❓     | ❓               | ❓           |
-| hero              | platform             | 🍏     | 🍏               | ❓           |
-| invoker           | business-tools       | 🍏     | 🍏               | 🍏           |
-| jamal             | documents-processing | 🍅     | 🍏               | 🍏           |
-| lilith            | documents-processing | 🐍     | 🐍               | 🐍           |
-| nano              | accounting           | ❓     | ❓               | ❓           |
-| pablo             | factory              | 🍏     | 🍏               | 🍏           |
-| payot             | retention            | 🍏     | 🍏               | 🍏           |
-| pechkin           | platform             | 🍅     | 🍏               | ❓           |
-| roberto           | accounting           | ❓     | ❓               | ❓           |
-| scrooge           | integrations         | 🍅     | 🍏               | ❓           |
-| shiva             | integrations         | 🍏     | 🍏               | 🍏           |
-| skyler            | factory              | 🍏     | 🍏               | 🍏           |
-| tigerdocs         | agent-x              | 🍅     | 🍅               | ❓           |
+| Service / Feature | TS 4.4 | relative imports | typed models |
+| ----------------- | ------ | ---------------- | ------------ |
+| alfred            | 🍏     | 🍏               | 🍏           |
+| analytix          | 🍅     | 🍏               | 🍅           |
+| auditor           | 🍅     | 🍏               | 🍅           |
+| billy             | 🍏     | 🍏               | 🍏           |
+| bouncer           | 🍅     | 🍏               | ❓           |
+| core              | 🍅     | 🍅               | 🍅           |
+| dealer            | 🍏     | 🍏               | 🍏           |
+| enrique           | 🍅     | 🍏               | ❓           |
+| flexflow          | 🍅     | 🍅               | ❓           |
+| hermes            | ❓     | ❓               | ❓           |
+| hero              | 🍏     | 🍏               | ❓           |
+| invoker           | 🍏     | 🍏               | 🍏           |
+| jamal             | 🍅     | 🍏               | 🍏           |
+| lilith            | 🐍     | 🐍               | 🐍           |
+| nano              | ❓     | ❓               | ❓           |
+| pablo             | 🍏     | 🍏               | 🍏           |
+| payot             | 🍏     | 🍏               | 🍏           |
+| pechkin           | 🍅     | 🍏               | ❓           |
+| roberto           | ❓     | ❓               | ❓           |
+| scrooge           | 🍅     | 🍏               | ❓           |
+| shiva             | 🍏     | 🍏               | 🍏           |
+| skyler            | 🍏     | 🍏               | 🍏           |
+| tigerdocs         | 🍅     | 🍅               | ❓           |
 
 ### Toolkit
 
