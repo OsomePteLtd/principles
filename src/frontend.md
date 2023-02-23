@@ -28,7 +28,7 @@ src/
   pages/
     bankAccount/
       BankAccountList/
-        [no nested directories]
+        [no nested directories, but you can add additional nested directory as an exception]
         [other files should be placed in queries or services]
         [components for the page should be placed in components directory]
         BankAccountList.page.ts
