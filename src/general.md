@@ -123,14 +123,13 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    // bad
 
    if (!cantDoIt) {
-      // I can do it
+     // I can do it
    }
-
 
    // good
 
    if (canDoIt) {
-      // I can do it
+     // I can do it
    }
    ```
 
