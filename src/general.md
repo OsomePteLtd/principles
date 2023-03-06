@@ -122,15 +122,11 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    ```typescript
    // bad
 
-   if (!cantDoIt) {
-     // I can do it
-   }
+   noDiscountAdjustment;
 
    // good
 
-   if (canDoIt) {
-     // I can do it
-   }
+   isDiscountAdjustmentDisabled;
    ```
 
 ## Clean Code
