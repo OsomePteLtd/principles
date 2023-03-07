@@ -1,5 +1,23 @@
 # Backend Development Principles
 
+- [Database](#database)
+- [Migrations](#migrations)
+- [Data migration](#data-migration)
+- [Models](#models)
+- [Controllers](#controllers)
+- [Services](#services)
+- [Jobs](#jobs)
+- [Event Bus](#event-bus)
+- [Tests](#tests)
+- [Microservices](#microservices)
+  - [Timeouts](#timeouts)
+  - [Data Replication](#data-replication)
+- [Idempotency](#idempotency)
+
+<!---
+Table of contents can be generated in services like http://ecotrust-canada.github.io/markdown-toc/
+-->
+
 ## Database
 
 1. Use foreign key constraints for foreign keys.
@@ -390,6 +408,8 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    }
    ```
 
+1. Use the [Lambda Event Sample](samples/lambda/events/ticket.event.ts) as a sample of the proper event handler.
+
 ## Tests
 
 1. All HTTP endpoints, lambdas and jobs should be covered by tests.
@@ -539,182 +559,55 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
   - if you need some other value of timeout please add a comment why you need it.
 
-## Best Practices Checklist
+### Data Replication
 
-### Main
+1. Every entity should be owned by a single service. The owner is the one who generates the `id`.
 
-| Service / Feature | Owner                | TS 4.4 | relative imports | typed models |
-| ----------------- | -------------------- | ------ | ---------------- | ------------ |
-| alfred            | partner-solutions    | 🍏     | 🍏               | 🍏           |
-| analytix          | platform             | 🍅     | 🍏               | 🍅           |
-| auditor           | platform             | 🍅     | 🍏               | 🍅           |
-| billy             | billing              | 🍏     | 🍏               | 🍏           |
-| bouncer           | platform             | 🍅     | 🍏               | ❓           |
-| core              | platform             | 🍅     | 🍅               | 🍅           |
-| dealer            | agent-x-sales        | 🍏     | 🍏               | 🍏           |
-| enrique           | documents-processing | 🍅     | 🍏               | ❓           |
-| flexflow          | platform             | 🍅     | 🍅               | ❓           |
-| hermes            | platform             | ❓     | ❓               | ❓           |
-| hero              | accounting           | 🍏     | 🍏               | ❓           |
-| invoker           | invoice-n-payments   | 🍏     | 🍏               | 🍏           |
-| jamal             | documents-processing | 🍅     | 🍏               | 🍏           |
-| pablo             | factory              | 🍏     | 🍏               | 🍏           |
-| payot             | billing              | 🍏     | 🍏               | 🍏           |
-| pechkin           | platform             | 🍅     | 🍏               | ❓           |
-| scrooge           | accounting           | 🍅     | 🍏               | ❓           |
-| shiva             | e-commerce           | 🍏     | 🍏               | 🍏           |
-| skyler            | reporting            | 🍏     | 🍏               | 🍏           |
-| tigerdocs         | agent-x              | 🍅     | 🍅               | ❓           |
+1. A service can store copies of foreign entities in the own database. The table should have the following structure:
 
-### Toolkit
+   ```
+   "id" INTEGER PRIMARY KEY,
+   "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   "rawData" JSONB NOT NULL
+   ```
 
-| Service / Feature | wrappers | logger | ACL | lambda | eventBus | migrate | retry DLQ | sentry |
-| ----------------- | -------- | ------ | --- | ------ | -------- | ------- | --------- | ------ |
-| alfred            | ❓       | 🍏     | 🍏  | 🍏     | 🍏       | 🍏      | 🍏        | 🍏     |
-| analytix          | ❓       | ❓     | ❓  | ❓     | ❓       | 🍅      | ❓        | ❓     |
-| auditor           | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     |
-| billy             | 🍏       | 🍏     | 🍅  | 🍅     | 🍅       | 🍏      | 🍏        | ❓     |
-| bouncer           | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
-| core              | 🍅       | ❓     | ❓  | ❓     | 🍏       | ❓      | ❓        | ❓     |
-| dealer            | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍅        | 🍅     |
-| enrique           | ❓       | ❓     | 🍏  | 🍏     | 🍏       | 🍏      | 🍅        | ❓     |
-| flexflow          | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     |
-| hermes            | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     |
-| hero              | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
-| invoker           | 🍏       | 🍏     | 🍏  | 🍏     | ❓       | ❓      | ❓        | ❓     |
-| jamal             | 🍅       | 🍏     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
-| pablo             | 🍏       | 🍏     | 🍅  | 🍅     | 🍏       | 🍏      | 🍏        | 🍏     |
-| payot             | 🍏       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍏        | ❓     |
-| pechkin           | 🍅       | 🍏     | 🍅  | 🍏     | 🍏       | 🍏      | 🍅        | 🍅     |
-| scrooge           | ❓       | ❓     | ❓  | ❓     | ❓       | 🍏      | ❓        | ❓     |
-| shiva             | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | 🍏      | 🍏        | ❓     |
-| skyler            | 🍏       | 🍏     | 🍏  | 🍏     | 🍏       | ❓      | 🍏        | 🍏     |
-| tigerdocs         | ❓       | ❓     | ❓  | ❓     | ❓       | ❓      | ❓        | ❓     |
+   - The table name should be equal to the original table name (for example, `companies`, not `coCompanies`).
 
-### Static checks
+   - `id` should be equal to the original entity ID.
 
-| Service / Feature | eslint config | depcheck | unused-exports | type-check | type-coverage | build | separate steps in CI | editorconfig | spell check |
-| ----------------- | ------------- | -------- | -------------- | ---------- | ------------- | ----- | -------------------- | ------------ | ----------- |
-| alfred            | 🍏            | 🍏       | 🍏             | 🍏         | ❓            | ❓    | 🍏                   | 🍏           | 🍏          |
-| analytix          | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
-| auditor           | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
-| billy             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
-| bouncer           | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
-| core              | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | 🍏                   | 🍏           | ❓          |
-| dealer            | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
-| enrique           | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
-| flexflow          | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
-| hermes            | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | ❓           | ❓          |
-| hero              | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
-| invoker           | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
-| jamal             | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
-| pablo             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
-| payot             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
-| pechkin           | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
-| scrooge           | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
-| shiva             | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
-| skyler            | 🍏            | 🍏       | 🍏             | 🍏         | 🍏            | 🍏    | 🍏                   | 🍏           | 🍏          |
-| tigerdocs         | ❓            | ❓       | ❓             | ❓         | ❓            | ❓    | ❓                   | 🍏           | ❓          |
+   - `createdAt` and `updatedAt` timestamps should be own.
 
-### Tests
+   - `rawData` should contain serialized original data (with a type from SDK, for example `Company`).
 
-| Service / Feature | jest | no sinon | global check for pending nocks | disabled network | anti flaky |
-| ----------------- | ---- | -------- | ------------------------------ | ---------------- | ---------- |
-| alfred            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
-| analytix          | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
-| auditor           | 🍏   | ❓       | ❓                             | ❓               | 🍅         |
-| billy             | 🍏   | ❓       | 🍏                             | 🍏               | 🍅         |
-| bouncer           | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
-| core              | 🍅   | 🍅       | ❓                             | ❓               | 🍅         |
-| dealer            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
-| enrique           | 🍏   | 🍏       | ❓                             | ❓               | 🍅         |
-| flexflow          | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
-| hermes            | ❓   | ❓       | ❓                             | ❓               | ❓         |
-| hero              | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
-| invoker           | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
-| jamal             | 🍏   | 🍅       | 🍅                             | 🍏               | 🍅         |
-| pablo             | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
-| payot             | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
-| pechkin           | 🍏   | 🍅       | 🍅                             | 🍏               | 🍏         |
-| scrooge           | 🍏   | ❓       | ❓                             | ❓               | 🍅         |
-| shiva             | 🍏   | 🍏       | ❓                             | ❓               | 🍅         |
-| skyler            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
-| tigerdocs         | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
+1. A service can extend the original entity with some fields, for example:
 
-### Infrastructure
+   ```
+   "id" INTEGER PRIMARY KEY,
+   "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   "rawData" JSONB NOT NULL,
+   "rafStatus" VARCHAR,
+   "rafAnswers" JSONB,
+   "rafDocument" JSONB,
+   "riskLevel" VARCHAR,
+   "kycStatus" BOOLEAN
+   ```
 
-| Service / Feature | own database instance | LTS Node | TS SLS config | SLS separate handlers | canary |
-| ----------------- | --------------------- | -------- | ------------- | --------------------- | ------ |
-| alfred            | 🍏                    | 🍅       | 🍏            | ❓                    | 🍏     |
-| analytix          | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
-| auditor           | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
-| billy             | 🍏                    | 🍅       | 🍏            | ❓                    | 🍏     |
-| bouncer           | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
-| core              | ❓                    | 🍅       | ❓            | ❓                    | 🍅     |
-| dealer            | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
-| enrique           | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
-| flexflow          | ❓                    | 🍅       | ❓            | ❓                    | 🍅     |
-| hermes            | ❓                    | 🍅       | ❓            | ❓                    | ❓     |
-| hero              | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
-| invoker           | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
-| jamal             | 🍏                    | 🍅       | 🍏            | 🍅                    | 🍏     |
-| pablo             | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
-| payot             | 🍏                    | 🍅       | 🍏            | 🍏                    | 🍏     |
-| pechkin           | 🍏                    | 🍅       | 🍏            | 🍅                    | 🍏     |
-| scrooge           | ❓                    | 🍅       | 🍏            | ❓                    | 🍏     |
-| shiva             | 🍏                    | 🍏       | 🍏            | 🍏                    | 🍏     |
-| skyler            | 🍅                    | 🍅       | 🍏            | 🍏                    | 🍏     |
-| tigerdocs         | ❓                    | 🍅       | ❓            | ❓                    | 🍅     |
+1. The owner service can back-replicate extended entities by other services, for example:
 
-### Other
+   ```
+   "id" SERIAL PRIMARY KEY,
+   "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   -- ... original fields ...
+   "corpsecData" JSONB,
+   "robertoData" JSONB,
+   ```
 
-| Service / Feature | no parameter store SDK | standard CODEOWNERS | dependabot with auto-merge | migration check | diff check |
-| ----------------- | ---------------------- | ------------------- | -------------------------- | --------------- | ---------- |
-| alfred            | 🍏                     | 🍏                  | 🍏                         | ❓              | 🍏         |
-| analytix          | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
-| auditor           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
-| billy             | 🍏                     | ❓                  | ❓                         | ❓              | 🍏         |
-| bouncer           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
-| core              | ❓                     | 🍅                  | 🍅                         | ❓              | ❓         |
-| dealer            | 🍏                     | 🍏                  | 🍏                         | ❓              | 🍏         |
-| enrique           | 🍏                     | 🍏                  | 🍏                         | ❓              | ❓         |
-| flexflow          | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
-| hermes            | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
-| hero              | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
-| invoker           | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
-| jamal             | 🍏                     | ❓                  | ❓                         | ❓              | ❓         |
-| pablo             | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
-| payot             | ❓                     | ❓                  | ❓                         | ❓              | 🍏         |
-| pechkin           | 🍏                     | 🍏                  | 🍅                         | 🍅              | 🍅         |
-| scrooge           | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
-| shiva             | 🍏                     | 🍏                  | 🍏                         | 🍏              | ❓         |
-| skyler            | 🍏                     | 🍏                  | 🍏                         | 🍏              | 🍏         |
-| tigerdocs         | ❓                     | ❓                  | ❓                         | ❓              | ❓         |
+   `serviceprefixData` should contain serialized foreign data (with a type from SDK, for example `CoCompany` and `AxCompany`). Such column names should have the following form – `serviceprefixData`, for example `corpsecData` and `robertoData`.
 
-### Environments
-
-| Service / Feature | Production | Stage | T1  | T2  | T3  | T4  | T5  | T6  | T7  | T8  | T9  |
-| ----------------- | ---------- | ----- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| alfred            | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | ❓  | ❓  | ❓  |
-| analytix          | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| auditor           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| billy             | 🍏         | 🍏    | 🍏  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  |
-| bouncer           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| core              | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  |
-| dealer            | 🍏         | 🍏    | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  | 🍅  |
-| enrique           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| flexflow          | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| hermes            | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| hero              | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| invoker           | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  |
-| jamal             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| pablo             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| payot             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| pechkin           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| scrooge           | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| shiva             | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
-| skyler            | 🍏         | 🍏    | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  | 🍏  |
-| tigerdocs         | 🍏         | 🍏    | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  | ❓  |
+1. Data replication should be implemented via the [service bus](#event-bus).
 
 ## Idempotency
 

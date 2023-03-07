@@ -1,16 +1,20 @@
 {
-  "name": "principles",
+  "name": "osome-principles",
   "version": "1.0.0",
   "description": "Osome Development Principles",
-  "private": true,
-  "license": "Proprietary",
+  "license": "MIT",
   "scripts": {
     "static-checks": "npm run prettier && npm run spell",
     "prettier": "prettier --check 'src/**/*'",
+    "prettier:write": "prettier --write 'src/**/*'",
     "spell": "cspell --no-progress 'src/**/*'"
   },
   "devDependencies": {
     "cspell": "^5.12.5",
     "prettier": "^2.2.1"
+  },
+  "engines": {
+    "node": "18.x",
+    "npm": "9.x"
   }
 }

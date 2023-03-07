@@ -1,9 +1,5 @@
 # General Testing Principles
 
-Related articles:
-
-- [The Merits of Mocking](https://kentcdodds.com/blog/the-merits-of-mocking)
-
 ## Strategy
 
 Our testing approach is not a ▲ "testing pyramid" but a 🏆 "testing trophy". That means:
@@ -32,6 +28,9 @@ Examples of good E2E test candidates:
 
 1. E2E tests can be added after the feature has been released
 1. Anybody can skip a failing in the `main` branch test because it's very important that the tests make life easier, not harder.
+1. The whole E2E test suite must run within 10 minutes in CI. Otherwise, some of the tests can be optimized or converted to integration tests.
+
+   The integration tests should cover most of the use cases, while E2E tests are slow, and it's ok to cover only the most critical use cases of the app. This way, the time limit also limits the amount of the test the suit contains.
 
 ## General
 
@@ -65,7 +64,7 @@ Examples of good E2E test candidates:
 
 ## Set Up and Tear Down
 
-1. There is no need to implement tear-down blocks or delete anywhere entities created in the tests.
+1. Tear-down blocks and cleaning up entities created in tests are good, but not required.
 
 ## UI testing
 
@@ -84,6 +83,44 @@ Examples of good E2E test candidates:
    > There's the old "Arrange" "Act" "Assert" model for structuring tests. I typically suggest that you have a single "Arrange" per test, and as many "Act" and "Asserts" as necessary for the workflow you're trying to get confidence about.
 
    Kent C. Dodds, [Write fewer, longer tests](https://kentcdodds.com/blog/write-fewer-longer-tests)
+
+## Mocking
+
+1. For E2E tests, avoid mocking anything (except for the backend hitting fake or test services and not actual credit card services, for example).
+
+   Related articles: [The Merits of Mocking](https://kentcdodds.com/blog/the-merits-of-mocking)
+
+1. For integration and unit tests (both backend and frontend), never make actual network calls, instead use libraries like `nock` or `mockiavelli`.
+
+   Related articles: [The Merits of Mocking](https://kentcdodds.com/blog/the-merits-of-mocking)
+
+1. Common fakes and mocks for multiple micro frontends should be stored in [websome-kit](https://github.com/OsomePteLtd/websome-kit/tree/main/src/tests) or [agent-kit](https://github.com/OsomePteLtd/agent-kit/tree/main/src/tests). For example, mocking auth is using in integration tests in several micro frontends:
+
+   ```typescript
+   export function mockAuth(mockiavelli: Mockiavelli, user: DeepPartial<User>) {
+     mockiavelli.mockPOST(`/auth/sms/send_code`, {
+       status: 200,
+       body: { verificationToken: 'verificationToken' },
+     });
+   }
+   ```
+
+   And to avoid duplication you can import `mockAuth` and `fakeUser` in your tests:
+
+   ```typescript
+   import { fakes, mocks } from '@osomepteltd/websome-kit/tests';
+   const user = fakes.fakeUser();
+   mocks.mockAuth(mockiavelli, user);
+   ```
+
+1. Domain specific fakes and mocks should be stored only in appropriate repo. For example, request `/ecommerce/amazon/install` is using only in `websome-ecommerce`, and mock for this request should be stored in `websome-ecommerce`:
+
+   ```typescript
+   mockiavelli.mockPOST('/ecommerce/amazon/install', {
+     status: 200,
+     body: { url: 'https://osome.com' },
+   });
+   ```
 
 ## E2E
 
