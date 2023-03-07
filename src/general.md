@@ -117,6 +117,18 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    const failedAuthorizationPayload = 'authorization_failed';
    ```
 
+1. Avoid negative variable names.
+
+   ```typescript
+   // bad
+
+   noDiscountAdjustment;
+
+   // good
+
+   isDiscountAdjustmentDisabled;
+   ```
+
 ## Clean Code
 
 1. Pattern "Loop + Function". If you have more then 1 line of code inside a loop, it is a sign that you need to extract a function.
