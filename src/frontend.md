@@ -1,5 +1,13 @@
 # Frontend Development Principles
 
+- [Project structure](#project-structure)
+- [Typescript](#typescript)
+- [Unit tests](#unit-tests)
+- [Styles](#styles)
+- [UI-kit](#ui-kit)
+- [Miscellaneous](#miscellaneous)
+- [Module federation](#module-federation)
+
 ## Project structure
 
 ```
