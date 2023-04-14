@@ -155,8 +155,6 @@ import { Ticket as TicketSdk } from '@osome/client-sdk';
 
 ## Unit tests
 
-1. Unit tests should be really "unit". Tend to extract smaller components, hooks and functions for testing specific logic instead of testing a big one.
-
 1. If you need to test complicated scenario, prefer e2e over unit tests.
 
 1. Mocks filename on frontend is `x.fake.ts`
