@@ -157,8 +157,6 @@ import { Ticket as TicketSdk } from '@osome/client-sdk';
 
 1. Unit tests should be really "unit". Tend to extract smaller components, hooks and functions for testing specific logic instead of testing a big one.
 
-1. Use `shallowRender` if you need to test component that includes many nested children. So changes in child components shouldn't affect your unit test.
-
 1. If you need to test complicated scenario, prefer e2e over unit tests.
 
 1. Mocks filename on frontend is `x.fake.ts`
