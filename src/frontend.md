@@ -1,5 +1,13 @@
 # Frontend Development Principles
 
+- [Project structure](#project-structure)
+- [Module federation](#module-federation)
+- [Typescript](#typescript)
+- [Unit tests](#unit-tests)
+- [Styles](#styles)
+- [UI-kit](#ui-kit)
+- [Miscellaneous](#miscellaneous)
+
 ## Project structure
 
 ```
@@ -25,6 +33,9 @@ src/
       media/ (shared static files)
         [no nested directories]
         icon.svg|png|jpeg...
+  entryPoints/
+    [exposed MF modules]
+    [no nested directories]
   pages/
     bankAccount/
       BankAccountList/
@@ -58,15 +69,19 @@ Notes:
 - common hook [example](https://github.com/OsomePteLtd/websome-accounting/blob/2e48a950f2694145211dd3f3c3183c23b43e3158/src/hooks/useEventOnReady.ts);
 - service [example](https://github.com/OsomePteLtd/websome/blob/main/src/services/company.service.ts)
 
-## Module federation project structure (for services which exports Components)
+## Module federation
 
-Same as above but with some new directory:
+1. Use `entryPoints` directory to expose components of your microfrontend
 
-```
-src/
-  entryPoints/
+1. Make microfrontends working without copying `.example.env` to `.env`. Provide defaults in your sandbox code. `.env` file is not forbidden but shouldn't obligatory for sandbox. It helps to use microfrontend for developers from other teams and QA who write integration tests.
 
-```
+   ```typescript
+   // sandbox code
+   // good
+   const companyId = process.env.companyId || 12345;
+   ```
+
+1. If microfrontend has several sandboxes, microfrontend should have main page with list of links to sandboxes. It provides ability to test different sandboxes during CI and improves experience for developers and QA.
 
 ## Typescript
 
@@ -327,17 +342,3 @@ export function fakeTicket() {}
 
    export default class extends Component {}
    ```
-
-## Module federation
-
-1. Use `entryPoints` directory to expose components of your microfrontend
-
-1. Make microfrontends working without copying `.example.env` to `.env`. Provide defaults in your sandbox code. `.env` file is not forbidden but shouldn't obligatory for sandbox. It helps to use microfrontend for developers from other teams and QA who write integration tests.
-
-   ```typescript
-   // sandbox code
-   // good
-   const companyId = process.env.companyId || 12345;
-   ```
-
-1. If microfrontend has several sandboxes, microfrontend should have main page with list of links to sandboxes. It provides ability to test different sandboxes during CI and improves experience for developers and QA.
