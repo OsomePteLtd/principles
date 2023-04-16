@@ -1,5 +1,13 @@
 # Frontend Development Principles
 
+- [Project structure](#project-structure)
+- [Module federation](#module-federation)
+- [Typescript](#typescript)
+- [Unit tests](#unit-tests)
+- [Styles](#styles)
+- [UI-kit](#ui-kit)
+- [Miscellaneous](#miscellaneous)
+
 ## Project structure
 
 ```
@@ -25,6 +33,9 @@ src/
       media/ (shared static files)
         [no nested directories]
         icon.svg|png|jpeg...
+  entryPoints/
+    [exposed MF modules]
+    [no nested directories]
   pages/
     bankAccount/
       BankAccountList/
@@ -58,15 +69,19 @@ Notes:
 - common hook [example](https://github.com/OsomePteLtd/websome-accounting/blob/2e48a950f2694145211dd3f3c3183c23b43e3158/src/hooks/useEventOnReady.ts);
 - service [example](https://github.com/OsomePteLtd/websome/blob/main/src/services/company.service.ts)
 
-## Module federation project structure (for services which exports Components)
+## Module federation
 
-Same as above but with some new directory:
+1. Use `entryPoints` directory to expose components of your microfrontend
 
-```
-src/
-  entryPoints/
+1. Make microfrontends working without copying `.example.env` to `.env`. Provide defaults in your sandbox code. `.env` file is not forbidden but shouldn't obligatory for sandbox. It helps to use microfrontend for developers from other teams and QA who write integration tests.
 
-```
+   ```typescript
+   // sandbox code
+   // good
+   const companyId = process.env.companyId || 12345;
+   ```
+
+1. If microfrontend has several sandboxes, microfrontend should have main page with list of links to sandboxes. It provides ability to test different sandboxes during CI and improves experience for developers and QA.
 
 ## Typescript
 
@@ -154,10 +169,6 @@ import { Ticket as TicketSdk } from '@osome/client-sdk';
 ```
 
 ## Unit tests
-
-1. Unit tests should be really "unit". Tend to extract smaller components, hooks and functions for testing specific logic instead of testing a big one.
-
-1. Use `shallowRender` if you need to test component that includes many nested children. So changes in child components shouldn't affect your unit test.
 
 1. If you need to test complicated scenario, prefer e2e over unit tests.
 
@@ -268,94 +279,6 @@ export function fakeTicket() {}
    </MyFancySelect>
    ```
 
-## Redux
-
-1. Group entities by domain, not by usage.
-
-   ```typescript
-   // bad
-   type State = {
-     documentView: {
-       document: Document | null,
-     },
-     documentsTable: {
-       documents: Document[],
-     },
-   };
-
-   // good
-   type State = {
-     documents: {
-       documentsById: DocumentsById,
-       allDocumentIds: Document['id][],
-     }
-   };
-   ```
-
-1. Avoid state duplication.
-
-   ```typescript
-   // bad
-   type State = {
-     selectedDocument: Document;
-     documentsById: DocumentsById;
-   };
-
-   // good
-   type State = {
-     selectedDocumentId: Document['id'];
-     documentsById: DocumentsById;
-   };
-   ```
-
-1. Do not mix different data formats into one store field since it's impossible to say if we have specific entity fields loaded.
-
-   ```typescript
-   // bad
-   type Ticket = {...};
-   type SingleTicket = Ticket & {...};
-   type State = {
-     ticketsById: TicketsById,
-   };
-   ticketsReducer.on(loadTickets.success, (state, { tickets }) => addTicketsToStore(tickets));
-   ticketsReducer.on(loadSingleTicket.success, (state, { ticket }) => addTicketsToStore([ticket]));
-
-   // good
-   type Ticket = {...};
-   type SingleTicket = Ticket & {...};
-   type State = {
-     ticketsById: TicketsById,
-     singleTicketsById: SingleTicketsById,
-   };
-   ticketsReducer.on(loadTickets.success, (state, { tickets }) => addTicketsToStore(tickets));
-   ticketsReducer.on(loadSingleTicket.success, (state, { ticket }) => addSingleTicketToStore(ticket));
-   ```
-
-1. Avoid navigation in middleware, prefer having it in components.
-
-   ```typescript
-   // bad
-   // saga.ts
-   const nextTicketId = yield select(getNextTicketId, { ticketId });
-   yield call(resolveTicket, { ticketId });
-   if (nextTicketId) {
-     // if request takes too long, user may go from ticket's page to document page,
-     // so redirect may be unexpected
-     push(createTicketLink(nextTicketId));
-   }
-
-   // good
-   // Component.tsx
-   useEffect(() => {
-     if (ticket.resolved && !prevTicket.current.resolved) {
-       setRedirectToNextTicketId();
-     }
-   }, [ticket]);
-
-   // you can also call push() from component, but declarative Redirect is preferrable
-   return shouldRedirectToNextTicketId ? <Redirect to={createTicketLink(nextTicketId)} /> : null;
-   ```
-
 ## Miscellaneous
 
 1. Prefer UX over DX.
@@ -419,17 +342,3 @@ export function fakeTicket() {}
 
    export default class extends Component {}
    ```
-
-## Module federation
-
-1. Use `entryPoints` directory to expose components of your microfrontend
-
-1. Make microfrontends working without copying `.example.env` to `.env`. Provide defaults in your sandbox code. `.env` file is not forbidden but shouldn't obligatory for sandbox. It helps to use microfrontend for developers from other teams and QA who write integration tests.
-
-   ```typescript
-   // sandbox code
-   // good
-   const companyId = process.env.companyId || 12345;
-   ```
-
-1. If microfrontend has several sandboxes, microfrontend should have main page with list of links to sandboxes. It provides ability to test different sandboxes during CI and improves experience for developers and QA.
