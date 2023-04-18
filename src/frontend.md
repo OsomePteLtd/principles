@@ -229,6 +229,7 @@ export function fakeTicket() {}
 - Use (websome|agent)-kit distribution if a component is visual and aware domain-specific
 
 ```mermaid
+flowchart TD
   UK --> MF1
   D(Domain-specific) --> AK
   UK(UI Kit) --> AK(App Kit)
@@ -237,8 +238,6 @@ export function fakeTicket() {}
   MF1 --> A(Host app)
   MF2 --> A
 ```
-
-
 
 ## UI-kit
 
