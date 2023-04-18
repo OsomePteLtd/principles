@@ -221,6 +221,11 @@ export function fakeTicket() {}
 
 1. If some color is repeated several times in code, extract it to theme.
 
+## Disposition of components
+- Prefer using local components `your_mf/src/components` with a few exceptions
+- Use MF or websome-kit/agent-kit distribution if a component is required in several repos and aware of domain-specific
+- Use UI Kit distribution if a component represents the design token [websome](https://www.figma.com/file/I8WglqziPB5pYlFIqF43JE/Client-UI-Kit-(Web)?node-id=0-1&t=MuFhhOjUXP4sFRr2-0) or matches with the [MUI](https://mui.com/material-ui/)
+
 ## UI-kit
 
 1. Design components API for common usage rather than for specific one.
@@ -254,8 +259,6 @@ export function fakeTicket() {}
    export const Button = props => {...};
    export const GoBackButton = props => {...};
    ```
-
-1. Do not hurry to extract components to UI-kit if you have only one. Try to collect more usages of this component. It helps create better component API for common usage.
 
 1. When extracting complicated components to UI-kit, consider exporting component parts instead of single component with complicated API. Complicated APIs are too hard to extend without breaking backward compatibility.
 
