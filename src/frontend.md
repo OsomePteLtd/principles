@@ -222,10 +222,11 @@ export function fakeTicket() {}
 1. If some color is repeated several times in code, extract it to theme.
 
 ## Disposition of components
+
 - Prefer using local components `your_mf/src/components` with a few exceptions
 - Use MF distribution if a component is required in several repositories and could be shipped as a whole piece with API
 - Use (websome|agent)-kit distribution if a component is visual and aware domain-specific
-- Use UI Kit distribution if a component represents the design token [websome](https://www.figma.com/file/I8WglqziPB5pYlFIqF43JE/Client-UI-Kit-(Web)?node-id=0-1&t=MuFhhOjUXP4sFRr2-0) or matches with the [MUI](https://mui.com/material-ui/)
+- Use UI Kit distribution if a component represents the design token [websome](<https://www.figma.com/file/I8WglqziPB5pYlFIqF43JE/Client-UI-Kit-(Web)?node-id=0-1&t=MuFhhOjUXP4sFRr2-0>) or matches with the [MUI](https://mui.com/material-ui/)
 
 ## UI-kit
 
