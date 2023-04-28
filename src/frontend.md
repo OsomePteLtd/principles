@@ -10,6 +10,14 @@
 
 ## Project structure
 
+Project structure should follow next principles:
+
+1. Not needed to move files too often.
+
+1. It's easy to understand where new file should be located.
+
+1. It's easy to understand where to look files/functionality up.
+
 ```
 src/
   components/ (can be dumb and smart)
