@@ -223,15 +223,10 @@ export function fakeTicket() {}
 
 ## Disposition of components
 
-- Prefer using local components `(host|mf)/src/components` with a few exceptions
-- Use UI Kit distribution if a component represents a design token (1) [websome](<https://www.figma.com/file/I8WglqziPB5pYlFIqF43JE/Client-UI-Kit-(Web)?node-id=0-1&t=MuFhhOjUXP4sFRr2-0>) or matches with [MUI](https://mui.com/material-ui/)
-- Use MF distribution if a component is required in several repositories and could be shipped as a whole piece with API
-- Use (websome|agent)-kit distribution if a component is visual and aware domain-specific
-
 ```mermaid
 flowchart TD
   UK --> MF1
-  D(Domain-specific) --> AK
+  SDK --> AK
   UK(UI Kit) --> AK(App Kit)
   AK --> MF1(MF 1)
   AK --> MF2(MF 2)
@@ -239,7 +234,14 @@ flowchart TD
   MF2 --> A
 ```
 
+- Prefer using local components `src/components` by default
+- Place into UI Kit if a component reperents a design token [websome](<https://www.figma.com/file/I8WglqziPB5pYlFIqF43JE/Client-UI-Kit-(Web)?node-id=0-1&t=MuFhhOjUXP4sFRr2-0>) [agent](https://www.figma.com/file/Nvf1xSP9MHwvU4aNlATg9W/%F0%9F%A7%B0--CRM-UI-Kit?node-id=12-68&t=xv8ncGr5UZwmwPv6-0)
+
+- Place component into MF if a component
+
 ## UI-kit
+
+1. Use MUI as the reference for components API
 
 1. Design components API for common usage rather than for specific one.
 
