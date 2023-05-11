@@ -12,7 +12,7 @@
 
 Project structure should follow next principles:
 
-1. Not needed to move files too often.
+1. Not needed to move files without changing their purpose.
 
 1. It's easy to identify a single place where a new file should be located.
 
