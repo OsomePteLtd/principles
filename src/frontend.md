@@ -39,6 +39,8 @@ src/
   pages/
     bankAccount/
       BankAccountList/
+        [a page is a screen-like component]
+        [the page may use nested pages so put your routing or another navigation in it]
         [no nested directories]
         [other files should be placed in queries or services]
         [components for the page should be placed in components directory]
