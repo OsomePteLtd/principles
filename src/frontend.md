@@ -42,10 +42,11 @@ src/
         [no nested directories]
         [other files should be placed in queries or services]
         [components for the page should be placed in components directory]
-        BankAccountListFilters.tsx
         BankAccountList.page.ts
         BankAccountList.page.styled.tsx
         BankAccountList.page.spec.ts (integration tests)
+        [partials of the page can be placed nearby]
+        BankAccountListFilters.tsx
   queries/
     [hooks use react-query, sdk, include mutations, some data normalisation, .etc]
     bankAccount.query.ts
