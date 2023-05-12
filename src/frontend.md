@@ -42,6 +42,7 @@ src/
         [no nested directories]
         [other files should be placed in queries or services]
         [components for the page should be placed in components directory]
+        BankAccountListFilters.tsx
         BankAccountList.page.ts
         BankAccountList.page.styled.tsx
         BankAccountList.page.spec.ts (integration tests)
