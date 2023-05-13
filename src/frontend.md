@@ -223,25 +223,13 @@ export function fakeTicket() {}
 
 ## Disposition of components
 
-```mermaid
-flowchart TD
-  UK --> MF1
-  SDK --> AK
-  UK(UI Kit) --> AK(App Kit)
-  AK --> MF1(MF 1)
-  AK --> MF2(MF 2)
-  MF1 --> A(Host app)
-  MF2 --> A
-```
-
-- Prefer using local components `src/components` by default
-- Place into UI Kit if a component reperents a design token [websome](<https://www.figma.com/file/I8WglqziPB5pYlFIqF43JE/Client-UI-Kit-(Web)?node-id=0-1&t=MuFhhOjUXP4sFRr2-0>) [agent](https://www.figma.com/file/Nvf1xSP9MHwvU4aNlATg9W/%F0%9F%A7%B0--CRM-UI-Kit?node-id=12-68&t=xv8ncGr5UZwmwPv6-0)
-
-- Place component into MF if a component
+- Prefer using local components by default.
+- Place into UI Kit if a component is added to the designer's UI-kit (shared) or matches with MUI component.
+- Place into websome-kit/agent-kit if a component depends on Osome SDK and can't be served via MF.
 
 ## UI-kit
 
-1. Use MUI as the reference for components API
+1. Use MUI as the reference for a visual component API.
 
 1. Design components API for common usage rather than for specific one.
 
