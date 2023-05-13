@@ -39,8 +39,8 @@ src/
   pages/
     bankAccount/
       [a page is a screen-like component]
-      [the page can compose another pages so put your routing or state navigation in it]
-      [examples: micro app with routes, separate page, ticket, wizard, payment widget etc.]
+      [the page can compose other pages so put your routing or state navigation in it]
+      [examples: micro app with routes, separate page, custom ticket view, wizard, payment widget etc.]
       BankAccountList/
         [no nested directories]
         [other files should be placed in queries or services]
