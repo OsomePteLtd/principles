@@ -231,7 +231,7 @@ export function fakeTicket() {}
 
 ## Disposition of components
 
-1. Place a compontent into UI Kit if it is added to the designer's shared UI-kit or matches wih MUI components library. [Why MUI?](#ui-kit)
+1. Place a component into UI Kit if it is added to the designer's shared UI-kit or matches wih MUI components library. [Why MUI?](#ui-kit)
 
 1. Expose a component from MF if it represents a domain of microfrontend and not being common.
 
