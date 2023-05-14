@@ -223,13 +223,17 @@ export function fakeTicket() {}
 
 ## Disposition of components
 
-- Prefer using local components by default.
-- Place into UI Kit if a component is added to the designer's UI-kit (shared) or matches with MUI component.
-- Place into websome-kit/agent-kit if a component depends on Osome SDK and can't be served via MF.
+1. Prefer using local components by default.
+
+1. Place into UI Kit if a component is added to the designer's shared UI-kit or matches with MUI component.
+
+1. Place into MF if a component represents domain of microfrontend and not being common.
+
+1. Place into `websome-kit`/`agent-kit` if a component depends on Osome SDK and for some reason it is not desirable to serve it through MF. [example1](https://github.com/OsomePteLtd/websome-kit/tree/main/src/DocumentViewer) [example2](https://github.com/OsomePteLtd/websome-kit/tree/main/src/wizardKit)
 
 ## UI-kit
 
-1. Use MUI as the reference for a visual component API.
+1. Use `MUI` as the reference for `Component API`. Use **identical** naming for component's name and props to have a **roadmap** how to scale components.
 
 1. Design components API for common usage rather than for specific one.
 
