@@ -227,7 +227,7 @@ export function fakeTicket() {}
 
 1. Place into UI Kit if a component is added to the designer's shared UI-kit or matches with MUI component.
 
-1. Place into MF if a component represents domain of microfrontend and not being common.
+1. Expose from MF if a component represents a domain of microfrontend and not being common.
 
 1. Place into `websome-kit`/`agent-kit` if a component depends on Osome SDK and for some reason it is not desirable to serve it through MF. [example1](https://github.com/OsomePteLtd/websome-kit/tree/main/src/DocumentViewer) [example2](https://github.com/OsomePteLtd/websome-kit/tree/main/src/wizardKit)
 
