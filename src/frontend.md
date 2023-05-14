@@ -236,6 +236,7 @@ export function fakeTicket() {}
 1. Expose a component from MF if it represents a domain of microfrontend and not being common.
 
 1. Place a component into `websome-kit`/`agent-kit` if a component depends on Osome SDK and for some reason it is not desirable to serve it through MF.
+
 ## UI-kit
 
 1. Use `MUI` as the reference for `Component API`. Use **identical** naming for components and props to have a **roadmap** how to scale further.
