@@ -231,11 +231,11 @@ export function fakeTicket() {}
 
 ## Disposition of components
 
-1. Place into UI Kit if a component is added to the designer's shared UI-kit or matches wih MUI components library. [Why MUI?](#ui-kit)
+1. Place a compontent into UI Kit if it is added to the designer's shared UI-kit or matches wih MUI components library. [Why MUI?](#ui-kit)
 
-1. Expose from MF if a component represents a domain of microfrontend and not being common.
+1. Expose a component from MF if it represents a domain of microfrontend and not being common.
 
-1. Place into `websome-kit`/`agent-kit` if a component depends on Osome SDK and for some reason it is not desirable to serve it through MF. [example1](https://github.com/OsomePteLtd/websome-kit/tree/main/src/DocumentViewer) [example2](https://github.com/OsomePteLtd/websome-kit/tree/main/src/wizardKit)
+1. Place a component into `websome-kit`/`agent-kit` if a component depends on Osome SDK and for some reason it is not desirable to serve it through MF. [example1](https://github.com/OsomePteLtd/websome-kit/tree/main/src/DocumentViewer) [example2](https://github.com/OsomePteLtd/websome-kit/tree/main/src/wizardKit)
 
 ## UI-kit
 
