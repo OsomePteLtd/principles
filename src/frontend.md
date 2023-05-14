@@ -223,9 +223,7 @@ export function fakeTicket() {}
 
 ## Disposition of components
 
-1. Prefer using local components by default.
-
-1. Place into UI Kit if a component is added to the designer's shared UI-kit or matches with MUI component.
+1. Place into UI Kit if a component is added to the designer's shared UI-kit else prefer using local components.
 
 1. Expose from MF if a component represents a domain of microfrontend and not being common.
 
@@ -234,6 +232,8 @@ export function fakeTicket() {}
 ## UI-kit
 
 1. Use `MUI` as the reference for `Component API`. Use **identical** naming for component's name and props to have a **roadmap** how to scale components.
+
+1. Ask a designer to add a component to the shared UI kit if it matches with MUI component.
 
 1. Design components API for common usage rather than for specific one.
 
