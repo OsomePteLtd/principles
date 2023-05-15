@@ -239,7 +239,7 @@ export function fakeTicket() {}
 
 ## UI-kit
 
-1. Use `MUI` as the reference for `Component API`. Use **identical** naming for components and props to have a **roadmap** how to scale further.
+1. Use `MUI` as the reference for `Component API`. It's needed for having consistent naming and keeping components universal.
 
 1. Design components API for common usage rather than for specific one.
 
