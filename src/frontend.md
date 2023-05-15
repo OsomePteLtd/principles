@@ -233,7 +233,7 @@ export function fakeTicket() {}
 
 1. Design components API for common usage rather than for specific one.
 
-1. Prefer S3 distripution of your assets. Put fonts, images, icons to `src/assets`.
+1. Prefer S3 distribution of your assets. Put fonts, images, icons to `src/assets`.
 
 1. If component handles too many specific cases or dramatically changes its appearance on prop changes, consider having several components instead.
 
