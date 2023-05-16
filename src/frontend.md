@@ -287,6 +287,45 @@ export function fakeTicket() {}
    </MyFancySelect>
    ```
 
+## TanStack Query
+
+1. Return the full response from a request
+
+   > Why? It prevents redundant network requests.
+
+   ```typescript
+   // bad
+   // get user data in one place
+   // 1st network request
+   const {
+     data: { user },
+   } = useQuery('currentUser', () =>
+     api.getCurrentUser().then((response) => {
+       return response.user;
+     }),
+   );
+   // then get user posts in another place using the same API endpoint
+   // 2nd network request just to get the same data
+   const {
+     data: { posts },
+   } = useQuery('currentUserPosts', () =>
+     api.getCurrentUser().then((response) => {
+       return response.posts;
+     }),
+   );
+
+   // good
+   const {
+     data: { user },
+   } = useQuery('currentUser', () => api.getCurrentUser());
+   // 1st network request
+   // then later on the same page
+   const {
+     data: { posts },
+   } = useQuery('currentUser', () => api.getCurrentUser());
+   // no additional network request needed, use the first one
+   ```
+
 ## Miscellaneous
 
 1. Prefer UX over DX.
