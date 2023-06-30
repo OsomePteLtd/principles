@@ -1,12 +1,15 @@
 # Frontend Development Principles
 
-- [Project structure](#project-structure)
-- [Module federation](#module-federation)
-- [Typescript](#typescript)
-- [Unit tests](#unit-tests)
-- [Styles](#styles)
-- [UI-kit](#ui-kit)
-- [Miscellaneous](#miscellaneous)
+- [Frontend Development Principles](#frontend-development-principles)
+  - [Project structure](#project-structure)
+  - [Module federation](#module-federation)
+  - [Typescript](#typescript)
+  - [SDK](#sdk)
+  - [Unit tests](#unit-tests)
+  - [Styles](#styles)
+  - [UI-kit](#ui-kit)
+  - [TanStack Query](#tanstack-query)
+  - [Miscellaneous](#miscellaneous)
 
 ## Project structure
 
@@ -289,7 +292,26 @@ export function fakeTicket() {}
 
 ## TanStack Query
 
-1. Return the full response from a request
+1. Prefer use important defaults
+
+   > Why? It prevents some cache issues are usually difficult to troubleshoot and resolve. In addition, some settings provide a good user experience (for example, `refetchOnWindowFocus`)
+
+   ```typescript
+   // bad
+   const queryClient = new QueryClient({
+     defaultOptions: {
+       queries: {
+         refetchOnWindowFocus: false,
+         refetchOnMount: false,
+       },
+     },
+   });
+
+   // good
+   const queryClient = new QueryClient();
+   ```
+
+2. Return the full response from a request
 
    > Why? It prevents redundant network requests.
 
