@@ -292,7 +292,7 @@ export function fakeTicket() {}
 
 ## TanStack Query
 
-1. Prefer use important defaults
+1. Prefer use important defaults. Read more about defaults [here](https://tanstack.com/query/v4/docs/react/guides/important-defaults) and [here](https://www.notion.so/osome/Differences-and-Features-of-cacheTime-and-staleTime-parameters-f1f622beb2144b05a4e532e0324334dd)
 
    > Why? It prevents some cache issues are usually difficult to troubleshoot and resolve. In addition, some settings provide a good user experience (for example, `refetchOnWindowFocus`)
 
@@ -308,10 +308,27 @@ export function fakeTicket() {}
    });
 
    // good
-   const queryClient = new QueryClient();
+   const queryClient = new QueryClient({
+     defaultOptions: {
+       queries: {
+         refetchOnWindowFocus: process.env.ENV === 'production',
+       },
+     },
+   });
    ```
 
-2. Return the full response from a request
+2. Change staleTime and cacheTime for certain query when you totally sure it can not lead to unexpected cache issues.
+
+   ```typescript
+   // good
+   useQuery(['poa', 'supported_countries'], () => apiSdk.corpsec.poa.supported_countries.get(), {
+     // this request doesn't change too often, so we can cache it for forever
+     cacheTime: Infinity,
+     staleTime: Infinity,
+   });
+   ```
+
+3. Return the full response from a request
 
    > Why? It prevents redundant network requests.
 
