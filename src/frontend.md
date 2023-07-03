@@ -323,8 +323,8 @@ export function fakeTicket() {}
    // good
    useQuery(['poa', 'supported_countries'], () => apiSdk.corpsec.poa.supported_countries.get(), {
      // this request doesn't change too often, so we can cache it for forever
-     cacheTime: Infinity,
-     staleTime: Infinity,
+     cacheTime: 60 * 60 * 1000,
+     staleTime: 60 * 60 * 1000,
    });
    ```
 
