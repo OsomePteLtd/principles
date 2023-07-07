@@ -332,7 +332,7 @@ export function fakeTicket() {}
      const queryClient = new QueryClient({
        defaultOptions: {
          queries: {
-           staleTime: 3 * 1000,
+           staleTime: 30 * 1000,
          },
        },
      });
