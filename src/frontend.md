@@ -293,6 +293,7 @@ export function fakeTicket() {}
 ## TanStack Query
 
 1. Default settings.
+
    - Overriding `staleTime`.
 
      We should find suitable value for `staleTime` to avoid cache issues and not to make additional requests.
@@ -317,7 +318,7 @@ export function fakeTicket() {}
      });
      ```
 
-3. Change staleTime and cacheTime for certain query when you totally sure it can not lead to unexpected cache issues.
+2. Change staleTime and cacheTime for certain query when you totally sure it can not lead to unexpected cache issues.
 
    > Read more about staleTime and cacheTime [here](https://www.notion.so/osome/Differences-and-Features-of-cacheTime-and-staleTime-parameters-f1f622beb2144b05a4e532e0324334dd)
 
@@ -330,7 +331,7 @@ export function fakeTicket() {}
    });
    ```
 
-4. Return the full response from a request
+3. Return the full response from a request
 
    > Why? It prevents redundant network requests.
 
