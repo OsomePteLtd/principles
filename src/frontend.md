@@ -292,32 +292,55 @@ export function fakeTicket() {}
 
 ## TanStack Query
 
-1. Prefer use important defaults. Read more about defaults [here](https://tanstack.com/query/v4/docs/react/guides/important-defaults) and [here](https://www.notion.so/osome/Differences-and-Features-of-cacheTime-and-staleTime-parameters-f1f622beb2144b05a4e532e0324334dd)
+1. Default settings.
 
-   > Why? It prevents some cache issues are usually difficult to troubleshoot and resolve. In addition, some settings provide a good user experience (for example, `refetchOnWindowFocus`)
+   - Prefer use default settings.
 
-   ```typescript
-   // bad
-   const queryClient = new QueryClient({
-     defaultOptions: {
-       queries: {
-         refetchOnWindowFocus: false,
-         refetchOnMount: false,
+     It prevents some cache issues are usually difficult to troubleshoot and resolve. In addition, some default settings provide a good user experience (for example, `refetchOnWindowFocus`). Read more about defaults [here](https://tanstack.com/query/v4/docs/react/guides/important-defaults)
+
+     ```typescript
+     // bad
+     const queryClient = new QueryClient({
+       defaultOptions: {
+         queries: {
+           refetchOnWindowFocus: false,
+           refetchOnMount: false,
+           cacheTime: 0,
+         },
        },
-     },
-   });
+     });
 
-   // good
-   const queryClient = new QueryClient({
-     defaultOptions: {
-       queries: {
-         refetchOnWindowFocus: process.env.ENV === 'production',
+     // good
+     const queryClient = new QueryClient();
+     ```
+
+   - Overriding `staleTime`.
+
+     We should find suitable value for `staleTime` to avoid cache issues and not to make additional requests.
+
+     ```typescript
+     // most likely we will get cache issues
+     const queryClient = new QueryClient({
+       defaultOptions: {
+         queries: {
+           staleTime: 60 * 60 * 1000,
+         },
        },
-     },
-   });
-   ```
+     });
+
+     // probably, good for most our cases
+     const queryClient = new QueryClient({
+       defaultOptions: {
+         queries: {
+           staleTime: 3 * 1000,
+         },
+       },
+     });
+     ```
 
 2. Change staleTime and cacheTime for certain query when you totally sure it can not lead to unexpected cache issues.
+
+   > Read more about staleTime and cacheTime [here](https://www.notion.so/osome/Differences-and-Features-of-cacheTime-and-staleTime-parameters-f1f622beb2144b05a4e532e0324334dd)
 
    ```typescript
    // good
