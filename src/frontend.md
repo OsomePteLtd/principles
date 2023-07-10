@@ -308,11 +308,64 @@ export function fakeTicket() {}
        },
      });
 
-     // probably, good for most our cases
+     // probably good for most our cases
      const queryClient = new QueryClient({
        defaultOptions: {
          queries: {
            staleTime: 30 * 1000,
+         },
+       },
+     });
+     ```
+
+   - Prefer `refetchOnWindowFocus: false`.
+
+     `refetchOnWindowFocus: true` may cause some unwanted refetch, for example, when you open and close system dialog. Read more [here](https://reallyosome.atlassian.net/browse/NEWBORN-1277).
+
+     ```typescript
+     // bad,
+     const queryClient = new QueryClient({
+       defaultOptions: {
+         queries: {
+           refetchOnWindowFocus: true,
+         },
+       },
+     });
+
+     // bad, because refetchOnWindowFocus is true by default
+     const queryClient = new QueryClient();
+
+     // good
+     const queryClient = new QueryClient({
+       defaultOptions: {
+         queries: {
+           refetchOnWindowFocus: false,
+         },
+       },
+     });
+     ```
+
+   - Prefer not to override other default settings.
+
+     It prevents some cache issues are usually difficult to troubleshoot and resolve. Read more about defaults [here](https://tanstack.com/query/v4/docs/react/guides/important-defaults)
+
+     ```typescript
+     // bad
+     const queryClient = new QueryClient({
+       defaultOptions: {
+         queries: {
+           refetchOnMount: false,
+           cacheTime: 0,
+         },
+       },
+     });
+
+     // good example based on above
+     const queryClient = new QueryClient({
+       defaultOptions: {
+         queries: {
+           staleTime: 30 * 1000,
+           refetchOnWindowFocus: false,
          },
        },
      });
