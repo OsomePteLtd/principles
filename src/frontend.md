@@ -308,7 +308,7 @@ export function fakeTicket() {}
        },
      });
 
-     // probably good for most our cases
+     // probably good for most our cases (f.e prefetching data for MFEs)
      const queryClient = new QueryClient({
        defaultOptions: {
          queries: {
@@ -378,7 +378,7 @@ export function fakeTicket() {}
    ```typescript
    // good
    useQuery(['poa', 'supported_countries'], () => apiSdk.corpsec.poa.supported_countries.get(), {
-     // this request doesn't change too often, so we can cache it for forever
+     // this request doesn't change too often, so we can cache it for a long time
      cacheTime: 60 * 60 * 1000,
      staleTime: 60 * 60 * 1000,
    });
