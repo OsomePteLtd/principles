@@ -421,7 +421,7 @@ export function fakeTicket() {}
    // no additional network request needed, use the first one
    ```
 
-4. Add query filters and path params to query keys.
+4. Add query filters and path params to query keys. Every variable that is used inside the queryFn should be added to the query key.
 
    > Why? It prevents unexpected cache collisions. [See also](https://tanstack.com/query/v4/docs/react/guides/query-keys).
 
