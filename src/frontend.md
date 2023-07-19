@@ -421,6 +421,53 @@ export function fakeTicket() {}
    // no additional network request needed, use the first one
    ```
 
+4. Add query filters to query keys.
+
+   > Why? It prevents unexpected cache collisions.
+
+   ```typescript
+   // bad
+   // 1st request
+   const ticketsQuery = useQuery(['tickets'], () =>
+     api.tickets.get({
+       processDefinitionKeys: [ProcessDefinitionKey.obQualification, ProcessDefinitionKey.obKyc],
+     }),
+   );
+   // 2nd request
+   const ticketsQuery = useQuery(['tickets'], () =>
+     api.tickets.get({
+       processDefinitionKeys: [ProcessDefinitionKey.csCorpPass, ProcessDefinitionKey.csFollowUp],
+     }),
+   );
+
+   // good
+   const ticketsQuery = useQuery(
+     [
+       'tickets',
+       {
+         processDefinitionKeys: [ProcessDefinitionKey.obQualification, ProcessDefinitionKey.obKyc],
+       },
+     ],
+     () =>
+       api.tickets.get({
+         processDefinitionKeys: [ProcessDefinitionKey.obQualification, ProcessDefinitionKey.obKyc],
+       }),
+   );
+   // 2nd request
+   const ticketsQuery = useQuery(
+     [
+       'tickets',
+       {
+         processDefinitionKeys: [ProcessDefinitionKey.csCorpPass, ProcessDefinitionKey.csFollowUp],
+       },
+     ],
+     () =>
+       api.tickets.get({
+         processDefinitionKeys: [ProcessDefinitionKey.csCorpPass, ProcessDefinitionKey.csFollowUp],
+       }),
+   );
+   ```
+
 ## Miscellaneous
 
 1. Prefer UX over DX.
