@@ -421,6 +421,58 @@ export function fakeTicket() {}
    // no additional network request needed, use the first one
    ```
 
+4. Add query filters and path params to query keys. Every variable that is used inside the queryFn should be added to the query key.
+
+   > Why? It prevents unexpected cache collisions. [See also](https://tanstack.com/query/v4/docs/react/guides/query-keys).
+
+   ```typescript
+   // bad
+   // 1st request
+   const ticketsQuery = useQuery(['tickets'], () =>
+     api.company.id(companyId).tickets.get({
+       processDefinitionKeys: [ProcessDefinitionKey.obQualification, ProcessDefinitionKey.obKyc],
+     }),
+   );
+   // 2nd request
+   const ticketsQuery = useQuery(['tickets'], () =>
+     api.company.id(companyId).tickets.get({
+       processDefinitionKeys: [ProcessDefinitionKey.csCorpPass, ProcessDefinitionKey.csFollowUp],
+     }),
+   );
+
+   // good
+   const ticketsQuery = useQuery(
+     [
+       'tickets',
+       {
+         companyId,
+         processDefinitionKeys: [ProcessDefinitionKey.obQualification, ProcessDefinitionKey.obKyc],
+       },
+     ],
+     () =>
+       api.company.id(companyId).tickets.get({
+         processDefinitionKeys: [ProcessDefinitionKey.obQualification, ProcessDefinitionKey.obKyc],
+       }),
+   );
+   // 2nd request
+   const ticketsQuery = useQuery(
+     [
+       'tickets',
+       {
+         companyId,
+         processDefinitionKeys: [ProcessDefinitionKey.csCorpPass, ProcessDefinitionKey.csFollowUp],
+       },
+     ],
+     () =>
+       api.company.id(companyId).tickets.get({
+         processDefinitionKeys: [ProcessDefinitionKey.csCorpPass, ProcessDefinitionKey.csFollowUp],
+       }),
+   );
+
+   // also good
+   const ticketsQuery = useQuery(['tickets', ticketId], () => api.tickets.id(ticketId).get());
+   ```
+
 ## Miscellaneous
 
 1. Prefer UX over DX.
