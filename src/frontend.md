@@ -1,12 +1,15 @@
 # Frontend Development Principles
 
-- [Project structure](#project-structure)
-- [Module federation](#module-federation)
-- [Typescript](#typescript)
-- [Unit tests](#unit-tests)
-- [Styles](#styles)
-- [UI-kit](#ui-kit)
-- [Miscellaneous](#miscellaneous)
+- [Frontend Development Principles](#frontend-development-principles)
+  - [Project structure](#project-structure)
+  - [Module federation](#module-federation)
+  - [Typescript](#typescript)
+  - [SDK](#sdk)
+  - [Unit tests](#unit-tests)
+  - [Styles](#styles)
+  - [UI-kit](#ui-kit)
+  - [TanStack Query](#tanstack-query)
+  - [Miscellaneous](#miscellaneous)
 
 ## Project structure
 
@@ -293,6 +296,189 @@ export function fakeTicket() {}
      <Divider />
      <Option value='a'>Bar</Option>
    </MyFancySelect>
+   ```
+
+## TanStack Query
+
+1. Default settings.
+
+   - Overriding `staleTime`.
+
+     We should find suitable value for `staleTime` to avoid cache issues and not to make additional requests.
+
+     ```typescript
+     // most likely we will get cache issues
+     const queryClient = new QueryClient({
+       defaultOptions: {
+         queries: {
+           staleTime: 60 * 60 * 1000,
+         },
+       },
+     });
+
+     // probably good for most our cases (f.e prefetching data for MFEs)
+     const queryClient = new QueryClient({
+       defaultOptions: {
+         queries: {
+           staleTime: 30 * 1000,
+         },
+       },
+     });
+     ```
+
+   - Prefer `refetchOnWindowFocus: false`.
+
+     `refetchOnWindowFocus: true` may cause some unwanted refetch, for example, when you open and close system dialog. Read more [here](https://reallyosome.atlassian.net/browse/NEWBORN-1277).
+
+     ```typescript
+     // bad,
+     const queryClient = new QueryClient({
+       defaultOptions: {
+         queries: {
+           refetchOnWindowFocus: true,
+         },
+       },
+     });
+
+     // bad, because refetchOnWindowFocus is true by default
+     const queryClient = new QueryClient();
+
+     // good
+     const queryClient = new QueryClient({
+       defaultOptions: {
+         queries: {
+           refetchOnWindowFocus: false,
+         },
+       },
+     });
+     ```
+
+   - Prefer not to override other default settings.
+
+     It prevents some cache issues are usually difficult to troubleshoot and resolve. Read more about defaults [here](https://tanstack.com/query/v4/docs/react/guides/important-defaults)
+
+     ```typescript
+     // bad
+     const queryClient = new QueryClient({
+       defaultOptions: {
+         queries: {
+           refetchOnMount: false,
+           cacheTime: 0,
+         },
+       },
+     });
+
+     // good example based on above
+     const queryClient = new QueryClient({
+       defaultOptions: {
+         queries: {
+           staleTime: 30 * 1000,
+           refetchOnWindowFocus: false,
+         },
+       },
+     });
+     ```
+
+2. Change staleTime and cacheTime for certain query when you totally sure it can not lead to unexpected cache issues.
+
+   > Read more about staleTime and cacheTime [here](https://www.notion.so/osome/Differences-and-Features-of-cacheTime-and-staleTime-parameters-f1f622beb2144b05a4e532e0324334dd)
+
+   ```typescript
+   // good
+   useQuery(['poa', 'supported_countries'], () => apiSdk.corpsec.poa.supported_countries.get(), {
+     // this request doesn't change too often, so we can cache it for a long time
+     cacheTime: 60 * 60 * 1000,
+     staleTime: 60 * 60 * 1000,
+   });
+   ```
+
+3. Return the full response from a request
+
+   > Why? It prevents redundant network requests.
+
+   ```typescript
+   // bad
+   // get user data in one place
+   // 1st network request
+   const {
+     data: { user },
+   } = useQuery('currentUser', () =>
+     api.getCurrentUser().then((response) => {
+       return response.user;
+     }),
+   );
+   // then get user posts in another place using the same API endpoint
+   // 2nd network request just to get the same data
+   const {
+     data: { posts },
+   } = useQuery('currentUserPosts', () =>
+     api.getCurrentUser().then((response) => {
+       return response.posts;
+     }),
+   );
+
+   // good
+   const {
+     data: { user },
+   } = useQuery('currentUser', () => api.getCurrentUser());
+   // 1st network request
+   // then later on the same page
+   const {
+     data: { posts },
+   } = useQuery('currentUser', () => api.getCurrentUser());
+   // no additional network request needed, use the first one
+   ```
+
+4. Add query filters and path params to query keys. Every variable that is used inside the queryFn should be added to the query key.
+
+   > Why? It prevents unexpected cache collisions. [See also](https://tanstack.com/query/v4/docs/react/guides/query-keys).
+
+   ```typescript
+   // bad
+   // 1st request
+   const ticketsQuery = useQuery(['tickets'], () =>
+     api.company.id(companyId).tickets.get({
+       processDefinitionKeys: [ProcessDefinitionKey.obQualification, ProcessDefinitionKey.obKyc],
+     }),
+   );
+   // 2nd request
+   const ticketsQuery = useQuery(['tickets'], () =>
+     api.company.id(companyId).tickets.get({
+       processDefinitionKeys: [ProcessDefinitionKey.csCorpPass, ProcessDefinitionKey.csFollowUp],
+     }),
+   );
+
+   // good
+   const ticketsQuery = useQuery(
+     [
+       'tickets',
+       {
+         companyId,
+         processDefinitionKeys: [ProcessDefinitionKey.obQualification, ProcessDefinitionKey.obKyc],
+       },
+     ],
+     () =>
+       api.company.id(companyId).tickets.get({
+         processDefinitionKeys: [ProcessDefinitionKey.obQualification, ProcessDefinitionKey.obKyc],
+       }),
+   );
+   // 2nd request
+   const ticketsQuery = useQuery(
+     [
+       'tickets',
+       {
+         companyId,
+         processDefinitionKeys: [ProcessDefinitionKey.csCorpPass, ProcessDefinitionKey.csFollowUp],
+       },
+     ],
+     () =>
+       api.company.id(companyId).tickets.get({
+         processDefinitionKeys: [ProcessDefinitionKey.csCorpPass, ProcessDefinitionKey.csFollowUp],
+       }),
+   );
+
+   // also good
+   const ticketsQuery = useQuery(['tickets', ticketId], () => api.tickets.id(ticketId).get());
    ```
 
 ## Miscellaneous
