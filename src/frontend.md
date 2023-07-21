@@ -473,6 +473,32 @@ export function fakeTicket() {}
    const ticketsQuery = useQuery(['tickets', ticketId], () => api.tickets.id(ticketId).get());
    ```
 
+5. Keep all calls to API in `queries` folder.
+
+   > Why? It prevents spreading API code through the whole application code and helps seeing the whole protocol of dealing whit API in one place,
+   > which makes query cache management easier.
+
+   ```typescript
+   // MyComponent.tsx
+   // bad, cache key management is located in component file, hard to control it
+   const ticketQuery = useQuery(['ticket', ticketId], () => sdk.tickets.id(ticketId).get());
+   // also bad
+   const handleSubmitForm = useCallback(
+     async (formFields) => {
+       const document = sdk.documents.id(documentId).patch({ formFields });
+       queryClient.setQueryData(['document', documentId], { document });
+     },
+     [documentId],
+   );
+
+   // good, sdk call is not exposed from .query file, cacheKey is not exposed
+   import { useGetTicket } from '../../queries/ticket.query';
+   import { usePatchDocument } from '../../queries/document.query';
+   ...
+   const ticketQuery = useGetTicket(ticketId);
+   const documentMutation = usePatchDocument(documentId);
+   ```
+
 ## Miscellaneous
 
 1. Prefer UX over DX.
