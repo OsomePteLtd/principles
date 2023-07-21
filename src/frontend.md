@@ -492,6 +492,9 @@ export function fakeTicket() {}
    );
 
    // good, sdk call is not exposed from .query file, cacheKey is not exposed
+   import { useGetTicket } from '../../queries/ticket.query';
+   import { usePatchDocument } from '../../queries/document.query';
+   ...
    const ticketQuery = useGetTicket(ticketId);
    const documentMutation = usePatchDocument(documentId);
    ```
