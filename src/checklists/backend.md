@@ -88,30 +88,30 @@
 
 ### Tests
 
-| Service / Feature | jest | no sinon | global check for pending nocks | disabled network | anti flaky |
-| ----------------- | ---- | -------- | ------------------------------ | ---------------- | ---------- |
-| alfred            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
-| analytix          | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
-| auditor           | 🍏   | ❓       | ❓                             | ❓               | 🍅         |
-| billy             | 🍏   | 🍅       | 🍏                             | 🍏               | 🍅         |
-| bouncer           | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
-| core              | 🍅   | 🍅       | ❓                             | ❓               | 🍅         |
-| dealer            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
-| enrique           | 🍏   | 🍏       | ❓                             | ❓               | 🍅         |
-| flexflow          | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
-| hermes            | ❓   | ❓       | ❓                             | ❓               | ❓         |
-| hero              | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
-| invoker           | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
-| jamal             | 🍏   | 🍅       | 🍅                             | 🍏               | 🍅         |
-| nano              | ❓   | ❓       | ❓                             | ❓               | ❓         |
-| pablo             | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
-| payot             | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
-| pechkin           | 🍏   | 🍅       | 🍅                             | 🍏               | 🍏         |
-| roberto           | 🍅   | 🍅       | ❓                             | ❓               | 🍅         |
-| scrooge           | 🍏   | ❓       | ❓                             | ❓               | 🍅         |
-| shiva             | 🍏   | 🍏       | ❓                             | ❓               | 🍅         |
-| skyler            | 🍏   | 🍏       | 🍏                             | 🍏               | 🍅         |
-| tigerdocs         | 🍅   | ❓       | ❓                             | ❓               | 🍅         |
+| Service / Feature | jest | no sinon | global check for pending nocks | disabled network |
+| ----------------- | ---- | -------- | ------------------------------ | ---------------- |
+| alfred            | 🍏   | 🍏       | 🍏                             | 🍏               |
+| analytix          | 🍅   | ❓       | ❓                             | ❓               |
+| auditor           | 🍏   | ❓       | ❓                             | ❓               |
+| billy             | 🍏   | 🍅       | 🍏                             | 🍏               |
+| bouncer           | 🍅   | ❓       | ❓                             | ❓               |
+| core              | 🍅   | 🍅       | ❓                             | ❓               |
+| dealer            | 🍏   | 🍏       | 🍏                             | 🍏               |
+| enrique           | 🍏   | 🍏       | ❓                             | ❓               |
+| flexflow          | 🍅   | ❓       | ❓                             | ❓               |
+| hermes            | ❓   | ❓       | ❓                             | ❓               |
+| hero              | 🍅   | ❓       | ❓                             | ❓               |
+| invoker           | 🍏   | 🍏       | 🍏                             | 🍏               |
+| jamal             | 🍏   | 🍅       | 🍅                             | 🍏               |
+| nano              | ❓   | ❓       | ❓                             | ❓               |
+| pablo             | 🍏   | 🍏       | 🍏                             | 🍏               |
+| payot             | 🍏   | 🍏       | 🍏                             | 🍏               |
+| pechkin           | 🍏   | 🍅       | 🍅                             | 🍏               |
+| roberto           | 🍅   | 🍅       | ❓                             | ❓               |
+| scrooge           | 🍏   | ❓       | ❓                             | ❓               |
+| shiva             | 🍏   | 🍏       | ❓                             | ❓               |
+| skyler            | 🍏   | 🍏       | 🍏                             | 🍏               |
+| tigerdocs         | 🍅   | ❓       | ❓                             | ❓               |
 
 ### Infrastructure
 
