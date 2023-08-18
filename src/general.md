@@ -129,6 +129,28 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    isDiscountAdjustmentDisabled;
    ```
 
+1. Avoid third-party names of softwares or services.
+
+   ```typescript
+   // bad
+
+   <HotJar company={company} />
+
+   // good
+
+   <Nps company={company} />
+   ```
+
+   ```typescript
+   // bad
+
+   company.xeroData
+
+   // good
+
+   company.accountignData
+   ```
+
 ## Clean Code
 
 1. Pattern "Loop + Function". If you have more then 1 line of code inside a loop, it is a sign that you need to extract a function.
