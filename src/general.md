@@ -144,11 +144,11 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    ```typescript
    // bad
 
-   company.xeroData
+   company.xeroData;
 
    // good
 
-   company.accountignData
+   company.accountignData;
    ```
 
 ## Clean Code
