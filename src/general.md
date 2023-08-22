@@ -129,26 +129,16 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    isDiscountAdjustmentDisabled;
    ```
 
-1. Avoid third-party names of softwares or services.
+1. Avoid third-party names of softwares or services in function and component names.
 
    ```typescript
    // bad
-
    <HotJar company={company} />
+   function handleSendBirdEventJob()
 
    // good
-
    <Nps company={company} />
-   ```
-
-   ```typescript
-   // bad
-
-   company.xeroData;
-
-   // good
-
-   company.accountignData;
+   function handleMessageCreatedJob()
    ```
 
 ## Clean Code
