@@ -129,7 +129,7 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    isDiscountAdjustmentDisabled;
    ```
 
-1. Avoid third-party names of softwares or services in function and component names.
+1. Avoid third-party names of software or services in function and component names.
 
    ```typescript
    // bad
