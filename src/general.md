@@ -134,11 +134,21 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    ```typescript
    // bad
    <HotJar company={company} />;
-   function handleSendBirdEventJob();
 
    // good
    <Nps company={company} />;
-   function handleMessageCreatedJob();
+   ```
+
+   ```typescript
+   // bad
+   function handleSendBirdEventJob() {
+     ...
+   };
+
+   // good
+   function handleMessageCreatedJob() {
+     ...
+   };
    ```
 
 ## Clean Code
