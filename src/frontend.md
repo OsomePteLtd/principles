@@ -499,6 +499,83 @@ export function fakeTicket() {}
    const documentMutation = usePatchDocument(documentId);
    ```
 
+## I18n
+
+### Translation keys
+
+1. Use `snake_case` for translation keys.
+
+   ```typescript
+   // bad
+   t('home.helloWorld');
+
+   // good
+   t('home.hello_world');
+   ```
+
+1. Do not split phrases into several translation keys. Sometimes it's impossible to translate splitted phrase to another language.
+
+   ```typescript
+   // bad
+   const greeting = t('home.hello') + userName + '!';
+
+   // good
+   const greeting = t('home.hello_user', { userName });
+   ```
+
+1. Give meaningful names to translation keys. Translation key should shortly describe their purpose of content.
+
+   ```typescript
+   // bad
+   t('home.header_title');
+
+   // good
+   t('home.hello_world');
+   ```
+
+1. Do not nest translation keys too deeply, keep 2-3 levels of nesting.
+
+   ```typescript
+   // bad
+   t('invoices.payable.list.header.title');
+
+   // good
+   t('invoices_payable.title_invoices_to_pay');
+   ```
+
+1. Do not use dynamic translation keys. We use static tool that prepares translation files for us, and it cannot run code.
+
+   ```typescript
+   // bad, should be caught by our custom eslint rule
+   const key = isNight ? 'home.good_night' : 'home.good_day';
+   const greeting = t(key);
+
+   // good
+   const greeting = isNight ? t('home.good_night') : t('home.good_day');
+   ```
+
+1. Avoid changing translation keys without changing their content. Changing keys forces our translators to handle translations one more time.
+
+1. Use `t()` for translation except of case when you need to interpolate components, in that case use `<Trans />`.
+
+### Namespaces
+
+1. Use namespace in translation keys if it's used not in host app. We use shared single i18n instance through host app and microfrontend, and host app is bound to default namespace.
+
+   ```typescript
+   // bad, should be caught by our custom eslint rule (if not host app)
+   t('home.hello_world');
+   // bad
+   t('home.hello_world', { ns: 'invoices' });
+
+   // good
+   t('invoices:home.hello_world');
+   ```
+
+1. Use only one namespace per repository. It helps us to work with Lokalise.
+
+1. Name of namespace should be unique through all repositories of Osome. It helps us to avoid translation keys conflict.
+
 ## Miscellaneous
 
 1. Prefer UX over DX.
