@@ -520,6 +520,7 @@ export function fakeTicket() {}
    const greeting = t('home.hello') + userName + '!';
 
    // good
+   // in translation file: "hello_user": "Hello, {{userName}}!",
    const greeting = t('home.hello_user', { userName });
    ```
 
@@ -572,9 +573,9 @@ export function fakeTicket() {}
    t('invoices:home.hello_world');
    ```
 
-1. Use only one namespace per repository. It helps us to work with Lokalise.
+1. Use only one namespace per repository. It helps us to work with the TMS (Translation Management System).
 
-1. Name of namespace should be unique through all repositories of Osome. It helps us to avoid translation keys conflict.
+1. Name of namespace should be unique through all repositories in system. It helps us to avoid translation keys conflict.
 
 ## Miscellaneous
 
