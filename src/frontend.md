@@ -499,6 +499,98 @@ export function fakeTicket() {}
    const documentMutation = usePatchDocument(documentId);
    ```
 
+## I18n
+
+### Translation keys
+
+1. Use `snake_case` for translation keys.
+
+   ```typescript
+   // bad
+   t('home.helloWorld');
+
+   // good
+   t('home.hello_world');
+   ```
+
+1. Do not split phrases into several translation keys. Sometimes it's impossible to translate splitted phrase to another language.
+
+   ```typescript
+   // bad
+   const greeting = t('home.hello') + userName + '!';
+
+   // good
+   // in translation file: "hello_user": "Hello, {{userName}}!",
+   const greeting = t('home.hello_user', { userName });
+   ```
+
+1. Use clear and meaningful key names that succinctly describe their purpose and the value they hold. This is similar to how variables are named in code.
+
+   ```typescript
+   // bad
+   t('home.button');
+
+   // good
+   t('home.create_ticket_button');
+   ```
+
+1. Avoid being overly specific and refrain from using translation key values as names.
+
+   ```typescript
+   // bad
+   t('home.you_have_not_created_any_ticket_yet');
+
+   // good
+   t('home.blank_state_text');
+   ```
+
+1. Do not nest translation keys too deeply, keep 2-3 levels of nesting. First level should be used for section of the application (module, entry points, page or domain). Second level should be used for grouping similar keys, for example form errors. But don't overthink here.
+
+   ```typescript
+   // bad
+   t('invoices.payable.list.header.title');
+
+   // good, "invoices_payable" identifies page
+   t('invoices_payable.title_invoices_to_pay');
+
+   // good, "grouped" form errors
+   t('invoices_payable.create_invoice_form_error.empty_name');
+   t('invoices_payable.create_invoice_form_error.empty_number');
+   ```
+
+1. Avoid changing translation keys without changing their content. Changing keys forces our translators to handle translations one more time.
+
+1. Do not use dynamic translation keys. We use static tool that prepares translation files for us, and it cannot run code.
+
+   ```typescript
+   // bad, should be caught by our custom eslint rule
+   const key = isNight ? 'home.good_night' : 'home.good_day';
+   const greeting = t(key);
+
+   // good
+   const greeting = isNight ? t('home.good_night') : t('home.good_day');
+   ```
+
+1. Use `t()` for translation except of case when you need to interpolate components, in that case use `<Trans />`.
+
+### Namespaces
+
+1. Use namespace in translation keys if it's used not in host app. We use shared single i18n instance through host app and microfrontend, and host app is bound to default namespace.
+
+   ```typescript
+   // bad, should be caught by our custom eslint rule (if not host app)
+   t('home.hello_world');
+   // bad
+   t('home.hello_world', { ns: 'invoices' });
+
+   // good
+   t('invoices:home.hello_world');
+   ```
+
+1. Use only one namespace per repository. It helps us to work with the TMS (Translation Management System).
+
+1. Name of namespace should be unique through all repositories in system. It helps us to avoid translation keys conflict.
+
 ## Miscellaneous
 
 1. Prefer UX over DX.
