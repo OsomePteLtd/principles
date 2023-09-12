@@ -524,14 +524,24 @@ export function fakeTicket() {}
    const greeting = t('home.hello_user', { userName });
    ```
 
-1. Give meaningful names to translation keys. Translation key should shortly describe their purpose of content.
+1. Use clear and meaningful key names that succinctly describe their purpose and the value they hold. This is similar to how variables are named in code.
 
    ```typescript
    // bad
-   t('home.header_title');
+   t('home.button');
 
    // good
-   t('home.hello_world');
+   t('home.create_ticket_button');
+   ```
+
+1. Avoid being overly specific and refrain from using translation key values as names.
+
+   ```typescript
+   // bad
+   t('home.you_have_not_created_any_ticket_yet');
+
+   // good
+   t('home.blank_state_text');
    ```
 
 1. Do not nest translation keys too deeply, keep 2-3 levels of nesting.
