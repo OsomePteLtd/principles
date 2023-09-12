@@ -544,15 +544,21 @@ export function fakeTicket() {}
    t('home.blank_state_text');
    ```
 
-1. Do not nest translation keys too deeply, keep 2-3 levels of nesting.
+1. Do not nest translation keys too deeply, keep 2-3 levels of nesting. First level should be used for section of the application (module, entry points, page or domain). Second level should be used for grouping similar keys, for example form errors. But don't overthink here.
 
    ```typescript
    // bad
    t('invoices.payable.list.header.title');
 
-   // good
+   // good, "invoices_payable" identifies page
    t('invoices_payable.title_invoices_to_pay');
+
+   // good, "grouped" form errors
+   t('invoices_payable.create_invoice_form_error.empty_name');
+   t('invoices_payable.create_invoice_form_error.empty_number');
    ```
+
+1. Avoid changing translation keys without changing their content. Changing keys forces our translators to handle translations one more time.
 
 1. Do not use dynamic translation keys. We use static tool that prepares translation files for us, and it cannot run code.
 
@@ -564,8 +570,6 @@ export function fakeTicket() {}
    // good
    const greeting = isNight ? t('home.good_night') : t('home.good_day');
    ```
-
-1. Avoid changing translation keys without changing their content. Changing keys forces our translators to handle translations one more time.
 
 1. Use `t()` for translation except of case when you need to interpolate components, in that case use `<Trans />`.
 
