@@ -595,7 +595,7 @@ export function fakeTicket() {}
    <Trans
      i18nKey="key"
      components={{
-       // pay attention: no need to pass children to these components because they will be redeclared based on translation string
+       // pay attention: no need to pass children to these components because they will be re-declared based on translation string
        linkToInvoices: <Link to="/invoices" />,
        invoicesIcon: <InvoicesIcon />,
        linkToExpenses: <Link to="/expenses" />,
