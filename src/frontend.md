@@ -571,7 +571,38 @@ export function fakeTicket() {}
    const greeting = isNight ? t('home.good_night') : t('home.good_day');
    ```
 
-1. Use `t()` for translation except of case when you need to interpolate components, in that case use `<Trans />`.
+1. Use `<Trans />` when you need to interpolate components ot html tags (including <br />). Use `t()` in all other cases.
+
+1. Don't use numeric tags in strings handled by `<Trans />`. Use named tag components instead. Also don't pass children to `Trans` because they may mislead developers since only translation string matters. It's needed because formatting or refactoring may change numbers of components which may cause translation to be broken.
+
+   ```typescript
+   // bad
+   // "key": "<0>go to invoices<1 /></0> or <2>go to expenses<3 /></2>"
+   <Trans i18nKey="key">
+     <Link to="/invoices">
+       go to invoices
+       <InvoicesIcon />
+     </Link>{' '}
+     or{' '}
+     <Link to="expenses">
+       go to expenses
+       <ExpensesIcon />
+     </Link>
+   </Trans>;
+
+   // good
+   // "key": "<linkToInvoices>go to invoices<invoicesIcon /></linkToInvoices> or <linkToExpenses>go to expenses<expensesIcon /></linkToExpenses>"
+   <Trans
+     i18nKey="key"
+     components={{
+       // pay attention: no need to pass children to these components because they will be redeclared based on translation string
+       linkToInvoices: <Link to="/invoices" />,
+       invoicesIcon: <InvoicesIcon />,
+       linkToExpenses: <Link to="/expenses" />,
+       expensesIcon: <ExpensesIcon />,
+     }}
+   />;
+   ```
 
 ### Namespaces
 
