@@ -577,10 +577,10 @@ export function fakeTicket() {}
 
    ```typescript
    // bad
-   // "key": "<0>go to invoices<1 /></0> or <2>go to expenses<3 /></2>"
+   // "key": "<0>go to {{invoicesCount}} invoices<1 /></0> or <2>go to expenses<3 /></2>"
    <Trans i18nKey="key">
      <Link to="/invoices">
-       go to invoices
+       go to {invoicesCount} invoices
        <InvoicesIcon />
      </Link>{' '}
      or{' '}
@@ -591,7 +591,7 @@ export function fakeTicket() {}
    </Trans>;
 
    // good
-   // "key": "<linkToInvoices>go to invoices<invoicesIcon /></linkToInvoices> or <linkToExpenses>go to expenses<expensesIcon /></linkToExpenses>"
+   // "key": "<linkToInvoices>go to {{invoicesCount}} invoices<invoicesIcon /></linkToInvoices> or <linkToExpenses>go to expenses<expensesIcon /></linkToExpenses>"
    <Trans
      i18nKey="key"
      components={{
@@ -600,6 +600,9 @@ export function fakeTicket() {}
        invoicesIcon: <InvoicesIcon />,
        linkToExpenses: <Link to="/expenses" />,
        expensesIcon: <ExpensesIcon />,
+     }}
+     values={{
+       invoicesCount,
      }}
    />;
    ```
