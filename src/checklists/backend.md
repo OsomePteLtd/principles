@@ -23,6 +23,7 @@
 | pablo             | 🍏     | 🍏               | 🍏           |
 | payot             | 🍏     | 🍏               | 🍏           |
 | pechkin           | 🍅     | 🍏               | ❓           |
+| previewer         | ❓     | ❓               | ❓           |
 | roberto           | 🍏     | 🍏               | 🍅           |
 | scrooge           | 🍅     | 🍏               | ❓           |
 | shiva             | 🍏     | 🍏               | 🍏           |
