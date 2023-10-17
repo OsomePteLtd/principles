@@ -612,3 +612,133 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 ## Idempotency
 
 1. Idempotency key template is `fullModelName-${id}-actionName`, e.g. `biContract-123-paymentDeclined`.
+
+## I18n
+
+### Wrapper around `t` function
+
+1. Use custom wrapper on `t` function from _i18n_. It forces always define needed language. Makes `t` usage more abviuouse and allow to translate only on allowed languages.
+
+```typescript
+export enum Language {
+  en = 'en',
+  zhCn = 'zh-CN',
+  zhTw = 'zh-TW',
+}
+
+export function t(key: string, lng: Language, parameters?: Record<string, string>) {
+  return i18next.t(key, { lng, ...parameters });
+}
+```
+
+### Translation keys
+
+1. Use `snake_case` for translation keys.
+
+   ```typescript
+   // bad
+   t('home.helloWorld', Language.en);
+
+   // good
+   t('home.hello_world', Language.en);
+   ```
+
+1. Do not split phrases into several translation keys. Sometimes it's impossible to translate splitted phrase to another language.
+
+   ```typescript
+   // bad
+   const greeting = t('home.hello', Language.en) + userName + '!';
+
+   // good
+   // in translation file: "hello_user": "Hello, {{userName}}!",
+   const greeting = t('home.hello_user', Language.en, { userName });
+   ```
+
+1. Use clear and meaningful key names that succinctly describe their purpose and the value they hold. This is similar to how variables are named in code.
+
+   ```typescript
+   // bad
+   t('home.name', Language.en);
+
+   // good
+   t('home.ticket.default_name', Language.en);
+   ```
+
+1. Avoid being overly specific and refrain from using translation key values as names.
+
+   ```typescript
+   // bad
+   t('home.you_have_not_created_any_ticket_yet', Language.en);
+
+   // good
+   t('home.blank_state_text', Language.en);
+   ```
+
+1. Do not nest translation keys too deeply, keep 2-3 levels of nesting. First level should be used for section of the application (module, entry points, page or domain). Second level should be used for grouping similar keys, for example form errors. But don't overthink here.
+
+   ```typescript
+   // bad
+   t('invoices.payable.list.header.title', Language.en);
+
+   // good, "invoices_payable" identifies page
+   t('invoices_payable.title_invoices_to_pay', Language.en);
+
+   // good, "grouped" form errors
+   t('invoices_payable.create_invoice_form_error.empty_name', Language.en);
+   t('invoices_payable.create_invoice_form_error.empty_number', Language.en);
+   ```
+
+1. Avoid changing translation keys without changing their content. Changing keys forces our translators to handle translations one more time.
+
+1. Do not use dynamic translation keys. We use static tool that prepares translation files for us, and it cannot run code.
+
+   ```typescript
+   // bad, should be caught by our custom eslint rule
+   const key = isNight ? 'home.good_night' : 'home.good_day';
+   const greeting = t(key, Language.en);
+
+   // good
+   const greeting = isNight ? t('home.good_night', Language.en) : t('home.good_day', Language.en);
+   ```
+
+### Namespaces
+
+> You probably won't need to use namespace at all. Only reason to use it if you are in the process of moving part of the functionality to another microservice, namaspaces will help isolate translations that will later be placed in a separate repository
+
+1. Always Define default `defaultNS` on i18n setup
+
+```typescript
+void i18next.init({
+  ...
+  ns: ['core', 'roberto'],
+  defaultNS: 'core',
+  ...
+});
+```
+
+1. Don't explicitly specify the default namespace when translating
+
+```typescript
+// bad
+t('core:ticket.default_name');
+
+// good
+t('ticket.default_name');
+
+// good
+t('roberto:ticket.default_name');
+```
+
+### Translates stored in database
+
+1. Translates for specific columns of table should be stored in JSONB column named `i18n`. This column should have next structure:
+
+```typescript
+{ // keys are valid columns of table which should be translated
+  name: { // keys are valid languages
+   'en': 'example name',
+   'zh-CN': '示例名称',
+   'zh-TW': '示例名称',
+ }
+}
+```
