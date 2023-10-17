@@ -617,7 +617,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 ### Wrapper around `t` function
 
-1. Use custom wrapper on `t` function from _i18n_. It forces always define needed language. Makes `t` usage more abviuouse and allow to translate only on allowed languages.
+1. Use custom wrapper on `t` function from _i18n_. It forces always define needed language. Makes `t` usage more clear and allow to translate only on defined languages.
 
 ```typescript
 export enum Language {
