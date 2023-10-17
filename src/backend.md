@@ -658,34 +658,30 @@ export function t(key: string, lng: Language, parameters?: Record<string, string
 
    ```typescript
    // bad
-   t('home.name', Language.en);
+   t('ticket.name', Language.en);
 
    // good
-   t('home.ticket.default_name', Language.en);
+   t('ticket.ob_data_collection_ticket_name', Language.en);
    ```
 
 1. Avoid being overly specific and refrain from using translation key values as names.
 
    ```typescript
    // bad
-   t('home.you_have_not_created_any_ticket_yet', Language.en);
+   t('ticket.you_have_not_created_any_ticket_yet', Language.en);
 
    // good
-   t('home.blank_state_text', Language.en);
+   t('ticket.blank_state_text', Language.en);
    ```
 
 1. Do not nest translation keys too deeply, keep 2-3 levels of nesting. First level should be used for section of the application (module, entry points, page or domain). Second level should be used for grouping similar keys, for example form errors. But don't overthink here.
 
    ```typescript
    // bad
-   t('invoices.payable.list.header.title', Language.en);
+   t('ticket.ob_data.collection_ticket.defaults.name', Language.en);
 
-   // good, "invoices_payable" identifies page
-   t('invoices_payable.title_invoices_to_pay', Language.en);
-
-   // good, "grouped" form errors
-   t('invoices_payable.create_invoice_form_error.empty_name', Language.en);
-   t('invoices_payable.create_invoice_form_error.empty_number', Language.en);
+   // good
+   t('ticket.ob_data_collection_ticket_name', Language.en);
    ```
 
 1. Avoid changing translation keys without changing their content. Changing keys forces our translators to handle translations one more time.
@@ -693,7 +689,6 @@ export function t(key: string, lng: Language, parameters?: Record<string, string
 1. Do not use dynamic translation keys. We use static tool that prepares translation files for us, and it cannot run code.
 
    ```typescript
-   // bad, should be caught by our custom eslint rule
    const key = isNight ? 'home.good_night' : 'home.good_day';
    const greeting = t(key, Language.en);
 
@@ -739,6 +734,25 @@ t('roberto:ticket.default_name');
    'en': 'example name',
    'zh-CN': '示例名称',
    'zh-TW': '示例名称',
+ },
+  description: {
+   'en': 'example of description',
+   'zh-CN': '描述示例',
+   'zh-TW': '描述示例',
  }
+}
+```
+
+In original columns we still store english versions of text by default. Example of table row where **name** and **description** are translated:
+
+```json
+{
+  "id": 1,
+  "name": "example name", // in orignal column store english verisons
+  "description": "example of description", // in orignal column store english verisons
+  "i18n": {
+    "name": { "en": "example name", "zh-CN": "示例名称", "zh-TW": "示例名称" },
+    "description": { "en": "example of description", "zh-CN": "描述示例", "zh-TW": "描述示例" }
+  }
 }
 ```
