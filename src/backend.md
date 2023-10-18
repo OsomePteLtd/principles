@@ -748,8 +748,8 @@ In original columns we still store english versions of text by default. Example 
 ```json
 {
   "id": 1,
-  "name": "example name", // in original column store english versions
-  "description": "example of description", // in original column store english versions
+  "name": "example name", // in original column store english version
+  "description": "example of description", // in original column store english version
   "i18n": {
     "name": { "en": "example name", "zh-CN": "示例名称", "zh-TW": "示例名称" },
     "description": { "en": "example of description", "zh-CN": "描述示例", "zh-TW": "描述示例" }
