@@ -615,22 +615,6 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 ## I18n
 
-### Wrapper around `t` function
-
-1. Use custom wrapper on `t` function from _i18n_. It forces always define needed language. Makes `t` usage more clear and allow to translate only on defined languages.
-
-```typescript
-export enum Language {
-  en = 'en',
-  zhCn = 'zh-CN',
-  zhTw = 'zh-TW',
-}
-
-export function t(key: string, lng: Language, parameters?: Record<string, string>) {
-  return i18next.t(key, { lng, ...parameters });
-}
-```
-
 ### Translation keys
 
 1. Use `snake_case` for translation keys.
@@ -678,7 +662,7 @@ export function t(key: string, lng: Language, parameters?: Record<string, string
 
    ```typescript
    // bad
-   t('ticket.ob_data.collection_ticket.defaults.name', Language.en);
+   t('ticket.ob_data_collection_ticket.defaults.nam', Language.en);
 
    // good
    t('ticket.ob_data_collection_ticket_name', Language.en);
