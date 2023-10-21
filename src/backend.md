@@ -612,3 +612,131 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 ## Idempotency
 
 1. Idempotency key template is `fullModelName-${id}-actionName`, e.g. `biContract-123-paymentDeclined`.
+
+## I18n
+
+### Translation keys
+
+1. Use `snake_case` for translation keys.
+
+   ```typescript
+   // bad
+   t('home.helloWorld', Language.en);
+
+   // good
+   t('home.hello_world', Language.en);
+   ```
+
+1. Do not split phrases into several translation keys. Sometimes it's impossible to translate splitted phrase to another language.
+
+   ```typescript
+   // bad
+   const greeting = t('home.hello', Language.en) + userName + '!';
+
+   // good
+   // in translation file: "hello_user": "Hello, {{userName}}!",
+   const greeting = t('home.hello_user', Language.en, { userName });
+   ```
+
+1. Use clear and meaningful key names that succinctly describe their purpose and the value they hold. This is similar to how variables are named in code.
+
+   ```typescript
+   // bad
+   t('ticket.name', Language.en);
+
+   // good
+   t('ticket.ob_data_collection_ticket_name', Language.en);
+   ```
+
+1. Avoid being overly specific and refrain from using translation key values as names.
+
+   ```typescript
+   // bad
+   t('ticket.you_have_not_created_any_ticket_yet', Language.en);
+
+   // good
+   t('ticket.blank_state_text', Language.en);
+   ```
+
+1. Do not nest translation keys too deeply, keep 2-3 levels of nesting. First level should be used for section of the application (module, entry points, page or domain). Second level should be used for grouping similar keys, for example form errors. But don't overthink here.
+
+   ```typescript
+   // bad
+   t('ticket.ob_data_collection_ticket.defaults.nam', Language.en);
+
+   // good
+   t('ticket.ob_data_collection_ticket_name', Language.en);
+   ```
+
+1. Avoid changing translation keys without changing their content. Changing keys forces our translators to handle translations one more time.
+
+1. Do not use dynamic translation keys. We use static tool that prepares translation files for us, and it cannot run code.
+
+   ```typescript
+   const key = isNight ? 'home.good_night' : 'home.good_day';
+   const greeting = t(key, Language.en);
+
+   // good
+   const greeting = isNight ? t('home.good_night', Language.en) : t('home.good_day', Language.en);
+   ```
+
+### Namespaces
+
+> You probably won't need to use namespace at all. Only reason to use it if you are in the process of moving part of the functionality to another microservice, namaspaces will help isolate translations that will later be placed in a separate repository
+
+1. Always Define default `defaultNS` on i18n setup
+
+```typescript
+void i18next.init({
+  ...
+  ns: ['core', 'roberto'],
+  defaultNS: 'core',
+  ...
+});
+```
+
+1. Don't explicitly specify the default namespace when translating
+
+```typescript
+// bad
+t('core:ticket.default_name');
+
+// good
+t('ticket.default_name');
+
+// good
+t('roberto:ticket.default_name');
+```
+
+### Translates stored in database
+
+1. Translates for specific columns of table should be stored in JSONB column named `i18n`. This column should have next structure:
+
+```typescript
+{ // keys are valid columns of table which should be translated
+  name: { // keys are valid languages
+   'en': 'example name',
+   'zh-CN': '示例名称',
+   'zh-TW': '示例名称',
+ },
+  description: {
+   'en': 'example of description',
+   'zh-CN': '描述示例',
+   'zh-TW': '描述示例',
+ }
+}
+```
+
+In original columns we still store english versions of text by default. Example of table row where **name** and **description** are translated:
+
+```json
+{
+  "id": 1,
+  "name": "example name", // in original column store english version
+  "description": "example of description", // in original column store english version
+  "i18n": {
+    "name": { "en": "example name", "zh-CN": "示例名称", "zh-TW": "示例名称" },
+    "description": { "en": "example of description", "zh-CN": "描述示例", "zh-TW": "描述示例" }
+  }
+}
+```
