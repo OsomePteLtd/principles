@@ -191,6 +191,21 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    function createUser(attributes, { auditLogs }: { auditLogs: boolean })
    ```
 
+## Company domain
+
+1. Don't use a default company branch.
+
+```typescript
+// bad
+const branch = company?.branch || 'gb';
+
+// good
+if (!company?.branch) {
+  return;
+}
+const branch = company.branch;
+```
+
 ## Comments
 
 1. Use comments to add context or information that is not obvious from the code already. Don't use comments to explain the code itself - code (through proper naming) should be self-explanatory.
