@@ -171,6 +171,28 @@ Method 3 is the same except you implement your migration in lambda function and 
 
 For serverless projects - method 3 is preferred, but not always. When you have a huge dataset and it is impossible to perform migration within one serverless function invocation because of timeout (15 minutes usually), method 2 is the only option since it allows you to split your migration by batches via multiple SQS messages.
 
+### Transactions
+
+1. Avoid initiating read network calls within a transaction before the first SQL statement.
+
+   One of the key principles in effective transaction management is the avoidance of prolonged transaction durations, particularly with regards to networking operations. This precaution is essential because database transactions involve locking the database, potentially resulting in decreased database performance and an increased likelihood of encountering deadlocks.
+
+   It's important to note that network calls generally exhibit a significantly slower response time compared to database statements. For example, a network call may take around 150 milliseconds, whereas a typical database statement requires only 5 milliseconds. Adhering to this practice helps minimize system inefficiencies and reduces the risks associated with transaction-related issues.
+
+   ```typescript
+   // bad
+   return sequelize.transaction(async (transaction) => {
+     const cachedId = await redis.get('userId');
+     await User.save({ name }, { where: { id: cachedId } });
+   });
+
+   // good
+   const cachedId = await redis.get('userId');
+   return sequelize.transaction(async (transaction) => {
+     await User.save({ name }, { where: { id: cachedId } });
+   });
+   ```
+
 ## Models
 
 1. Do not use models from other models (except for associations). For example, you should not create a method in the `Ticket` model that will do `User.findAll()`. For such case you should create a service function that will use 2 models.
