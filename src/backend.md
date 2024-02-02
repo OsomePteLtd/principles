@@ -20,6 +20,8 @@ Table of contents can be generated in services like http://ecotrust-canada.githu
 
 ## Database
 
+### Columns
+
 1. Use foreign key constraints for foreign keys.
 
 1. Use `TIMESTAMP WITH TIME ZONE` (`TIMESTAMPTZ`) for timestamps.
@@ -76,7 +78,7 @@ Table of contents can be generated in services like http://ecotrust-canada.githu
 
    http://codeclimber.net.nz/archive/2012/11/19/why-you-should-never-use-a-boolean-field-use-an/
 
-## Migrations
+### Migrations
 
 1. Add `SET lock_timeout TO '2s';` to each migration:
 
@@ -147,7 +149,7 @@ Table of contents can be generated in services like http://ecotrust-canada.githu
    CREATE UNIQUE INDEX ON "notificationPeriods" ("subscriptionId", "type", "value") WHERE ("deletedAt" IS NULL);
    ```
 
-## Data migration
+### Data migration
 
 As the project you are working on develops, aside from migrating your DB schema you have to migrate your data as well.
 
