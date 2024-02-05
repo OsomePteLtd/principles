@@ -333,30 +333,32 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 1. Do not add `find*` service functions, use directly ORM `find*` functions from controllers instead. Exception: the finder function is very complex and has very specific domain logic, so it’s guaranteed it will not be used by different parts of the app. E.g., `findAllDocumentsRelatedToDocumentThroughReconciliations`.
 
-1. Use `attributes` for ORM `find*` methods if only some set of model fields is needed.
+1. Use `attributes` for ORM `find*` methods if  only some set of model fields is needed.
+  
+   Example:
+   ```typescript
+    // bad
 
-```typescript
-// bad
+    async function getUserNamesMap(): Promise<Record<number, string>> {
+      const users = await User.findAll({});
+      return users.reduce((acc, user) => {
+        acc[user.id] = user.name;
+        return acc;
+      }, {});
+    }
 
-async function getCompanyNamesMap(): Promise<Record<number, string>> {
-  const companies = await Company.findAll({});
-  return companies.reduce((acc, company) => {
-    acc[company.id] = company.name;
-    return acc;
-  }, {});
-}
+    // good
 
-// good
-async function getCompanyNamesMap(): Promise<Record<number, string>> {
-  const companies = await Company.findAll({
-    attributes: <Array<keyof CompanyAttributes>>['id', 'name'],
-  });
-  return companies.reduce((acc, company) => {
-    acc[company.id] = company.name;
-    return acc;
-  }, {});
-}
-```
+    async function getUserNamesMap(): Promise<Record<number, string>> {
+      const users = await User.findAll({
+        attributes: <Array<keyof UserAttributes>>['id', 'name'],
+      });
+      return users.reduce((acc, user) => {
+        acc[user.id] = user.name;
+        return acc;
+      }, {});
+    }
+   ```
 
 ## Jobs
 
