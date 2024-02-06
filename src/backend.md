@@ -323,6 +323,28 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    }
    ```
 
+1. To enhance endpoint performance, optimize the main service function (e.g., createUser) by incorporating a job queue and relocating non-essential code that doesn't directly influence the endpoint response. That way, we both increase performance and make the system more robust.
+
+   Example:
+
+   ```typescript
+   // bad
+
+   async function createUser(attributes: UserAttributes) {
+     const user = await User.create(attributes);
+     await sendWelcomeEmail(user);
+     return user;
+   }
+
+   // good
+
+   async function createUser(attributes: UserAttributes) {
+     const user = await User.create(attributes);
+     await enqueueSendWelcomeEmail(user);
+     return user;
+   }
+   ```
+
 ## Services
 
 1. Business logic should be inside services.
