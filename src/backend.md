@@ -619,65 +619,65 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 1. If test file for controller becomes large (for example more then 1500 rows) it can be splitted into separate files by `describe` blocks and placed into tests folder
 
-```
-- controllers
-  - bankAccount
-    - bankAccount.controller.ts
-    - tests
-      - getBankAccounts.controller.test.ts
-      - getBankAccount.controller.test.ts
-      - createBankAccount.controller.test.ts
-      - updateBankAccount.controller.test.ts
-```
+   ```
+   - controllers
+      - bankAccount
+        - bankAccount.controller.ts
+        - tests
+          - getBankAccounts.controller.test.ts
+          - getBankAccount.controller.test.ts
+          - createBankAccount.controller.test.ts
+          - updateBankAccount.controller.test.ts
+   ```
 
 1. One test should include one action as a call of controller or job.
 
-```typescript
+   ```typescript
    // bad
 
    it((caseX) => {
      // ...
-    await postSqsJob(JobName.name, {...});
-    // ...
-    await postSqsJob(JobName.name, {...});
+     await postSqsJob(JobName.name, {...});
+     // ...
+     await postSqsJob(JobName.name, {...});
    });
 
    // good
 
    it((caseX) => {
      // ...
-    await postSqsJob(JobName.name, {...});
-    // ...
+     await postSqsJob(JobName.name, {...});
+     // ...
    });
 
-    it((caseY) => {
+   it((caseY) => {
      // ...
-    await postSqsJob(JobName.name, {...});
-    // ...
+     await postSqsJob(JobName.name, {...});
+     // ...
    });
-```
+   ```
 
 1. Test assertions should not verify the results of inner jobs.
 
-```typescript
+   ```typescript
    // bad
 
    it(() => {
      // ...
-    await postSqsJob(JobName.sprayX, {...});
-    // ...
-    expect(entity.x).toEqual(x);
+     await postSqsJob(JobName.sprayX, {...});
+     // ...
+     expect(entity.x).toEqual(x);
    });
 
    // good
 
    it(() => {
      // ...
-    await postSqsJob(JobName.sprayX, {...});
-    // ...
-    expect(enqueueServiceMock).toHaveBeenCalledWith(JobName.actionX)
+     await postSqsJob(JobName.sprayX, {...});
+     // ...
+     expect(enqueueServiceMock).toHaveBeenCalledWith(JobName.actionX)
    });
-```
+   ```
 
 ## Microservices
 
