@@ -630,6 +630,55 @@ For serverless projects - method 3 is preferred, but not always. When you have a
       - updateBankAccount.controller.test.ts
 ```
 
+1. One test should include one action as a call of controller or job.
+
+```typescript
+   // bad
+
+   it((caseX) => {
+     // ...
+    await postSqsJob(JobName.name, {...});
+    // ...
+    await postSqsJob(JobName.name, {...});
+   });
+
+   // good
+
+   it((caseX) => {
+     // ...
+    await postSqsJob(JobName.name, {...});
+    // ...
+   });
+
+    it((caseY) => {
+     // ...
+    await postSqsJob(JobName.name, {...});
+    // ...
+   });
+```
+
+1. Test assertions should not verify the results of other jobs.
+
+```typescript
+   // bad
+
+   it(() => {
+     // ...
+    await postSqsJob(JobName.sprayX, {...});
+    // ...
+    expect(entity.x).toEqual(x);
+   });
+
+   // good
+
+   it(() => {
+     // ...
+    await postSqsJob(JobName.sprayX, {...});
+    // ...
+    expect(enqueueServiceMock).toHaveBeenCalledWith(JobName.actionX)
+   });
+```
+
 ## Microservices
 
 1. Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
