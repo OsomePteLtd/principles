@@ -657,7 +657,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    });
 ```
 
-1. Test assertions should not verify the results of other jobs.
+1. Test assertions should not verify the results of inner jobs.
 
 ```typescript
    // bad
