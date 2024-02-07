@@ -173,9 +173,41 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 ### Transactions
 
-1. Avoid initiating read network calls within a transaction before the first SQL statement.
+One of the key principles in effective transaction management is the avoidance of prolonged transaction durations, particularly with regards to networking operations. This precaution is essential because database transactions involve locking the database, potentially resulting in decreased database performance and an increased likelihood of encountering deadlocks.
 
-   One of the key principles in effective transaction management is the avoidance of prolonged transaction durations, particularly with regards to networking operations. This precaution is essential because database transactions involve locking the database, potentially resulting in decreased database performance and an increased likelihood of encountering deadlocks.
+1. Avoid incorporating `SELECT` statements within a transaction prior to the first SQL statement that explicitly begins the transaction. They do not guarantee the result of the SELECT ramains unaltered anyway, but increase the overall time of the transaction.
+
+   Using `SELECT ... FOR UPDATE` statements is an exception and must be used within the transaction.
+
+   ```typescript
+   // bad
+   return sequelize.transaction(async (transaction) => {
+     const { id: userId } = await User.findOne({ email }, { transaction });
+     await changeUserBalance(userId, amount, { transaction });
+     await cashBackUser(userId, amount, { transaction });
+   });
+
+   // good
+   const { id: userId } = await User.findOne({ email });
+
+   return sequelize.transaction(async (transaction) => {
+     await changeUserBalance(userId, amount, { transaction });
+     await cashBackUser(userId, amount, { transaction });
+   });
+
+   // also good
+
+   return sequelize.transaction(async (transaction) => {
+     const { id: userId } = await User.findOne({
+       email,
+       lock: { level: SequelizeTransaction.LOCK.UPDATE, of: User },
+     });
+     await changeUserBalance(userId, amount, { transaction });
+     await cashBackUser(userId, amount, { transaction });
+   });
+   ```
+
+1. Avoid initiating read network calls within a transaction before the first SQL statement.
 
    It's important to note that network calls generally exhibit a significantly slower response time compared to database statements. For example, a network call may take around 150 milliseconds, whereas a typical database statement requires only 5 milliseconds. Adhering to this practice helps minimize system inefficiencies and reduces the risks associated with transaction-related issues.
 
