@@ -420,6 +420,26 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    }
    ```
 
+1. For improved fault tolerance, especially in critical jobs, avoid executing numerous operations directly within the main job. Instead, enqueue separate jobs for each logical operation or code chunk.
+
+   ```typescript
+   // bad
+
+   export async function handleUserCreatedJob({ userId }: { userId: number }) {
+     await updateBalance();
+     await sendEmail();
+     await sendAnalytics();
+   }
+
+   // good
+
+   export async function handleUserCreatedJob({ userId }: { userId: number }) {
+     await enqueueUpdateBalance();
+     await enqueueSendEmail();
+     await enqueueSendAnalytics();
+   }
+   ```
+
 ## Event Bus
 
 1. Use the Event Bus for asynchronous communication between services.
