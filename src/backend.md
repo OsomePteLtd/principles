@@ -343,7 +343,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
      await enqueueSendWelcomeEmail(user);
      return user;
    }
-   
+
    // good
 
    async function createUser(attributes: UserAttributes) {
@@ -351,7 +351,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
      await enqueueHandleUserCreated(user);
      return user;
    }
-   
+
    export async function handleUserCreated({ userId }: { userId: number }) {
      await enqueueSendWelcomeEmail();
    }
