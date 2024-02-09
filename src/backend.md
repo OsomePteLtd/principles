@@ -323,7 +323,9 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    }
    ```
 
-1. To enhance endpoint performance, optimize the main service function (e.g., createUser) by incorporating a job queue and relocating non-essential code that doesn't directly influence the endpoint response. That way, we both increase performance and make the system more robust. A job name should follow the pattern `handle{Entity}{Created|Updated}`.
+1. To enhance endpoint performance, optimize the main service function (e.g., createUser) by incorporating a job queue and relocating non-essential code that doesn't directly influence the endpoint response. That way, we both increase performance and make the system more robust.
+
+   A job name should follow the pattern `handle{Entity}{Created|Updated}`. This way we separate side effects from the main logic and make sure changes in side effects don't affect the create/update functions.
 
    Example:
 
@@ -352,7 +354,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
      return user;
    }
 
-   export async function handleUserCreated({ userId }: { userId: number }) {
+   export async function handleUserCreatedJob({ userId }: { userId: number }) {
      await enqueueSendWelcomeEmail();
    }
    ```
@@ -437,7 +439,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
    ```typescript
    // bad
 
-   export async function handleUserCreated({ userId }: { userId: number }) {
+   export async function handleUserCreatedJob({ userId }: { userId: number }) {
      await updateBalance();
      await sendEmail();
      await sendAnalytics();
@@ -445,7 +447,7 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
    // good
 
-   export async function handleUserCreated({ userId }: { userId: number }) {
+   export async function handleUserCreatedJob({ userId }: { userId: number }) {
      await enqueueUpdateBalance();
      await enqueueSendEmail();
      await enqueueSendAnalytics();
