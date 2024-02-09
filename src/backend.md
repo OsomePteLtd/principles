@@ -165,7 +165,7 @@ Depending on the complexity of migration there are several ways to perform it:
 
 Methods 2, 3 are pretty much the same and are used when you need to perform some complex migrations with a bunch of logic and conditions. Your migration functions must be covered with tests covering all possible scenarios.
 
-For the method 2 you have to create a Job following the same rules in [Job](#jobs) section, implement your migration in the job, write tests. You start the migration process by triggering the corresponding SQS message.
+For the method 2 you have to create a Job following the same rules in [Job](#jobs) section, implement your migration in the job, write tests. You start the migration process by [triggering](https://www.notion.so/osome/SQS-automation-0b9153e476f14a84852df0d1d7d354c9) the corresponding SQS message.
 
 Method 3 is the same except you implement your migration in lambda function and start the migration process by executing the function.
 
