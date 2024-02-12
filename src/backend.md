@@ -173,9 +173,41 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 ### Transactions
 
-1. Avoid initiating read network calls within a transaction before the first SQL statement.
+One of the key principles in effective transaction management is the avoidance of prolonged transaction durations, particularly with regards to networking operations. This precaution is essential because database transactions involve locking the database, potentially resulting in decreased database performance and an increased likelihood of encountering deadlocks.
 
-   One of the key principles in effective transaction management is the avoidance of prolonged transaction durations, particularly with regards to networking operations. This precaution is essential because database transactions involve locking the database, potentially resulting in decreased database performance and an increased likelihood of encountering deadlocks.
+1. Avoid incorporating `SELECT` statements within a transaction prior to the first SQL statement that explicitly begins the transaction. They do not guarantee the result of the SELECT ramains unaltered anyway, but increase the overall time of the transaction.
+
+   Using `SELECT ... FOR UPDATE` statements is an exception and must be used within the transaction.
+
+   ```typescript
+   // bad
+   return sequelize.transaction(async (transaction) => {
+     const { id: userId } = await User.findOne({ email }, { transaction });
+     await changeUserBalance(userId, amount, { transaction });
+     await cashBackUser(userId, amount, { transaction });
+   });
+
+   // good
+   const { id: userId } = await User.findOne({ email });
+
+   return sequelize.transaction(async (transaction) => {
+     await changeUserBalance(userId, amount, { transaction });
+     await cashBackUser(userId, amount, { transaction });
+   });
+
+   // also good
+
+   return sequelize.transaction(async (transaction) => {
+     const { id: userId } = await User.findOne({
+       email,
+       lock: { level: SequelizeTransaction.LOCK.UPDATE, of: User },
+     });
+     await changeUserBalance(userId, amount, { transaction });
+     await cashBackUser(userId, amount, { transaction });
+   });
+   ```
+
+1. Avoid initiating read network calls within a transaction before the first SQL statement.
 
    It's important to note that network calls generally exhibit a significantly slower response time compared to database statements. For example, a network call may take around 150 milliseconds, whereas a typical database statement requires only 5 milliseconds. Adhering to this practice helps minimize system inefficiencies and reduces the risks associated with transaction-related issues.
 
@@ -325,6 +357,8 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 1. To enhance endpoint performance, optimize the main service function (e.g., createUser) by incorporating a job queue and relocating non-essential code that doesn't directly influence the endpoint response. That way, we both increase performance and make the system more robust.
 
+   A job name should follow the pattern `handle{Entity}{Created|Updated}`. This way we separate side effects from the main logic and make sure changes in side effects don't affect the create/update functions.
+
    Example:
 
    ```typescript
@@ -336,12 +370,24 @@ For serverless projects - method 3 is preferred, but not always. When you have a
      return user;
    }
 
-   // good
+   // also bad
 
    async function createUser(attributes: UserAttributes) {
      const user = await User.create(attributes);
      await enqueueSendWelcomeEmail(user);
      return user;
+   }
+
+   // good
+
+   async function createUser(attributes: UserAttributes) {
+     const user = await User.create(attributes);
+     await enqueueHandleUserCreated(user);
+     return user;
+   }
+
+   export async function handleUserCreatedJob({ userId }: { userId: number }) {
+     await enqueueSendWelcomeEmail();
    }
    ```
 
@@ -677,65 +723,65 @@ For serverless projects - method 3 is preferred, but not always. When you have a
 
 1. If test file for controller becomes large (for example more then 1500 rows) it can be splitted into separate files by `describe` blocks and placed into tests folder
 
-```
-- controllers
-  - bankAccount
-    - bankAccount.controller.ts
-    - tests
-      - getBankAccounts.controller.test.ts
-      - getBankAccount.controller.test.ts
-      - createBankAccount.controller.test.ts
-      - updateBankAccount.controller.test.ts
-```
+   ```
+   - controllers
+      - bankAccount
+        - bankAccount.controller.ts
+        - tests
+          - getBankAccounts.controller.test.ts
+          - getBankAccount.controller.test.ts
+          - createBankAccount.controller.test.ts
+          - updateBankAccount.controller.test.ts
+   ```
 
 1. One test should include one action as a call of controller or job.
 
-```typescript
+   ```typescript
    // bad
 
    it((caseX) => {
      // ...
-    await postSqsJob(JobName.name, {...});
-    // ...
-    await postSqsJob(JobName.name, {...});
+     await postSqsJob(JobName.name, {...});
+     // ...
+     await postSqsJob(JobName.name, {...});
    });
 
    // good
 
    it((caseX) => {
      // ...
-    await postSqsJob(JobName.name, {...});
-    // ...
+     await postSqsJob(JobName.name, {...});
+     // ...
    });
 
-    it((caseY) => {
+   it((caseY) => {
      // ...
-    await postSqsJob(JobName.name, {...});
-    // ...
+     await postSqsJob(JobName.name, {...});
+     // ...
    });
-```
+   ```
 
 1. Test assertions should not verify the results of inner jobs.
 
-```typescript
+   ```typescript
    // bad
 
    it(() => {
      // ...
-    await postSqsJob(JobName.sprayX, {...});
-    // ...
-    expect(entity.x).toEqual(x);
+     await postSqsJob(JobName.sprayX, {...});
+     // ...
+     expect(entity.x).toEqual(x);
    });
 
    // good
 
    it(() => {
      // ...
-    await postSqsJob(JobName.sprayX, {...});
-    // ...
-    expect(enqueueServiceMock).toHaveBeenCalledWith(JobName.actionX)
+     await postSqsJob(JobName.sprayX, {...});
+     // ...
+     expect(enqueueServiceMock).toHaveBeenCalledWith(JobName.actionX)
    });
-```
+   ```
 
 ## Microservices
 
