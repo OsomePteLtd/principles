@@ -556,6 +556,64 @@ One of the key principles in effective transaction management is the avoidance o
 
 1. Prefer to write integration tests rather then unit tests, i.e. it is better to write a test for a controller than for a service. Write unit tests only for covering some corner cases that are difficult to cover with integration tests.
 
+1. Prefer integration tests over unit tests, but don't create integration tests if the input/output shape remains unchanged and you need to test various scenarios of complex logic. In such cases, use service-level tests for the primary service function, ensuring it's the only service function employed in the controller. For instance, utilize the createUser service function exclusively for the `POST /users` endpoint.
+
+   This approach makes the tests more concise and faster. Additionally, having tests for all different input/output shape combinations ensures that we can refactor the endpoint later without the risk of breaking it.
+
+   This approach is also beneficial when the main function is utilized across various endpoints, jobs, event handlers, or other services. It eliminates the need for duplicating tests and provides clarity on where to add new tests.
+
+   If you choose to follow this advice, ensure that you achieve 100% coverage for the endpoint.
+
+   ```typescript
+   // bad
+
+   // controller.test.ts
+   it('get recommendation / few existing likes', async () => {
+     const userId = 1;
+     const expectedPostId = 2;
+
+     const responseBody = await testApi(recommend, {
+       body: { userId },
+     });
+
+     expect(responseBody.post.id).toBeEqual(expectedPostId);
+   });
+
+   it('get recommendation / many existing likes', async () => {
+     const userId = 1;
+     const expectedPostId = 3;
+
+     const responseBody = await testApi(recommend, {
+       body: { userId },
+     });
+
+     expect(responseBody.post.id).toBeEqual(expectedPostId);
+   });
+
+   // good
+
+   // controller.test.ts
+   it('get recommendation', async () => {
+     const userId = 1;
+     const expectedPostId = 2;
+
+     const responseBody = await testApi(recommend, {
+       body: { userId },
+     });
+
+     expect(responseBody.post.id).toBeEqual(expectedPostId);
+   });
+
+   // recommendation.service.test.ts
+   it('get recommendation / few existing likes', async () => {
+     // proper setup and assert for this specific case
+   });
+
+   it('get recommendation / many existing likes', async () => {
+     // proper setup and assert for this specific case
+   });
+   ```
+
 1. Use seed functions for preparing a database state for your tests. Use `faker` for random values and use other seed functions for associations.
 
    Example:
