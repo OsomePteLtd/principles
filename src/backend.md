@@ -849,10 +849,10 @@ One of the key principles in effective transaction management is the avoidance o
    "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
    -- ... original fields ...
    "corpsecData" JSONB,
-   "robertoData" JSONB,
+   "billingData" JSONB,
    ```
 
-   `serviceprefixData` should contain serialized foreign data (with a type from SDK, for example `CoCompany` and `AxCompany`). Such column names should have the following form – `serviceprefixData`, for example `corpsecData` and `robertoData`.
+   `{domain}Data` should contain serialized foreign data (with a type from SDK, for example `CoCompany` and `AxCompany`). Such column names should have the following form – `{domain}Data`, for example `corpsecData` and `billingData`.
 
 1. Data replication should be implemented via the [service bus](#event-bus).
 
