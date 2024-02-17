@@ -550,6 +550,22 @@ One of the key principles in effective transaction management is the avoidance o
 
 1. Use the [Lambda Event Sample](samples/lambda/events/ticket.event.ts) as a sample of the proper event handler.
 
+1. An event handler function should be a thin wrapper for a service function.
+
+   ```typescript
+   // bad
+
+   export async function handleDocumentUpdated(event: SnsDocumentUpdated): Promise<void> {
+     // very complex in-place logic
+   }
+
+   // good
+
+   export async function handleDocumentUpdated(event: SnsDocumentUpdated): Promise<void> {
+     await updateDocument(event.document.id);
+   }
+   ```
+
 ## Tests
 
 1. All HTTP endpoints, lambdas and jobs should be covered by tests.
