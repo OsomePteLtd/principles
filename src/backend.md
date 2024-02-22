@@ -486,7 +486,7 @@ One of the key principles in effective transaction management is the avoidance o
    }
    ```
 
-1. Spray job should include all preconditions and call an action job for an entity when this entity is eligible for this action right now. The action job should be a thin wrapper. Otherwise, the spray job will invoke the action everytime and then our the queue is filled with undoable and duplicate tasks. The infrastructure wastes additionall resources processing useless work.
+1. The set of a spray job preconditions must be greater than the set of an action job preconditions. They must have an intersection as large as possible.
 
    ```typescript
    // bad
@@ -494,6 +494,7 @@ One of the key principles in effective transaction management is the avoidance o
    async function sprayXJob() {
      const items = await findAll({
        // many preconditions
+       // isY
      });
      await callActionJobForItems(items);
    }
@@ -503,7 +504,7 @@ One of the key principles in effective transaction management is the avoidance o
      if (!item) {
        return;
      }
-     if (!isNow(item)) {
+     if (!isSgDay(item)) {
        return;
      }
      if (!isX(item)) {
@@ -522,7 +523,7 @@ One of the key principles in effective transaction management is the avoidance o
        // many preconditions include
        // isX,
        // isY,
-       // isNow,
+       // isSgDay,
      });
      await callActionJobForItems(items);
    }
