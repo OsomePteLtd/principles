@@ -486,6 +486,56 @@ One of the key principles in effective transaction management is the avoidance o
    }
    ```
 
+1. Spray job should include all preconditions and call an action job for an entity when this entity is eligible for this action right now. The action job should be a thin wrapper. Otherwise, the spray job will invoke the action everytime and then our the queue is filled with undoable and duplicate tasks. The infrastructure wastes additionall resources processing useless work.
+
+   ```typescript
+   // bad
+
+   async function sprayXJob() {
+     const items = await findAll({
+       // many preconditions
+     });
+     await callActionJobForItems(items);
+   }
+
+   async function actionXJob(id: number) {
+     const item = await findByPk(id);
+     if (!item) {
+       return;
+     }
+     if (!isNow(item)) {
+       return;
+     }
+     if (!isX(item)) {
+       return;
+     }
+     if (!isY(item)) {
+       return;
+     }
+     doMainAction(item);
+   }
+
+   // good
+
+   async function sprayXJob() {
+     const items = await findAll({
+       // many preconditions include
+       // isX,
+       // isY,
+       // isNow,
+     });
+     await callActionJobForItems(items);
+   }
+
+   async function actionXJob(id: number) {
+     const item = await findByPk(id);
+     if (!item) {
+       return;
+     }
+     doMainAction(item);
+   }
+   ```
+
 ## Event Bus
 
 1. Use the Event Bus for asynchronous communication between services.
