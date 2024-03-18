@@ -574,14 +574,14 @@ export function fakeTicket() {}
 
 1. Do not use dynamic translation keys. We use static tool that prepares translation files for us, and it cannot run code.
 
-```typescript
-// bad, should be caught by our custom eslint rule
-const key = isNight ? 'home.good_night' : 'home.good_day';
-const greeting = t(key);
+   ```typescript
+   // bad, should be caught by our custom eslint rule
+   const key = isNight ? 'home.good_night' : 'home.good_day';
+   const greeting = t(key);
 
-// good
-const greeting = isNight ? t('home.good_night') : t('home.good_day');
-```
+   // good
+   const greeting = isNight ? t('home.good_night') : t('home.good_day');
+   ```
 
 1. Use `<Trans />` when you need to interpolate components ot html tags (including <br />). Use `t()` in all other cases.
 
