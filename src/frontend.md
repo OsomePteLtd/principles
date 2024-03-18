@@ -560,16 +560,28 @@ export function fakeTicket() {}
 
 1. Avoid changing translation keys without changing their content. Changing keys forces our translators to handle translations one more time.
 
-1. Do not use dynamic translation keys. We use static tool that prepares translation files for us, and it cannot run code.
+1. Change translation key if the meaning of the translated phrase has changed and non-English translations should be updated as well. It allows TMS to detect a new translation and run automations flow against it. Keep in mind that non-English translations are not updated in TMS when changed in repository.
 
    ```typescript
-   // bad, should be caught by our custom eslint rule
-   const key = isNight ? 'home.good_night' : 'home.good_day';
-   const greeting = t(key);
+   // bad, TMS does not detect a new translation
+   // "required_tasks": "To send invoices to your customers you need to pay for services",
+   "required_tasks": "In order to send new invoice, please complete required actions:",
 
-   // good
-   const greeting = isNight ? t('home.good_night') : t('home.good_day');
+   // good, TMS detects a new translation, runs automations and updates non-English translations
+   // "required_tasks": "To send invoices to your customers you need to pay for services",
+   "complete_required_actions": "In order to send new invoice, please complete required actions:",
    ```
+
+1. Do not use dynamic translation keys. We use static tool that prepares translation files for us, and it cannot run code.
+
+```typescript
+// bad, should be caught by our custom eslint rule
+const key = isNight ? 'home.good_night' : 'home.good_day';
+const greeting = t(key);
+
+// good
+const greeting = isNight ? t('home.good_night') : t('home.good_day');
+```
 
 1. Use `<Trans />` when you need to interpolate components ot html tags (including <br />). Use `t()` in all other cases.
 
