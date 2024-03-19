@@ -560,6 +560,18 @@ export function fakeTicket() {}
 
 1. Avoid changing translation keys without changing their content. Changing keys forces our translators to handle translations one more time.
 
+1. Change translation key if the meaning of the translated phrase has changed and non-English translations should be updated as well. It allows TMS to detect a new translation and run automations flow against it. Keep in mind that non-English translations are not updated in TMS when changed in repository.
+
+   ```typescript
+   // bad, TMS does not detect a new translation
+   // "required_tasks": "To send invoices to your customers you need to pay for services",
+   "required_tasks": "In order to send new invoice, please complete required actions:",
+
+   // good, TMS detects a new translation, runs automations and updates non-English translations
+   // "required_tasks": "To send invoices to your customers you need to pay for services",
+   "complete_required_actions": "In order to send new invoice, please complete required actions:",
+   ```
+
 1. Do not use dynamic translation keys. We use static tool that prepares translation files for us, and it cannot run code.
 
    ```typescript
