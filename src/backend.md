@@ -78,6 +78,22 @@ Table of contents can be generated in services like http://ecotrust-canada.githu
 
    http://codeclimber.net.nz/archive/2012/11/19/why-you-should-never-use-a-boolean-field-use-an/
 
+1. Enums' names must be in camelCase and should not include the word "enum" in the name
+
+   ```sql
+   -- bad
+   CREATE TYPE "user_subscription_status" AS ENUM (
+    'active',
+    'pending'
+   );
+
+   -- good
+   CREATE TYPE "userSubscriptionStatus" AS ENUM (
+    'active',
+    'pending'
+   );
+   ```
+
 ### Migrations
 
 1. Add `SET lock_timeout TO '2s';` to each migration:
