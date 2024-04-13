@@ -46,10 +46,12 @@ Project structure should follow next principles:
 1. Controllers for resources should be placed into separated directories named as resource. For example: `user`, `role`, e.t.c.
 2. Each resource directory should have 4 files. For example if resource is `user`:
 
-- `user.controller.ts` // controller handlers implementation
-- `user.controller.test.ts` // tests for controller handlers
-- `user.endpoints.ts` // endpoints declaration
-- `handlers.ts`
+| File extension            | description                        |
+| ------------------------- | ---------------------------------- |
+| `user.controller.ts`      | controller handlers implementation |
+| `user.controller.test.ts` | tests for controller handlers      |
+| `user.endpoints.ts`       | endpoints declaration              |
+| `handlers.ts`             |                                    |
 
 `handlers.ts` - special file which contains only 1 export instruction:
 
@@ -150,7 +152,7 @@ export function getJobFunctions() {
 
 This directory contains different helpers and utilities which are common for a whole service
 or used widely across multiple other services. These helpers should not contain any business logic
-rules or core related to service domain area. Directory may contain \*.ts files of nested folders (only 1 level allowed here).
+rules or core related to service domain area. Directory may contain `*.ts` files of nested folders (only 1 level allowed here).
 
 Lib directory structure example:
 
