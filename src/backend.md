@@ -100,11 +100,70 @@ Events folder structure example:
 ```
 
 #### jobs
+
+Job handlers for resources should be placed into separated folders named as resource. For example: `user`, `role`, e.t.c.
+
+Jobs folder structure example:
+```
+- jobs
+  - user
+    - user.job.ts
+    - user.job.test.ts
+  - jobNames.ts
+  - jobHandlers.ts
+```
+
+`jobName.ts` - file which contains enum with all existing job names.
+
+Example:
+```ts
+export enum JobName {
+  handleUserCreated = 'handleUserCreated',
+  handleUserUpdated = 'handleUserUpdated',
+}
+```
+`jobHandlers.ts` - file which contains mapping between job names and their handler functions. 
+
+Example:
+```ts
+import { handleUserCreatedJob } from './user/handleUserCreated.job';
+import { handleUserUpdatedJob } from './user/handleUserUpdated.job';
+import { JobName } from './jobNames';
+
+export function getJobFunctions() {
+  return {
+    [JobName.handleUserCreated]: handleUserCreatedJob,
+    [JobName.handleUserUpdated]: handleUserUpdatedJob,
+  };
+}
+```
+
+
 #### lib
 #### models
 #### sdk
 #### services
 #### tests
+
+Contains nocks, seeds, fakes and other helpers for tests. Each type of test helpers should have it own file extension:
+
+| Type     | File extension |
+|----------|----------------|
+| fakes    | *.fake.ts      | 
+| nocks    | *.nock.ts      | 
+| seeds    | *.seed.ts      |
+
+Tests folder structure example:
+```
+- tests
+  - fakes
+    - user.fake.ts
+  - nocks
+    - {remoteService}.nock.ts
+  - seeds
+    - user.seed.ts
+  - setupTests.ts
+```
 
 ## Database
 
