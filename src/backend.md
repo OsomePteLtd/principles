@@ -1,5 +1,6 @@
 # Backend Development Principles
 
+- [Project Structure](#project-structure)
 - [Database](#database)
 - [Migrations](#migrations)
 - [Data migration](#data-migration)
@@ -17,6 +18,93 @@
 <!---
 Table of contents can be generated in services like http://ecotrust-canada.github.io/markdown-toc/
 -->
+
+## Project structure
+
+Project structure should follow next principles:
+
+1. Not needed to move files without changing their purpose.
+
+1. It's easy to identify a single place where a new file should be located.
+
+1. It's easy to understand where to look files/functionality up.
+
+### Top level basic project structure
+
+- src
+  - controllers
+  - events
+  - jobs
+  - lib
+  - models
+  - sdk
+  - services
+  - tests
+
+#### controllers
+
+1. Controllers for resources should be placed into separated folders named as resource. For example: `user`, `role`, e.t.c.
+2. Each resource folder should have 4 files. For example if resource is `user`:
+  - `user.controller.ts` // controller handlers implementation
+  - `user.controller.test.ts` // tests for controller handlers
+  - `user.endpoints.ts` // endpoints declaration
+  - `handlers.ts` 
+  
+  `handlers.ts` - special file which contains only 1 export instruction:
+  ```ts
+  export * from './user.controller';
+  ```
+
+Controllers folder structure example:
+```
+- controllers
+  - user
+    - user.controller.ts
+    - user.controller.test.ts
+    - user.endpoints.ts
+    - handlers.ts
+  - endpoints.ts
+  - index.ts
+```
+
+For some resouces `*.controller.test.ts` file can become huge. So if it exceeds some comfortable size for reading it may be splitted into separate files and put them into `tests` folder inside resource folder.
+
+Assume that user resource has following endpoint names: `getUsers`, `getUser`, `createUser`. So each test file should be named as `{endpoint name}.controller.test.ts`.
+
+Example:
+```
+- controllers
+  - user
+    - tests
+      - getUsers.controller.test.ts
+      - getUser.controller.test.ts
+      - createUser.controller.test.ts
+    - user.controller.ts
+    - user.endpoints.ts
+    - handlers.ts
+  - endpoints.ts
+  - index.ts
+```
+
+
+#### events
+
+Event handlers for resources should be placed into separated folders named as resource. For example: `user`, `role`, e.t.c.
+
+Events folder structure example:
+```
+- events
+  - user
+    - user.event.ts
+    - user.event.test.ts
+```
+
+#### jobs
+#### lib
+#### models
+#### sdk
+#### services
+#### tests
 
 ## Database
 
