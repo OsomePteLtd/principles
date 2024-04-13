@@ -148,9 +148,23 @@ export function getJobFunctions() {
 
 #### lib directory
 
+This directory contains different helpers and utilities which are common for a whole service
+or used widely across multiple other services. These helpers should not contain any business logic
+rules or core related to service domain area. Directory may contain \*.ts files of nested folders (only 1 level allowed here).
+
+Lib directory structure example:
+
+```
+- lib
+  - app.ts
+  - toolkit.ts
+```
+
 #### models directory
 
 Models directory should have flat structure and contain only `*.model.ts` files for database structures mapping.
+
+Models directory structure example:
 
 ```
 - models
@@ -190,15 +204,35 @@ Example:
 
 #### services directory
 
+Service directory contains all business logic of service. It can contain only following files:
+
+| Type     | File extension      |
+| -------- | ------------------- |
+| services | `*.service.ts`      |
+| tests    | `*.service.test.ts` |
+
+Service directory also may contain nested folders
+but not more then 2 levels deep.
+
+Services directory structure example:
+
+```
+- services
+  - user
+    - user.service.ts
+    - user.service.test.ts
+  - eventBus.service.ts
+```
+
 #### tests directory
 
 Contains nocks, seeds, fakes and other helpers for tests. Each type of test helpers should have it own file extension:
 
 | Type  | File extension |
 | ----- | -------------- |
-| fakes | \*.fake.ts     |
-| nocks | \*.nock.ts     |
-| seeds | \*.seed.ts     |
+| fakes | `*.fake.ts`    |
+| nocks | `*.nock.ts`    |
+| seeds | `*.seed.ts`    |
 
 Tests directory structure example:
 
