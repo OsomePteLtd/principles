@@ -41,21 +41,24 @@ Project structure should follow next principles:
   - services
   - tests
 
-#### controllers
+#### controllers directory
 
-1. Controllers for resources should be placed into separated folders named as resource. For example: `user`, `role`, e.t.c.
-2. Each resource folder should have 4 files. For example if resource is `user`:
-  - `user.controller.ts` // controller handlers implementation
-  - `user.controller.test.ts` // tests for controller handlers
-  - `user.endpoints.ts` // endpoints declaration
-  - `handlers.ts` 
-  
-  `handlers.ts` - special file which contains only 1 export instruction:
-  ```ts
-  export * from './user.controller';
-  ```
+1. Controllers for resources should be placed into separated directories named as resource. For example: `user`, `role`, e.t.c.
+2. Each resource directory should have 4 files. For example if resource is `user`:
 
-Controllers folder structure example:
+- `user.controller.ts` // controller handlers implementation
+- `user.controller.test.ts` // tests for controller handlers
+- `user.endpoints.ts` // endpoints declaration
+- `handlers.ts`
+
+`handlers.ts` - special file which contains only 1 export instruction:
+
+```ts
+export * from './user.controller';
+```
+
+Controllers directory structure example:
+
 ```
 - controllers
   - user
@@ -67,11 +70,12 @@ Controllers folder structure example:
   - index.ts
 ```
 
-For some resouces `*.controller.test.ts` file can become huge. So if it exceeds some comfortable size for reading it may be splitted into separate files and put them into `tests` folder inside resource folder.
+For some resources `*.controller.test.ts` file can become huge (> 1500 rows). So if it exceeds some comfortable size for reading it may be splitted into separate files and put them into `tests` directory inside resource directory.
 
 Assume that user resource has following endpoint names: `getUsers`, `getUser`, `createUser`. So each test file should be named as `{endpoint name}.controller.test.ts`.
 
 Example:
+
 ```
 - controllers
   - user
@@ -86,12 +90,12 @@ Example:
   - index.ts
 ```
 
+#### events directory
 
-#### events
+Event handlers for resources should be placed into separated directories named as resource. For example: `user`, `role`, e.t.c.
 
-Event handlers for resources should be placed into separated folders named as resource. For example: `user`, `role`, e.t.c.
+Events directory structure example:
 
-Events folder structure example:
 ```
 - events
   - user
@@ -99,11 +103,12 @@ Events folder structure example:
     - user.event.test.ts
 ```
 
-#### jobs
+#### jobs directory
 
-Job handlers for resources should be placed into separated folders named as resource. For example: `user`, `role`, e.t.c.
+Job handlers for resources should be placed into separated directories named as resource. For example: `user`, `role`, e.t.c.
 
-Jobs folder structure example:
+Jobs directory structure example:
+
 ```
 - jobs
   - user
@@ -116,15 +121,18 @@ Jobs folder structure example:
 `jobName.ts` - file which contains enum with all existing job names.
 
 Example:
+
 ```ts
 export enum JobName {
   handleUserCreated = 'handleUserCreated',
   handleUserUpdated = 'handleUserUpdated',
 }
 ```
-`jobHandlers.ts` - file which contains mapping between job names and their handler functions. 
+
+`jobHandlers.ts` - file which contains mapping between job names and their handler functions.
 
 Example:
+
 ```ts
 import { handleUserCreatedJob } from './user/handleUserCreated.job';
 import { handleUserUpdatedJob } from './user/handleUserUpdated.job';
@@ -138,22 +146,62 @@ export function getJobFunctions() {
 }
 ```
 
+#### lib directory
 
-#### lib
-#### models
-#### sdk
-#### services
-#### tests
+#### models directory
+
+Models directory should have flat structure and contain only `*.model.ts` files for database structures mapping.
+
+```
+- models
+  - user.model.ts
+  - index.ts
+```
+
+`src/models/index.ts` file is needed for initialization all existing models.
+
+Example:
+
+```ts
+import { User } from './User.model';
+
+initAssociations();
+
+export * from './User.model';
+
+// private
+
+function initAssociations() {
+  User.associate();
+}
+```
+
+#### sdk directory
+
+sdk directory contains adapters for external service remote calls. This directory should have flat structure with `*.sdk.ts` files.
+
+Example:
+
+```
+- sdk
+  - {service1}.sdk.ts
+  - {service2}.sdk.ts
+```
+
+#### services directory
+
+#### tests directory
 
 Contains nocks, seeds, fakes and other helpers for tests. Each type of test helpers should have it own file extension:
 
-| Type     | File extension |
-|----------|----------------|
-| fakes    | *.fake.ts      | 
-| nocks    | *.nock.ts      | 
-| seeds    | *.seed.ts      |
+| Type  | File extension |
+| ----- | -------------- |
+| fakes | \*.fake.ts     |
+| nocks | \*.nock.ts     |
+| seeds | \*.seed.ts     |
 
-Tests folder structure example:
+Tests directory structure example:
+
 ```
 - tests
   - fakes
