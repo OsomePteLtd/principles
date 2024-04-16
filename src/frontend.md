@@ -473,7 +473,7 @@ export function fakeTicket() {}
    const ticketsQuery = useQuery(['tickets', ticketId], () => api.tickets.id(ticketId).get());
    ```
 
-5. Keep all calls to API in `queries` folder.
+5. Keep all calls to API and react-query cache management in `queries` folder.
 
    > Why? It prevents spreading API code through the whole application code and helps seeing the whole protocol of dealing whit API in one place,
    > which makes query cache management easier.
@@ -493,10 +493,13 @@ export function fakeTicket() {}
 
    // good, sdk call is not exposed from .query file, cacheKey is not exposed
    import { useGetTicket } from '../../queries/ticket.query';
-   import { usePatchDocument } from '../../queries/document.query';
+   import { usePatchDocument, updateDocumentCache } from '../../queries/document.query';
    ...
    const ticketQuery = useGetTicket(ticketId);
    const documentMutation = usePatchDocument(documentId);
+   const doSomething = useCallback((updatedDocument) => {
+     updateDocumentCache(document);
+   }, []);
    ```
 
 ## I18n
