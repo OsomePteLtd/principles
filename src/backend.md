@@ -23,8 +23,6 @@ Table of contents can be generated in services like http://ecotrust-canada.githu
 
 Project structure should follow next principles:
 
-1. Not needed to move files without changing their purpose.
-
 1. It's easy to identify a single place where a new file should be located.
 
 1. It's easy to understand where to look files/functionality up.
@@ -116,36 +114,6 @@ Jobs directory structure example:
   - user
     - user.job.ts
     - user.job.test.ts
-  - jobNames.ts
-  - jobHandlers.ts
-```
-
-`jobName.ts` - file which contains enum with all existing job names.
-
-Example:
-
-```ts
-export enum JobName {
-  handleUserCreated = 'handleUserCreated',
-  handleUserUpdated = 'handleUserUpdated',
-}
-```
-
-`jobHandlers.ts` - file which contains mapping between job names and their handler functions.
-
-Example:
-
-```ts
-import { handleUserCreatedJob } from './user/handleUserCreated.job';
-import { handleUserUpdatedJob } from './user/handleUserUpdated.job';
-import { JobName } from './jobNames';
-
-export function getJobFunctions() {
-  return {
-    [JobName.handleUserCreated]: handleUserCreatedJob,
-    [JobName.handleUserUpdated]: handleUserUpdatedJob,
-  };
-}
 ```
 
 #### lib directory
@@ -224,6 +192,40 @@ Services directory structure example:
     - user.service.ts
     - user.service.test.ts
   - eventBus.service.ts
+```
+
+Also `src/services` directory can contain some specific files:
+
+##### `src/services/jobNames.ts`
+
+File which contains enum with all existing job names.
+
+Example:
+
+```ts
+export enum JobName {
+  handleUserCreated = 'handleUserCreated',
+  handleUserUpdated = 'handleUserUpdated',
+}
+```
+
+##### `src/services/jobHandlers.ts`
+
+File which contains mapping between job names and their handler functions.
+
+Example:
+
+```ts
+import { handleUserCreatedJob } from '../jobs/user/handleUserCreated.job';
+import { handleUserUpdatedJob } from '../jobs/user/handleUserUpdated.job';
+import { JobName } from './jobNames';
+
+export function getJobFunctions() {
+  return {
+    [JobName.handleUserCreated]: handleUserCreatedJob,
+    [JobName.handleUserUpdated]: handleUserUpdatedJob,
+  };
+}
 ```
 
 #### tests directory
