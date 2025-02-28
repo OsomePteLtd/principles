@@ -642,7 +642,7 @@ export function fakeTicket() {}
 
 ## Miscellaneous
 
-1. Do not use branch names longer than 50 chars. Max domain section length is 63 chars and it's common restriction. We auto-deploy each pull-request to stage environment and use branch name as subdomain. Moreover, you can use same branch name for host+microfrontend for testing them together. For some specific environments we add postfix to subdomain, so for us max length is 50, not 63.
+1. Do not use branch names longer than 50 chars. Max domain section length is 63 chars and it's common restriction. We auto-deploy each pull-request to stage environment and use branch name as subdomain. Moreover, you can use same branch name for testing host+microfrontend them together. For some specific environments we add postfix to subdomain, so for us max length is 50, not 63.
 
 ```bash
 # bad
