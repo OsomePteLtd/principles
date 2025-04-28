@@ -208,7 +208,63 @@ const branch = company.branch;
 
 ## Comments
 
-1. Use comments to add context or information that is not obvious from the code already. Don't use comments to explain the code itself - code (through proper naming) should be self-explanatory.
+1. Use code to express intent.
+
+   - Code should be the primary form of documentation.
+   - Instead of writing comments to explain _what_ the code does, structure and name the code so that it is self-explanatory.
+   - Good code reads like a narrative of the intention.
+   - Comments should be reserved for explaining _why_ something is done in a non-obvious way.
+
+   ```typescript
+   // bad
+   const list = {
+      // old items
+      oldItem1,
+      ...
+      // the current one
+      item1,
+      ...
+   };
+
+   // good
+   const oldItems = {
+      oldItem1,
+      ...
+   };
+   const list = {
+      ...oldItems,
+      item1,
+      ...
+   };
+   ```
+
+   ```typescript
+   // bad
+   // Open X page
+   await expect(page.locator('text="X link"')).toBeVisible();
+   await page.click('[data-autotest="x"]');
+   await expect(page.locator('text=X page title')).toBeVisible();
+
+   // good
+   await openXPage(page);
+   ```
+
+1. Comments are for context, not for explaining code
+   Use comments only when you need to add information that is not obvious from the code itself, such as:
+
+   - Business-specific constraints
+   - Workarounds
+   - Non-trivial reasons behind a solution
+
+   ```typescript
+   // bad
+   const taxRate = 0.15; // 15% standard tax rate
+   const finalPrice = price + price * taxRate;
+
+   // good
+   const standardTaxRate = 0.15;
+   const finalPrice = price + price * standardTaxRate;
+   ```
 
 1. Use TODO prefix in comments to track and document technical debt - things that are worth doing, but not done yet.
 
