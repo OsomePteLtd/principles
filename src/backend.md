@@ -13,6 +13,7 @@
   - [Timeouts](#timeouts)
   - [Data Replication](#data-replication)
 - [Idempotency](#idempotency)
+- [Logging](#logging)
 
 <!---
 Table of contents can be generated in services like http://ecotrust-canada.github.io/markdown-toc/
@@ -1019,3 +1020,61 @@ In original columns we still store english versions of text by default. Example 
   }
 }
 ```
+
+## Logging
+
+Effective logging is paramount for the operability, debugging, and continuous improvement of our backend systems. Well-structured and purposeful logs significantly reduce cognitive load during incident response, facilitate rapid problem identification, and ensure efficient resource utilization. Adhering to the following principles will foster a proactive and efficient debugging culture.
+
+1. **Purposeful and Positive Flow Code**
+
+Logs should **serve a clear purpose**, reflecting the progression of business logic. Adopt a "continue with positive flow" mindset:
+
+- **Log significant progress or successful state transitions**:
+  Each log entry should indicate a meaningful advancement in the transaction or process flow.
+- **Explicitly log deviations or failures**:
+  Only when an error occurs, a validation fails, or an unexpected condition is met **should the log diverge** from the positive flow. This ensures that **the absence of error logs implies successful execution**, streamlining problem detection.
+- **Avoid logging redundant "success"** messages for every minor step if the overall transaction's success will be logged at its completion
+
+2. **Concise and Relevant Information**
+
+Logging **large or complex objects indiscriminately can severely hinder debugging efforts**, escalate logging costs, and impact application performance.
+
+- **Focus on Key Identifiers and Metrics**:
+  Instead of dumping entire data structures (e.g., a complete PDF file, a large request payload, or an extensive database query result), log only the critical information necessary for diagnosis. This typically includes:
+  - **Unique identifiers** (e.g., orderId, userId, documentId, transactionId).
+  - **Reference paths or URLs** (e.g., s3BucketPath, apiEndpoint).
+  - **Specific flags or statuses** (status, canRetry).
+  - **Key metrics** (e.g., durationMs, itemCount)
+- **Structured Logging**: Embrace structured logging (e.g., JSON format). This allows for easy parsing, filtering, and querying in log management systems, significantly reducing the cognitive effort to extract relevant data.
+  - Each log entry should be a distinct object with named fields.
+  - Avoid concatenating complex data into a single string if it can be represented as key-value pairs.
+
+3. **Avoid Excessive Data Dumping**
+
+**IF YOUR CODE CONTAIN EXCESSIVE DATA DUMPING IT MEAN YOUR CODE IS NOT DONE AND NOT READY FOR PRODUCTION!**
+
+Resist the temptation to indiscriminately log entire objects, especially those with potentially large or unknown sizes.
+
+- **Prevent PII/Sensitive Data Leaks**:
+  Never log Personally Identifiable Information (PII), sensitive credentials (API keys, passwords), or proprietary data unless absolutely critical and with strict compliance and security measures in place. **We do have mechanism in place to mask such thing, but nothing 100% thus we still need your vigilance**.
+- **Mitigate Performance and Cost Impacts**:
+  Excessive logging, particularly of large objects, can:
+  - **Increase CPU and memory consumption** within the application (due to serialization).
+  - **Lead to higher network bandwidth** usage for log transport.
+  - Dramatically increase ingestion, storage, and analysis costs in your logging platform.
+  - Potentially **cause delays or timeouts** in the logging pipeline itself.
+
+**Prioritize Diagnostic Value**:
+Every piece of logged data **should directly contribute to understanding the system's state** or debugging potential issues. If a piece of data doesn't provide immediate diagnostic value, reconsider logging it.
+
+4. **Continuous Refinement and Code Review**
+
+Maintain vigilance in upholding these logging standards across the codebase.
+
+- **Proactive Identification**: Actively identify and rectify existing code that writes large files, extensive objects, or data of unknown size to logs.
+
+- **Code Review Emphasis**: During Pull Request (PR) reviews, pay particular attention to logging practices:
+  - Are log messages clear and concise?
+  - Is sensitive data being logged inadvertently?
+  - Are large objects being dumped when only key identifiers are needed?
+  - Are appropriate log levels being used (e.g., DEBUG for verbose development-only logs, INFO for significant events, ERROR for failures)?
