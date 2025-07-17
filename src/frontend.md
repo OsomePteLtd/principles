@@ -561,7 +561,7 @@ export function fakeTicket() {}
    t('invoices_payable.create_invoice_form_error.empty_number');
    ```
 
-1. Avoid changing translation keys without changing their content. Changing keys forces our translators to handle translations one more time.
+1. Avoid changing translation keys unless the text itself changes. Renaming keys without revising content makes translators redo work. If the text does change, give the key a new name too, because once a key ships, its wording should stay frozen across all translations.
 
 1. Change translation key if the meaning of the translated phrase has changed and non-English translations should be updated as well. It allows TMS to detect a new translation and run automations flow against it. Keep in mind that non-English translations are not updated in TMS when changed in repository.
 
