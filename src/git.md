@@ -33,8 +33,8 @@ We follow a modified [**Conventional Commits**](https://www.conventionalcommits.
 ### 💡 Examples
 
 ```
-APP-226, PAY-67(invoice): fix: invoice URLs with companyId
-PAY-99(integrations): feat: add webhook validation for Airwallex integration
+APP-226, PAY-67: fix(invoice): invoice URLs with companyId
+PAY-99: feat(integrations): add webhook validation for Airwallex integration
 CORE-102: chore: update dependencies and lint rules
 
 ```
@@ -123,12 +123,12 @@ Read https://conventionalcomments.org/
 
 ## 🧾 Summary Cheat Sheet
 
-| Context | Format | Example |
-| --- | --- | --- |
-| **Commit** | `<JIRA-ID>[, <JIRA-ID>...](scope[,scope...]): <type>: <desc>`<br /><br />`<[optional body]`<br /><br />`[optional footer(s)]` | `PAY-99: fix(integrations): Airwallex transactions showing null` |
-| **Branch** | `<type>/<JIRA-ID>/<desc>` | `fix/PAY-99/airwallex-transactions-showing-null` |
-| **PR Title** | `[<JIRA-ID>,...] <type>: <desc>`  | `[PAY-99] fix: Airwallex transactions showing null` |
-| **PR review comments** | `<label> [decorations]: <subject> [discussion]` | **suggestion:** Let’s avoid using this specific function…If we reference much of a function marked “Deprecated”, it is almost certain to disagree with us, sooner or later. |
+| Context                | Format                                                                                                                        | Example                                                                                                                                                                     |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Commit**             | `<JIRA-ID>[, <JIRA-ID>...](scope[,scope...]): <type>: <desc>`<br /><br />`<[optional body]`<br /><br />`[optional footer(s)]` | `PAY-99: fix(integrations): Airwallex transactions showing null`                                                                                                            |
+| **Branch**             | `<type>/<JIRA-ID>/<desc>`                                                                                                     | `fix/PAY-99/airwallex-transactions-showing-null`                                                                                                                            |
+| **PR Title**           | `[<JIRA-ID>,...] <type>: <desc>`                                                                                              | `[PAY-99] fix: Airwallex transactions showing null`                                                                                                                         |
+| **PR review comments** | `<label> [decorations]: <subject> [discussion]`                                                                               | **suggestion:** Let’s avoid using this specific function…If we reference much of a function marked “Deprecated”, it is almost certain to disagree with us, sooner or later. |
 
 ---
 
