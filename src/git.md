@@ -123,17 +123,12 @@ Read https://conventionalcomments.org/
 
 ## 🧾 Summary Cheat Sheet
 
-| Context    | Format                                                            | Example |
-| ---------- | ----------------------------------------------------------------- | ------- |
-| **Commit** | `<JIRA-ID>[, <JIRA-ID>...]: <type>(<scope>[, <scope>...]): <desc> |
-
-[optional body]
-
-[optional footer(s)]`|`PAY-99: fix: Airwallex transactions showing null`|
-| **Branch** |`<type>/<JIRA-ID>/<desc>`|`fix/PAY-99/airwallex-transactions-showing-null`|
-| **PR Title** |`[<JIRA-ID>,...] <type>: <desc>` |`[PAY-99] fix: Airwallex transactions showing null`|
-| PR review comments |`<label> [decorations]: <subject>
-[discussion]` | **suggestion:** Let’s avoid using this specific function…If we reference much of a function marked “Deprecated”, it is almost certain to disagree with us, sooner or later. |
+| Context | Format | Example |
+| --- | --- | --- |
+| **Commit** | `<JIRA-ID>[, <JIRA-ID>...](scope[,scope...]): <type>: <desc>`<br /><br />`<[optional body]`<br /><br />`[optional footer(s)]` | `PAY-99: fix(integrations): Airwallex transactions showing null` |
+| **Branch** | `<type>/<JIRA-ID>/<desc>` | `fix/PAY-99/airwallex-transactions-showing-null` |
+| **PR Title** | `[<JIRA-ID>,...] <type>: <desc>`  | `[PAY-99] fix: Airwallex transactions showing null` |
+| **PR review comments** | `<label> [decorations]: <subject> [discussion]` | **suggestion:** Let’s avoid using this specific function…If we reference much of a function marked “Deprecated”, it is almost certain to disagree with us, sooner or later. |
 
 ---
 
