@@ -8,6 +8,7 @@ Osome Development Principles
 - [Backend Development Principles](src/backend.md)
 - [Frontend Development Principles](src/frontend.md)
 - [General Testing Principles](src/testing.md)
+- [Git Convention Principles](src/git.md)
 
 ## Contributors
 
