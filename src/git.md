@@ -11,8 +11,8 @@ The goal is to keep our repositories **consistent, searchable, and traceable** t
 <aside>
 💡
 
-> *(used AI to draft this document but convention and format comes from human ingenuity)*
-> 
+> _(used AI to draft this document but convention and format comes from human ingenuity)_
+
 </aside>
 
 ## 🧱 Commit Message Format
@@ -41,17 +41,17 @@ CORE-102: chore: update dependencies and lint rules
 
 ### 🧩 Types
 
-| Type | Description |
-| --- | --- |
-| **feat/feature** | A new feature |
-| **fix** | A bug fix |
-| **chore** | Maintenance or non-functional change (e.g., dependencies, build) |
-| **docs** | Documentation updates |
-| **refactor** | Code refactor without behavior change |
-| **test** | Adding or updating tests |
-| **perf** | Performance-related improvement |
-| **infra** | CI/CD configuration or script change |
-| task | working on a task |
+| Type             | Description                                                      |
+| ---------------- | ---------------------------------------------------------------- |
+| **feat/feature** | A new feature                                                    |
+| **fix**          | A bug fix                                                        |
+| **chore**        | Maintenance or non-functional change (e.g., dependencies, build) |
+| **docs**         | Documentation updates                                            |
+| **refactor**     | Code refactor without behavior change                            |
+| **test**         | Adding or updating tests                                         |
+| **perf**         | Performance-related improvement                                  |
+| **infra**        | CI/CD configuration or script change                             |
+| task             | working on a task                                                |
 
 ### ⚙️ Notes
 
@@ -111,28 +111,28 @@ PR titles should mirror the commit format and include relevant Jira IDs.
 ### ⚙️ Guidelines
 
 - Use the PR description to:
-    - Summarize the change
-    - Reference related Jira tickets
-    - Add screenshots or API samples if applicable
+  - Summarize the change
+  - Reference related Jira tickets
+  - Add screenshots or API samples if applicable
 
 ## Github PR review comments standard:
 
-Read https://conventionalcomments.org/ 
+Read https://conventionalcomments.org/
 
 ---
 
 ## 🧾 Summary Cheat Sheet
 
-| Context | Format | Example |
-| --- | --- | --- |
-| **Commit** | `<JIRA-ID>[, <JIRA-ID>...]: <type>(<scope>[, <scope>...]): <desc>
+| Context    | Format                                                            | Example |
+| ---------- | ----------------------------------------------------------------- | ------- |
+| **Commit** | `<JIRA-ID>[, <JIRA-ID>...]: <type>(<scope>[, <scope>...]): <desc> |
 
 [optional body]
 
-[optional footer(s)]` | `PAY-99: fix: Airwallex transactions showing null` |
-| **Branch** | `<type>/<JIRA-ID>/<desc>` | `fix/PAY-99/airwallex-transactions-showing-null` |
-| **PR Title** | `[<JIRA-ID>,...] <type>: <desc>`  | `[PAY-99] fix: Airwallex transactions showing null` |
-| PR review comments | `<label> [decorations]: <subject>
+[optional footer(s)]`|`PAY-99: fix: Airwallex transactions showing null`|
+| **Branch** |`<type>/<JIRA-ID>/<desc>`|`fix/PAY-99/airwallex-transactions-showing-null`|
+| **PR Title** |`[<JIRA-ID>,...] <type>: <desc>` |`[PAY-99] fix: Airwallex transactions showing null`|
+| PR review comments |`<label> [decorations]: <subject>
 [discussion]` | **suggestion:** Let’s avoid using this specific function…If we reference much of a function marked “Deprecated”, it is almost certain to disagree with us, sooner or later. |
 
 ---
