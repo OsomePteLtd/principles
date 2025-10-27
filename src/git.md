@@ -106,16 +106,16 @@ Make sure to also set the Default commit message for squash merging in your repo
 ### ✅ Format
 
 ```
-[<JIRA-ID>,...] <type>(scope): <short description>
+<type>(scope): <short description> [<JIRA-ID>,...]
 
 ```
 
 ### 💡 Examples
 
 ```
-[PAY-99] fix(integrations): Airwallex transactions showing null
-[APP-226,PAY-67] feat: support companyId in invoice URLs
-[CORE-10] chore: update documentation and dependencies
+fix(integrations): Airwallex transactions showing null [PAY-99]
+feat: support companyId in invoice URLs [APP-226,PAY-67]
+chore: update documentation and dependencies [CORE-10]
 
 ```
 
@@ -138,7 +138,7 @@ Read https://conventionalcomments.org/
 | ---------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Commit**             | `<type>(scope[,scope...]): <desc>`<br /><br />`<[optional body]`<br /><br />`[optional footer(s)]` | `fix(integrations): Airwallex transactions showing null`                                                                                                                    |
 | **Branch**             | `<type>/<JIRA-ID>/<desc>`                                                                          | `fix/PAY-99/airwallex-transactions-showing-null`                                                                                                                            |
-| **PR Title**           | `[<JIRA-ID>,...] <type>(scope[,scope...]): <desc>`                                                 | `[PAY-99] fix: Airwallex transactions showing null`                                                                                                                         |
+| **PR Title**           | `<type>(scope[,scope...]): <desc> [<JIRA-ID>,...]`                                                 | `fix: Airwallex transactions showing null [PAY-99]`                                                                                                                         |
 | **PR review comments** | `<label> [decorations]: <subject> [discussion]`                                                    | **suggestion:** Let’s avoid using this specific function…If we reference much of a function marked “Deprecated”, it is almost certain to disagree with us, sooner or later. |
 
 ---
