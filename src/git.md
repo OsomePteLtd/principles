@@ -1,45 +1,16 @@
 # Git Conventions
 
-Notion doc: https://www.notion.so/osome/Git-Conventions-29394fd5a8ec80bcb367d7253e6d8851
-
 This document defines our conventions for **commits**, **comments**, **branch names**, and **pull requests (PRs)**.
 
 The goal is to keep our repositories **consistent, searchable, and traceable** to corresponding **Jira tickets**.
 
----
+> [!NOTE]
+> This document was drafted with the help of AI, but the convention and format come from human ingenuity.
 
-<aside>
-💡
 
-> _(This document was drafted with the help of AI, but the convention and format come from human ingenuity.)_
+## Issue types
 
-</aside>
-
-## 🧱 Commit Message Format
-
-We follow a modified [**Conventional Commits**](https://www.conventionalcommits.org/en/v1.0.0/#summary) style that includes one or more **Jira Ticket IDs**.
-
-### ✅ Format
-
-```
-<type>(scope): <short description>
-
-[optional body]
-
-[optional footer(s)]
-
-```
-
-### 💡 Examples
-
-```
-fix(invoice): invoice URLs with companyId
-feat(integrations): add webhook validation for Airwallex integration
-chore: update dependencies and lint rules
-
-```
-
-### 🧩 Types
+We use these labels to mark branches, commits and PRs:
 
 | Type             | Description                                                                    |
 | ---------------- | ------------------------------------------------------------------------------ |
@@ -53,97 +24,124 @@ chore: update dependencies and lint rules
 | **infra**        | CI/CD configuration or script change                                           |
 | **task**         | working on a task (just support to link it with jira tasks - similar to chore) |
 
-### Scope
 
-1. A scope MAY be provided after a type. A scope MUST consist of a noun describing a section of the codebase surrounded by parenthesis, e.g., `fix(parser):`
-
-### ⚙️ Notes
-
-- Multiple Jira IDs can be comma-separated (no space after commas).
-- The description should be **short**, **imperative**, and **lowercase**.
-- Avoid ending the line with a period.
-
----
-
-## 🌿 Branch Naming Convention
+## Branches
 
 We use the following pattern for branches (based on Jira fields):
 
 ```
 <issue-type>/<issue-number>/<short-description>
-
 ```
 
-### 💡 Examples
+Examples:
 
 ```
 fix/PAY-99/airwallex-transactions-showing-null
 feat/APP-226/invoice-creation-endpoint
 chore/CORE-10/update-readme
-
 ```
 
-### ⚙️ Rules
+- `issue-type` **must** match one of the above
 
-- **issue-type** must match one of: `feat`, `fix`, `chore`, `refactor`, `test`, `docs`, `perf`,`task`.
-- **issue-number** should be the Jira ticket ID.
-- **short-description** should use **kebab-case** (lowercase, dash-separated).
-- Keep it under **60 characters** if possible.
-- forward slash to separate the different parts of the branch name and make it more readable
+- `issue-number` **should** be the Jira ticket ID
+  - You **may** omit it if you don’t have a ticket yet, but better create one first. It can be just a placeholder (short summary, no body) – you can always change it later.
 
----
+- `short-description` **should** use `kebab-case` (lowercase, dash-separated).
 
-## 🔀 Pull Request Naming Convention
+- Keep the branch name under **63 characters**.
+  - For frontend repos, the deployment will fail if the branch name is longer, as the preview domain is generated from the branch name.
 
-<aside>
-💡
+- Use forward slash to separate the different parts of the branch name and make it more readable
 
-PR titles should include relevant Jira IDs.
-Make sure to also set the Default commit message for squash merging in your repository to **“Pull request title and description”**
 
-</aside>
+## Commit Messages
 
-### ✅ Format
+We follow a modified [**Conventional Commits**](https://www.conventionalcommits.org/en/v1.0.0/#summary) style:
 
 ```
-<type>(scope): <short description> [<JIRA-ID>,...]
+<type>(<scope>): <short description> [<optional Jira ticket>]
 
+<optional body and footer(s)>
 ```
 
-### 💡 Examples
+Examples:
+
+```
+fix(invoice): include companyId in invoice URLs
+feat(integrations): add webhook validation for Airwallex integration
+chore: update dependencies and lint rules
+```
+
+Type is the issue type [defined above](#issue-types).
+
+A scope **may** be provided after the type. Scope **must** consist of a noun describing a section of the codebase surrounded by parenthesis, e.g.: `fix(parser): <description>`
+
+You **may** include a Jira Ticket ID in your commits:
+
+```
+feat(integrations): add webhook validation for Airwallex integration [PAY-99]
+```
+
+### Body and footers
+
+Body can be used if the commit needs more context. Use it sparingly.
+
+### ⚙️ Notes
+
+- Multiple Jira IDs can be comma-separated (no space after commas).
+- The description should be **short**, **imperative**, and **lowercase**.
+  - **Good:** <code><b>add</b> webhook validation for Airwallex integration</code>
+  - **Bad:** <code><b>added</b> webhook validation for Airwallex integration</code>
+- Avoid ending the line with a period.
+
+
+## Pull Requests
+
+PR titles follow the same basic principles as the commit messages, since they will be used as a squashed commit message when merged.
+
+PR titles **must** include relevant Jira IDs:
+
+```
+<type>(<scope>): <short description> [<JIRA-ID>,...]
+```
+
+Examples:
 
 ```
 fix(integrations): Airwallex transactions showing null [PAY-99]
 feat: support companyId in invoice URLs [APP-226,PAY-67]
 chore: update documentation and dependencies [CORE-10]
-
 ```
 
-### ⚙️ Guidelines
+### Description
 
-- Use the PR description to:
-  - Summarize the change
-  - Reference related Jira tickets
-  - Add screenshots or API samples if applicable
+Use the PR description to:
 
-## Github PR review comments standard:
+- Summarize the change
+- Reference related Jira tickets
+- Add screenshots or API examples if applicable
+
+But keep in mind that the description will be used as the body of the final squashed commit by default. When merging, make sure to remove everything apart from the summary from the **Extended description** field.
+
+> [!NOTE]
+> In your repo settings, make sure to set the **Default commit message** for squash merging in your repository to **Pull request title and description**.
+
+### PR reviews
 
 Read https://conventionalcomments.org/
 
----
 
-## 🧾 Summary Cheat Sheet
+## Summary cheat sheet
 
 | Context                | Format                                                                                             | Example                                                                                                                                                                     |
 | ---------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Commit**             | `<type>(scope[,scope...]): <desc>`<br /><br />`<[optional body]`<br /><br />`[optional footer(s)]` | `fix(integrations): Airwallex transactions showing null`                                                                                                                    |
 | **Branch**             | `<type>/<JIRA-ID>/<desc>`                                                                          | `fix/PAY-99/airwallex-transactions-showing-null`                                                                                                                            |
 | **PR Title**           | `<type>(scope[,scope...]): <desc> [<JIRA-ID>,...]`                                                 | `fix: Airwallex transactions showing null [PAY-99]`                                                                                                                         |
-| **PR review comments** | `<label> [decorations]: <subject> [discussion]`                                                    | **suggestion:** Let’s avoid using this specific function…If we reference much of a function marked “Deprecated”, it is almost certain to disagree with us, sooner or later. |
+| **PR review comments** | `<label> [decorations]: <subject> [discussion]`                                                    | **suggestion:** Let’s avoid using this specific function…If we reference much of a function marked “Deprecated”, it is almost certain to disagree with us, sooner or later. |
 
----
 
-## 🔍 Why This Matters
+## Why this matters
 
 Following these conventions helps us:
 
@@ -151,5 +149,3 @@ Following these conventions helps us:
 - **Automate changelog generation** and release notes
 - **Keep branches organized** and searchable
 - **Ensure clear PR history** for reviews and audits
-
----
