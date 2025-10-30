@@ -7,7 +7,6 @@ The goal is to keep our repositories **consistent, searchable, and traceable** t
 > [!NOTE]
 > This document was drafted with the help of AI, but the convention and format come from human ingenuity.
 
-
 ## Issue types
 
 We use these labels to mark branches, commits and PRs:
@@ -23,7 +22,6 @@ We use these labels to mark branches, commits and PRs:
 | **perf**         | Performance-related improvement                                                |
 | **infra**        | CI/CD configuration or script change                                           |
 | **task**         | working on a task (just support to link it with jira tasks - similar to chore) |
-
 
 ## Branches
 
@@ -44,15 +42,16 @@ chore/CORE-10/update-readme
 - `issue-type` **must** match one of the above
 
 - `issue-number` **should** be the Jira ticket ID
+
   - You **may** omit it if you don’t have a ticket yet, but better create one first. It can be just a placeholder (short summary, no body) – you can always change it later.
 
 - `short-description` **should** use `kebab-case` (lowercase, dash-separated).
 
 - Keep the branch name under **63 characters**.
+
   - For frontend repos, the deployment will fail if the branch name is longer, as the preview domain is generated from the branch name.
 
 - Use forward slash to separate the different parts of the branch name and make it more readable
-
 
 ## Commit Messages
 
@@ -94,7 +93,6 @@ Body can be used if the commit needs more context. Use it sparingly.
   - **Bad:** <code><b>added</b> webhook validation for Airwallex integration</code>
 - Avoid ending the line with a period.
 
-
 ## Pull Requests
 
 PR titles follow the same basic principles as the commit messages, since they will be used as a squashed commit message when merged.
@@ -130,7 +128,6 @@ But keep in mind that the description will be used as the body of the final squa
 
 Read https://conventionalcomments.org/
 
-
 ## Summary cheat sheet
 
 | Context                | Format                                                                                             | Example                                                                                                                                                                     |
@@ -139,7 +136,6 @@ Read https://conventionalcomments.org/
 | **Branch**             | `<type>/<JIRA-ID>/<desc>`                                                                          | `fix/PAY-99/airwallex-transactions-showing-null`                                                                                                                            |
 | **PR Title**           | `<type>(scope[,scope...]): <desc> [<JIRA-ID>,...]`                                                 | `fix: Airwallex transactions showing null [PAY-99]`                                                                                                                         |
 | **PR review comments** | `<label> [decorations]: <subject> [discussion]`                                                    | **suggestion:** Let’s avoid using this specific function…If we reference much of a function marked “Deprecated”, it is almost certain to disagree with us, sooner or later. |
-
 
 ## Why this matters
 
