@@ -81,6 +81,9 @@ You **may** include a Jira Ticket ID in your commits:
 feat(integrations): add webhook validation for Airwallex integration [PAY-99]
 ```
 
+> [!TIP]
+> Don’t stress too much about commits – they’ll be squashed when the PR is merged.
+
 ### Body and footers
 
 Body can be used if the commit needs more context. Use it sparingly.
@@ -119,10 +122,12 @@ Use the PR description to:
 - Reference related Jira tickets
 - Add screenshots or API examples if applicable
 
-But keep in mind that the description will be used as the body of the final squashed commit by default. When merging, make sure to remove everything apart from the summary from the **Extended description** field.
+### Merging PRs
+
+When merging, only leave the PR title as the commit message. If there is any important context, you can copy it over from PR description, but make sure it looks good as plaintext (there’s no Markdown in commit messages).
 
 > [!NOTE]
-> In your repo settings, make sure to set the **Default commit message** for squash merging in your repository to **Pull request title and description**.
+> In your repo settings, make sure to set the **Default commit message** for squash merging in your repository to **Pull request title only**.
 
 ### PR reviews
 
