@@ -47,9 +47,9 @@ chore/CORE-10/update-readme
 
 - `short-description` **should** use `kebab-case` (lowercase, dash-separated).
 
-- Keep the branch name under **63 characters**.
+- Keep the branch name under **40 characters**.
 
-  - For frontend repos, the deployment will fail if the branch name is longer, as the preview domain is generated from the branch name.
+  - For frontend repos, the deployment will fail if the branch name longer than 50-ish characters, as the preview domain is generated from the branch name (any part of the domain [can’t be longer than 63 characters](https://www.rfc-editor.org/rfc/rfc1035#:~:text=length%2E-,Labels,less%2E), and we add suffixes sometimes).
 
 - Use forward slash to separate the different parts of the branch name and make it more readable
 
