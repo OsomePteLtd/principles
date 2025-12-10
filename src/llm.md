@@ -8,6 +8,7 @@
 ## Complexity Limits
 
 ### Function Complexity
+
 - **Maximum Cyclomatic Complexity**: 5
 - **Maximum Function Length**: 15 lines (excluding type signatures and blank lines)
 - **Maximum Nesting Depth**: 2 levels
@@ -16,6 +17,7 @@
 **When a function exceeds these limits, extract sub-functions immediately.**
 
 ### File Complexity
+
 - **Maximum File Length**: 200 lines
 - **Maximum Exports per File**: 5
 - **One Primary Responsibility** per file
@@ -23,7 +25,9 @@
 ## Function Design
 
 ### Orchestration vs Implementation
+
 **Handlers and high-level functions should ONLY orchestrate, never implement.**
+
 ```typescript
 // ❌ WRONG - handler contains business logic
 export async function registerUserHandler(event: APIGatewayEvent): Promise<APIGatewayResponse> {
@@ -57,13 +61,15 @@ export async function registerUserHandler(event: APIGatewayEvent): Promise<APIGa
 ```
 
 ### Pure Functions Preferred
+
 - Favor pure functions (no side effects, deterministic output)
 - Side effects (DB, API calls) isolated in clearly named functions
 - All business logic should be testable without mocks
+
 ```typescript
 // ✅ Pure function (preferred)
 export function calculateTotalPrice(items: CartItem[]): number {
-  return items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 }
 
 // ✅ Impure function (clearly named, isolated)
@@ -75,6 +81,7 @@ export async function persistOrderToDatabase(order: Order): Promise<void> {
 ## TypeScript Type Safety
 
 ### Strict Mode Required
+
 ```json
 // tsconfig.json
 {
@@ -88,12 +95,14 @@ export async function persistOrderToDatabase(order: Order): Promise<void> {
 ```
 
 ### No `any`, Minimal `unknown`
+
 - **NEVER use `any`** - use `unknown` and type guards instead
 - Prefer specific types over generic types
 - Use branded types for IDs and sensitive values
+
 ```typescript
 // ❌ WRONG
-function processData(data: any) { }
+function processData(data: any) {}
 
 // ✅ CORRECT
 function processData(data: unknown): Result {
@@ -109,18 +118,20 @@ function isValidData(data: unknown): data is ValidData {
 ```
 
 ### Type Imports
+
 Always use `import type` for type-only imports to ensure clean separation and tree-shaking.
+
 ```typescript
 import type { User, CreateUserInput } from './types/user.types';
 import { createUser } from './services/user.service';
 ```
 
-
-
 ## Error Handling
 
 ### Explicit Error Types
+
 All errors must be typed and handled explicitly.
+
 ```typescript
 // error.d.ts
 export class ValidationError extends Error {
@@ -150,21 +161,21 @@ export function getUser(id: string): User {
 ```
 
 ### No Silent Failures
+
 - Never catch and ignore errors
 - Every error path must be explicit
 - Use Result types for expected failures
+
 ```typescript
 // result.d.ts
-export type Result<T, E = Error> =
-  | { success: true; data: T }
-  | { success: false; error: E };
+export type Result<T, E = Error> = { success: true; data: T } | { success: false; error: E };
 
 // validator.ts
 export function validateEmail(email: string): Result<string, ValidationError> {
   if (!email.includes('@')) {
     return {
       success: false,
-      error: new ValidationError('email', 'Must contain @')
+      error: new ValidationError('email', 'Must contain @'),
     };
   }
 
@@ -177,6 +188,7 @@ export function validateEmail(email: string): Result<string, ValidationError> {
 Every file with business logic must have a corresponding `.test.ts` file.
 
 ### Test Organization
+
 ```
 src/
 ├── services/
@@ -185,12 +197,14 @@ src/
 ```
 
 ### Test Coverage Requirements
+
 - **Minimum Line Coverage**: 80%
 - **Minimum Branch Coverage**: 75%
 - All public functions must have tests
 - All error paths must be tested
 
 ### Test Structure
+
 ```typescript
 // user.test.ts
 import { describe, it, expect } from 'vitest';
@@ -203,8 +217,7 @@ describe('createUser', () => {
   });
 
   it('throws ValidationError for invalid email', () => {
-    expect(() => createUser({ email: 'invalid' }))
-      .toThrow(ValidationError);
+    expect(() => createUser({ email: 'invalid' })).toThrow(ValidationError);
   });
 });
 ```
@@ -212,6 +225,7 @@ describe('createUser', () => {
 ## Extraction Triggers
 
 Extract a new function when:
+
 1. A function exceeds 15 lines
 2. Nesting depth exceeds 2 levels
 3. You use a comment to explain "what" code does (comment indicates abstraction needed)
@@ -219,6 +233,7 @@ Extract a new function when:
 5. Logic is repeated (DRY principle)
 
 Extract to a new file when:
+
 1. File exceeds 200 lines
 2. File has more than one primary responsibility
 3. Functions are unrelated to the file's primary purpose
@@ -226,27 +241,33 @@ Extract to a new file when:
 ## Naming Conventions
 
 ### Exports
+
 Follows these linting conventions
+
 - Constants are UPPER_SNAKE_CASE
 - Exported functions, classes, public class properties, and variables are UpperCamelCase
 - Private functions and class properties are in camelCase
 
 ### Functions
+
 - **Actions**: `create`, `update`, `delete`, `validate`, `transform`, `calculate`, `format`
 - **Queries**: `get`, `find`, `list`, `search`, `exists`, `has`
 - **Boolean predicates**: `is`, `has`, `can`, `should`
+
 ```typescript
 // ✅ CORRECT
-function createUser(input: CreateUserInput): User { }
-function getUserById(id: string): User | null { }
-function isValidEmail(email: string): boolean { }
-function hasPermission(user: User, action: string): boolean { }
+function createUser(input: CreateUserInput): User {}
+function getUserById(id: string): User | null {}
+function isValidEmail(email: string): boolean {}
+function hasPermission(user: User, action: string): boolean {}
 ```
 
 ### Variables
+
 - Use full words, not abbreviations (except universally known: `id`, `url`, `html`)
 - Constants in `SCREAMING_SNAKE_CASE`
 - Boolean variables should read like questions
+
 ```typescript
 const MAX_RETRIES = 3;
 const isUserActive = checkUserStatus(user);
