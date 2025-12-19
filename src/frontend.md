@@ -443,7 +443,6 @@ export function fakeTicket() {}
 ## TanStack Query
 
 1. Default settings.
-
    - Overriding `staleTime`.
 
      We should find suitable value for `staleTime` to avoid cache issues and not to make additional requests.
@@ -864,7 +863,6 @@ git checkout -b feature/PROJ-123-redirect-settings
    ```
 
    Absolute imports allowed for cases:
-
    1. when we import from `legacy` directory,
    2. when we work inside `legacy` directory.
 
