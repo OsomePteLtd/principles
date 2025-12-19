@@ -7,8 +7,11 @@
   - [SDK](#sdk)
   - [Unit tests](#unit-tests)
   - [Styles](#styles)
+  - [Loading States & UI Feedback](#loading-states--ui-feedback)
   - [UI-kit](#ui-kit)
   - [TanStack Query](#tanstack-query)
+  - [I18n](#i18n)
+  - [Date Formatting](#date-formatting)
   - [Miscellaneous](#miscellaneous)
 
 ## Project structure
@@ -128,9 +131,67 @@ Notes:
    function doSomething(entity: SomeEntity, options?: DoSomethingOptions);
    ```
 
-1. Tend to increase typescript coverage, avoid `any` and implicit `any`.
+1. Tend to increase typescript coverage, avoid `any` and implicit `any`. Never use `any` for function parameters, return types, or variable declarations as it defeats the purpose of TypeScript and prevents compile-time error detection.
+
+   ```typescript
+   // bad
+   export const CashFlowTable = ({ data, isLoading }: any) => {
+     // ...
+   };
+
+   // bad
+   interface CashFlowTableProps {
+     data: any;
+     isLoading: any;
+   }
+
+   // good
+   interface CashFlowTableProps {
+     data?: BusinessHealthMetricValue<CashFlowData>;
+     isLoading: boolean;
+   }
+
+   export const CashFlowTable: React.FC<CashFlowTableProps> = ({ data, isLoading }) => {
+     const { tableData, totals } = useCashFlowTable(data);
+     // ...
+   };
+   ```
+
+   Why? Proper typing catches errors at compile time, improves IDE autocomplete, and serves as self-documenting code.
 
 1. When you touch `.js` file, convert it to `.ts`. But if you really need a hotfix or your PR already includes refactoring and additional refactoring can make your PR too swollen, you can add label `hotfix` to your PR, but don't abuse this label.
+
+1. Use the `?` operator for optional properties rather than explicit `| undefined` unions. This is more concise, idiomatic TypeScript, and clearer in intent.
+
+   ```typescript
+   // bad - explicit undefined union
+   interface CashFlowTableProps {
+     data: BusinessHealthMetricValue<CashFlowData> | undefined;
+     isLoading: boolean;
+   }
+
+   interface BusinessHealthParams {
+     periodType: PeriodType;
+     periodValue: string;
+     year: number;
+     customStartDate: string | undefined;
+     customEndDate: string | undefined;
+   }
+
+   // good - using ? operator
+   interface CashFlowTableProps {
+     data?: BusinessHealthMetricValue<CashFlowData>;
+     isLoading: boolean;
+   }
+
+   interface BusinessHealthParams {
+     periodType: PeriodType;
+     periodValue: string;
+     year: number;
+     customStartDate?: string;
+     customEndDate?: string;
+   }
+   ```
 
 1. Don't use FC to define react component types. if you need to define children, then use `PropsWithChildren` or define manually
 
@@ -232,7 +293,96 @@ export function fakeTicket() {}
 
 1. If some color is repeated several times in code, extract it to theme.
 
+## Loading States & UI Feedback
+
+1. Always use Material-UI's Skeleton component to indicate loading states, providing better UX and visual consistency.
+
+   ```typescript
+   // good
+   export const CashFlowTable: React.FC<CashFlowTableProps> = ({ data, isLoading }) => {
+     return (
+       <TableContainer marginTop>
+         <Typography variant="subtitle1" sx={{ fontWeight: 600, marginBottom: '12px' }}>
+           Cash Flow Trend
+         </Typography>
+         {isLoading ? (
+           <Skeleton variant="rectangular" height={200} />
+         ) : (
+           <Table>
+             {/* Table content */}
+           </Table>
+         )}
+       </TableContainer>
+     );
+   };
+   ```
+
+   ```typescript
+   // bad
+   export const CashFlowTable = ({ data, isLoading }) => {
+     if (isLoading) {
+       return <div>Loading...</div>;
+     }
+
+     return (
+       <div>
+         <h3>Cash Flow Trend</h3>
+         <table>{/* Table content */}</table>
+       </div>
+     );
+   };
+   ```
+
+   Why? Skeleton components provide visual feedback that matches the final content structure, creating a more polished user experience.
+
 ## UI-kit
+
+1. Use Material-UI components everywhere possible (Table, Typography, Skeleton, Icons, etc.) with styled-components or the `sx` prop for styling. Avoid creating custom wrapper components when MUI equivalents exist.
+
+   ```typescript
+   // good - use MUI components directly with styling
+   import Skeleton from '@mui/material/Skeleton';
+   import Typography from '@mui/material/Typography';
+   import styled from 'styled-components';
+
+   const Card = styled.div`
+     border: 1px solid #e0e0e0;
+     border-radius: 8px;
+     padding: 20px;
+     background: #fff;
+     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+   `;
+
+   export const MetricCard: React.FC<MetricCardProps> = ({ title, value, isLoading }) => {
+     return (
+       <Card>
+         <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#333' }}>
+           {title}
+         </Typography>
+         {isLoading ? (
+           <Skeleton variant="text" width="60%" height={32} />
+         ) : (
+           <Typography variant="subtitle1" sx={{ fontSize: '24px', fontWeight: 600 }}>
+             {formatCurrency(value)}
+           </Typography>
+         )}
+       </Card>
+     );
+   };
+   ```
+
+   ```typescript
+   // bad - creating unnecessary custom components
+   export const CustomSkeleton = ({ width, height }) => {
+     return <div className="loading-skeleton" style={{ width, height }} />;
+   };
+
+   export const CustomText = ({ children, size }) => {
+     return <span className={`text-${size}`}>{children}</span>;
+   };
+   ```
+
+   Why? MUI components are well-tested, accessible, and themeable. Avoid reinventing the wheel.
 
 1. Design components API for common usage rather than for specific one.
 
@@ -640,6 +790,52 @@ export function fakeTicket() {}
 
 1. Name of namespace should be unique through all repositories in system. It helps us to avoid translation keys conflict.
 
+## Date Formatting
+
+1. Use the `format` function from `date-fns` library as the standard for all date-related formatting. This provides consistent, reliable date formatting with proper localization support.
+
+   ```typescript
+   // good
+   import { format } from 'date-fns';
+
+   export const BusinessHealthReport = () => {
+     const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+
+     const formatLastUpdated = (date: Date) => format(date, 'dd MMM yyyy, HH:mm');
+
+     return (
+       <Typography variant="body1" sx={{ fontSize: '14px', color: '#666' }}>
+         Last updated: {formatLastUpdated(lastUpdated)}
+       </Typography>
+     );
+   };
+
+   // In initialization
+   const getInitialParams = (): BusinessHealthParams => ({
+     periodType: 'month',
+     periodValue: format(new Date(), 'MMM'),
+     year: new Date().getFullYear(),
+   });
+   ```
+
+   ```typescript
+   // bad - manual date formatting
+   export const BusinessHealthReport = () => {
+     const [lastUpdated, setLastUpdated] = useState(new Date());
+
+     const formatLastUpdated = (date) => {
+       const day = date.getDate();
+       const month = date.toLocaleString('default', { month: 'short' });
+       const year = date.getFullYear();
+       const hours = date.getHours();
+       const minutes = date.getMinutes();
+       return `${day} ${month} ${year}, ${hours}:${minutes}`;
+     };
+
+     return <span>Last updated: {formatLastUpdated(lastUpdated)}</span>;
+   };
+   ```
+
 ## Miscellaneous
 
 1. Do not use branch names longer than **50 chars**. Max domain section length is 63 chars and it's common restriction. We auto-deploy each pull-request to stage environment and use branch name as subdomain. Moreover, you can use same branch name for testing host+microfrontend them together. For some specific environments we add postfix to subdomain, so for us max length is 50, not 63.
@@ -712,4 +908,82 @@ git checkout -b feature/PROJ-123-redirect-settings
    }
 
    export default class extends Component {}
+   ```
+
+1. Break large features into smaller phases with manageable PRs. Aim to keep PRs under ~1000 lines of code. This makes code reviews more thorough, reduces merge conflicts, and enables faster feedback cycles.
+
+   ```
+   // good - phase-based approach
+   Phase 1: Core data structures, types, and API hooks (200 LOC)
+   Phase 2: Metric cards and basic layout (300 LOC)
+   Phase 3: Revenue and cash flow tables (400 LOC)
+   Phase 4: Top expenses and revenue sources (350 LOC)
+   Phase 5: Integration tests and refinements (250 LOC)
+
+   Each phase is independently reviewable and can be merged incrementally.
+
+   // bad - monolithic PR
+   Single PR: All Business Health features at once (1500+ LOC)
+   - Hard to review thoroughly
+   - Increases merge conflicts
+   - Difficult to track specific changes
+   - Delays feedback and iteration
+   ```
+
+1. Use feature flags like `isProduction` for phased rollouts when breaking features into multiple PRs. This allows you to merge code incrementally while keeping incomplete features hidden from end users.
+
+   ```typescript
+   // good - using feature flag for incomplete features
+   import { isProduction } from '../../../config/environment';
+
+   export const Routing = () => {
+     const tabs = [
+       {
+         label: 'Accounting',
+         to: linkAccountingReports,
+       },
+       {
+         label: 'Bank feed',
+         to: linkBankFeedReports,
+       },
+       // Only show in non-production until fully complete
+       ...(!isProduction ? [{
+         label: 'Business Health',
+         to: linkBusinessHealthReports,
+       }] : []),
+     ];
+
+     return (
+       <Switch>
+         <Route path={linkAccountingReports} component={ReportRoutes} />
+         <Route path={linkBankFeedReports} component={BankFeedReportPage} />
+         {!isProduction && (
+           <Route path={linkBusinessHealthReports} component={BusinessHealthReportPage} />
+         )}
+       </Switch>
+     );
+   };
+   ```
+
+   ```typescript
+   // bad - no feature flag, incomplete feature visible in production
+   export const Routing = () => {
+     const tabs = [
+       {
+         label: 'Accounting',
+         to: linkAccountingReports,
+       },
+       {
+         label: 'Business Health', // Visible even if incomplete!
+         to: linkBusinessHealthReports,
+       },
+     ];
+
+     return (
+       <Switch>
+         <Route path={linkAccountingReports} component={ReportRoutes} />
+         <Route path={linkBusinessHealthReports} component={BusinessHealthReportPage} />
+       </Switch>
+     );
+   };
    ```
