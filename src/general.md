@@ -107,14 +107,14 @@ In the UI, the language should be local. For the UK, Singapore, and HK, it's Bri
    KycCheck
    ```
 
-1. Do not use capitalization and snake case for constants.
+1. Use capitalization and snake case for constants.
 
    ```typescript
    // bad
-   const FAILED_AUTHORIZATION_PAYLOAD = 'authorization_failed';
+   const failedAuthorizationPayload = 'authorization_failed';
 
    // good
-   const failedAuthorizationPayload = 'authorization_failed';
+   const FAILED_AUTHORIZATION_PAYLOAD = 'authorization_failed';
    ```
 
 1. Avoid negative variable names.
