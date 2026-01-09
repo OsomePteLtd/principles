@@ -9,6 +9,7 @@ Osome Development Principles
 - [Frontend Development Principles](src/frontend.md)
 - [General Testing Principles](src/testing.md)
 - [Git Convention Principles](src/git.md)
+- [LLM Rules](src/llm.md)
 
 ## Contributors
 
@@ -18,7 +19,7 @@ Osome Development Principles
 
 (The MIT License)
 
-Copyright (c) 2018 Osome
+Copyright (c) 2018 OSOME
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
