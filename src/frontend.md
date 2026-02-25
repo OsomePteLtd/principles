@@ -160,6 +160,25 @@ Notes:
    };
    ```
 
+1. Use strict equality (`===` / `!==`) for `null` and `undefined` checks. Never use loose equality (`== null`) even though it catches both `null` and `undefined` — it obscures intent and is inconsistent with our codebase patterns.
+
+   ```typescript
+   // bad — loose equality is ambiguous
+   if (value == null) {
+     return;
+   }
+
+   // good — explicit about what you're checking
+   if (value === null) {
+     return;
+   }
+
+   // good — when you need to check both null and undefined, be explicit
+   if (value === null || value === undefined) {
+     return;
+   }
+   ```
+
 ## SDK
 
 1. Avoid `as` keyword for importing types from sdk
