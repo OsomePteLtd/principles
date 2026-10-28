@@ -504,7 +504,7 @@ One of the key principles in effective transaction management is the avoidance o
 
 ## Event Bus
 
-1. Use the Event Bus for asynchronous communication between services.
+1. Use the Event Bus to publish events that other services may subscribe to. For asynchronous requests to one known consumer, choose a communication option from [Microservices](#microservices).
 
 1. Bear in mind that you could receive an outdated message. So you can safely use only immutable data (such `id`) from a message. Always fetch actual data before using it.
 
@@ -819,9 +819,28 @@ One of the key principles in effective transaction management is the avoidance o
 
 1. Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
 
-1. Don't post messages to other service SQS queues. Consider using 1) SNS event if the current service does not want to know about what happens with the event and who in fact uses it, 2) direct Lambda invocation if the service wants to know what happens and what is the result, 3) async Lambda invocation if the service knows what happens, but does not want to know the result, or can not afford waiting for the result.
+1. Choose cross-service communication according to the intended consumer and the result the caller needs:
 
-   By the moment, there are usages like this, but they are deprecated.
+   - **SNS (publish/subscribe messaging):** publish an event when independent services may subscribe; the producer does not need to know those consumers.
+   - **Synchronous Lambda invocation:** call a known service when the caller needs the processing result.
+   - **Asynchronous Lambda invocation:** call a known service when the caller does not need an immediate processing result. The consumer owns processing retries and a monitored failure destination.
+   - **Direct SQS:** send to a known consumer's supported queue interface when no immediate processing result is needed and the conditions below are met.
+
+1. Direct SQS is allowed only when all of these conditions hold:
+
+   - **Explicit contract:** the consumer exposes the queue as a supported service interface, with a shared typed message contract and producer helper. Define compatible schema evolution and validate messages in the consumer. Do not send arbitrary private worker jobs or bypass the consumer's business rules.
+   - **Consumer ownership:** the consumer owns the queue configuration, processing concurrency, retries, message retention, dead-letter queue (DLQ), monitoring, alarms and replay procedure. Limit processing to the consumer's downstream capacity. Configure queue routing and sender permissions explicitly.
+   - **Safe processing:** make handlers idempotent (safe to repeat), handle stale or out-of-order messages according to the contract, and acknowledge messages only after successful handling. Report processing failures so they can be retried; queues do not guarantee exactly-once business effects.
+   - **Explicit delivery policy:** the producer handles enqueue failures. Required business delivery must be retained and retried; use an outbox (delivery intent saved with the producer's database change) when both must succeed together. Best-effort analytics may log and continue only when message loss is explicitly accepted. An enqueue acknowledgment confirms queue acceptance, not completed processing.
+
+   These conditions apply to a deliberately exposed queue interface, not to every internal worker queue. Use SNS when publishing events for independent subscribers; adding SQS behind an SNS subscription does not change that choice.
+
+   **History and precedents:** the evidence supports documentation drifting behind accepted reliability-focused practice. The [original rule](https://github.com/OsomePteLtd/principles/pull/40) followed a [July 2021 discussion](https://ooosome.slack.com/archives/CBXJXEF0F/p1627041698131600); its [December clarification](https://ooosome.slack.com/archives/C01DUVBCV7B/p1638516512416900) favored events that all interested services could consume. Later approved implementations established direct queue interfaces:
+
+   - **Auditor:** the [toolkit helper](https://github.com/OsomePteLtd/server-toolkit/pull/63), approved by a reviewer of the original rule, sends audit records directly to its queue. The [August 2021 discussion](https://ooosome.slack.com/archives/C01DUVBCV7B/p1628089930039200) explicitly recognizes buffering audit records during consumer downtime.
+   - **Analytix:** after [recurring timeouts](https://ooosome.slack.com/archives/C01DUVBCV7B/p1691046923278649), an [async Lambda helper](https://github.com/OsomePteLtd/server-toolkit/pull/813) was [changed to direct SQS](https://github.com/OsomePteLtd/server-toolkit/pull/815) in August 2023. The forwarding Lambda already enqueued a job; the change removed that step. The [team's outcome report](https://ooosome.slack.com/archives/CEK7WGGB0/p1692174683928539) credits the new helper as part of the database connection fixes. The [review](https://github.com/OsomePteLtd/server-toolkit/pull/815#discussion_r1285859155) accepts not interrupting the caller when an analytics enqueue fails; that loss policy is specific to analytics.
+
+   These precedents establish the communication shape, not that every existing implementation meets all the conditions above. The separate [SNS via SQS decision](https://github.com/OsomePteLtd/decisions/blob/main/records/backend/sns-via-sqs.md) explains queue-based delivery controls while preserving publish/subscribe communication. The [investigation timeline](https://reallyosome.atlassian.net/browse/ITG-2345) records the sources and remaining uncertainty; no formal historical exemption was found.
 
 ### Timeouts
 
