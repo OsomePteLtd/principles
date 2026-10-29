@@ -823,24 +823,26 @@ One of the key principles in effective transaction management is the avoidance o
 
    - **SNS (publish/subscribe messaging):** publish an event when independent services may subscribe; the producer does not need to know those consumers.
    - **Synchronous Lambda invocation:** call a known service when the caller needs the processing result.
-   - **Asynchronous Lambda invocation:** call a known service when the caller does not need an immediate processing result. The consumer owns processing retries and a monitored failure destination.
-   - **Direct SQS:** send to a known consumer's supported queue interface when no immediate processing result is needed and the conditions below are met.
+   - **Asynchronous Lambda invocation:** call a known service when no immediate processing result is needed and Lambda's function-level concurrency, retry, event age and failure-handling controls meet the service's requirements.
+   - **Direct SQS:** send to a known consumer's supported queue interface when no immediate processing result is needed and the consumer needs direct control over queued work, retention, batch processing or replay. The SQS-specific conditions below must also hold.
 
-1. Direct SQS is allowed only when all of these conditions hold:
+   Both asynchronous options can limit processing concurrency. Choose according to the required delivery and recovery controls; [Core to Jamal](https://github.com/OsomePteLtd/core/pull/12056) illustrates using SQS to control classification throughput.
+
+1. Both asynchronous Lambda invocation and direct SQS require:
+
+   - **Safe processing:** make handlers idempotent (safe to repeat) and handle stale or out-of-order messages according to the contract. Neither option guarantees exactly-once business effects. Signal successful processing only after the required work succeeds; surface transient processing failures to the delivery mechanism instead of returning normal API error responses.
+   - **Consumer ownership:** the consumer owns processing concurrency, retries, event age or retention, monitoring, alarms and the failure capture and recovery procedure. Limit processing to downstream capacity. Define how permanent rejections, exhausted retries and expired events are reported and recovered; neither transport retries indefinitely.
+   - **Explicit delivery policy:** the producer handles failed submissions. Retain and retry required business delivery, and define recovery when the retry window expires. Use an outbox (delivery intent saved with the producer's database change) when both must succeed together. Best-effort analytics may log and continue only when message loss is explicitly accepted. A submission acknowledgment confirms acceptance for delivery, not completed processing.
+   - **Uncertain outcomes and fallbacks:** a missing acknowledgment does not prove submission failed. Retrying may duplicate an already accepted message. Do not automatically switch transports in a way that bypasses consumer capacity controls. Any fallback must be explicitly supported and preserve duplicate safety and the agreed delivery policy.
+
+1. Direct SQS is allowed only when these additional conditions hold:
 
    - **Explicit contract:** the consumer exposes the queue as a supported service interface, with a shared typed message contract and producer helper. Define compatible schema evolution and validate messages in the consumer. Do not send arbitrary private worker jobs or bypass the consumer's business rules.
-   - **Consumer ownership:** the consumer owns the queue configuration, processing concurrency, retries, message retention, dead-letter queue (DLQ), monitoring, alarms and replay procedure. Limit processing to the consumer's downstream capacity. Configure queue routing and sender permissions explicitly.
-   - **Safe processing:** make handlers idempotent (safe to repeat), handle stale or out-of-order messages according to the contract, and acknowledge messages only after successful handling. Report processing failures so they can be retried; queues do not guarantee exactly-once business effects.
-   - **Explicit delivery policy:** the producer handles enqueue failures. Required business delivery must be retained and retried; use an outbox (delivery intent saved with the producer's database change) when both must succeed together. Best-effort analytics may log and continue only when message loss is explicitly accepted. An enqueue acknowledgment confirms queue acceptance, not completed processing.
+   - **Queue ownership:** the consumer owns the queue configuration, routing, sender permissions and dead-letter queue (DLQ). Apply the shared processing, delivery and recovery requirements above to the queue consumer.
 
    These conditions apply to a deliberately exposed queue interface, not to every internal worker queue. Use SNS when publishing events for independent subscribers; adding SQS behind an SNS subscription does not change that choice.
 
-   **History and precedents:** the evidence supports documentation drifting behind accepted reliability-focused practice. The [original rule](https://github.com/OsomePteLtd/principles/pull/40) followed a [July 2021 discussion](https://ooosome.slack.com/archives/CBXJXEF0F/p1627041698131600); its [December clarification](https://ooosome.slack.com/archives/C01DUVBCV7B/p1638516512416900) favored events that all interested services could consume. Later approved implementations established direct queue interfaces:
-
-   - **Auditor:** the [toolkit helper](https://github.com/OsomePteLtd/server-toolkit/pull/63), approved by a reviewer of the original rule, sends audit records directly to its queue. The [August 2021 discussion](https://ooosome.slack.com/archives/C01DUVBCV7B/p1628089930039200) explicitly recognizes buffering audit records during consumer downtime.
-   - **Analytix:** after [recurring timeouts](https://ooosome.slack.com/archives/C01DUVBCV7B/p1691046923278649), an [async Lambda helper](https://github.com/OsomePteLtd/server-toolkit/pull/813) was [changed to direct SQS](https://github.com/OsomePteLtd/server-toolkit/pull/815) in August 2023. The forwarding Lambda already enqueued a job; the change removed that step. The [team's outcome report](https://ooosome.slack.com/archives/CEK7WGGB0/p1692174683928539) credits the new helper as part of the database connection fixes. The [review](https://github.com/OsomePteLtd/server-toolkit/pull/815#discussion_r1285859155) accepts not interrupting the caller when an analytics enqueue fails; that loss policy is specific to analytics.
-
-   These precedents establish the communication shape, not that every existing implementation meets all the conditions above. The separate [SNS via SQS decision](https://github.com/OsomePteLtd/decisions/blob/main/records/backend/sns-via-sqs.md) explains queue-based delivery controls while preserving publish/subscribe communication. The [investigation timeline](https://reallyosome.atlassian.net/browse/ITG-2345) records the sources and remaining uncertainty; no formal historical exemption was found.
+   **History and precedents:** approved direct-queue implementations in [Auditor](https://github.com/OsomePteLtd/server-toolkit/pull/63) and [Analytix](https://github.com/OsomePteLtd/server-toolkit/pull/815) support updating documentation that lagged accepted practice. These precedents establish the communication pattern, not compliance with every requirement above; see the [investigation timeline](https://reallyosome.atlassian.net/browse/ITG-2345) for the historical evidence, discussions and remaining uncertainty.
 
 ### Timeouts
 
