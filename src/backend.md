@@ -824,9 +824,11 @@ One of the key principles in effective transaction management is the avoidance o
    - **SNS (publish/subscribe messaging):** publish an event when independent services may subscribe; the producer does not need to know those consumers.
    - **Synchronous Lambda invocation:** call a known service when the caller needs the processing result.
    - **Asynchronous Lambda invocation:** call a known service when no immediate processing result is needed and Lambda's function-level concurrency, retry, event age and failure-handling controls meet the service's requirements.
-   - **Direct SQS:** send to a known consumer's supported queue interface when no immediate processing result is needed and the consumer needs direct control over queued work, retention, batch processing or replay. The SQS-specific conditions below must also hold.
+   - **Direct SQS:** send to a known consumer's supported queue interface when no immediate processing result is needed and the consumer needs to hold, batch, replay or pace the queued work. The SQS-specific conditions below must also hold.
 
-   Both asynchronous options can limit processing concurrency. Choose according to the required delivery and recovery controls; [Core to Jamal](https://github.com/OsomePteLtd/core/pull/12056) illustrates using SQS to control classification throughput.
+   SNS and Lambda invocation are the defaults; direct SQS is the exception, allowed only when the consumer must do something with the queued work that asynchronous Lambda invocation cannot provide: hold it beyond Lambda's asynchronous retention, process it in batches, replay it from a dead-letter queue, or pull it at its own pace against a downstream limit. Asynchronous Lambda holds throttled events for at most six hours, one per invocation; a consumer-owned queue holds for days, batches, and lets the consumer set the pace. "No immediate result" describes the call, not the delivery guarantee: required business messages are still retained and retried (see the delivery policy below).
+
+   Known uses: Auditor ([toolkit #63](https://github.com/OsomePteLtd/server-toolkit/pull/63)), Analytix ([toolkit #815](https://github.com/OsomePteLtd/server-toolkit/pull/815), after an asynchronous Lambda helper in [#813](https://github.com/OsomePteLtd/server-toolkit/pull/813) proved to be an extra hop) and Core to Jamal ([core#12056](https://github.com/OsomePteLtd/core/pull/12056), classification throughput against the Gemini quota).
 
 1. Both asynchronous Lambda invocation and direct SQS require:
 
@@ -837,12 +839,12 @@ One of the key principles in effective transaction management is the avoidance o
 
 1. Direct SQS is allowed only when these additional conditions hold:
 
-   - **Explicit contract:** the consumer exposes the queue as a supported service interface, with a shared typed message contract and producer helper. Define compatible schema evolution and validate messages in the consumer. Do not send arbitrary private worker jobs or bypass the consumer's business rules.
-   - **Queue ownership:** the consumer owns the queue configuration, routing, sender permissions and dead-letter queue (DLQ). Apply the shared processing, delivery and recovery requirements above to the queue consumer.
+   - **Explicit contract:** the consumer exposes the queue as a supported service interface, with a shared typed message contract and producer helper. Define compatible schema evolution and validate messages in the consumer. A queue exposed this way is a service interface like an API: the consumer validates and applies its own rules, and producers never write into a consumer's internal queues or state. Send through the shared producer helper so every message carries the producer identity (`Initiator`), `TraceId` and OpenTelemetry context, and the consumer handler restores them; the consumer logs and authorizes by producer identity.
+   - **Queue ownership:** the consumer owns the queue configuration, routing, a queue policy that allows only the approved producer services to send, and the dead-letter queue (DLQ). Apply the shared processing, delivery and recovery requirements above to the queue consumer.
 
    These conditions apply to a deliberately exposed queue interface, not to every internal worker queue. Use SNS when publishing events for independent subscribers; adding SQS behind an SNS subscription does not change that choice.
 
-   **History and precedents:** approved direct-queue implementations in [Auditor](https://github.com/OsomePteLtd/server-toolkit/pull/63) and [Analytix](https://github.com/OsomePteLtd/server-toolkit/pull/815) support updating documentation that lagged accepted practice. These precedents establish the communication pattern, not compliance with every requirement above; see the [investigation timeline](https://reallyosome.atlassian.net/browse/ITG-2345) for the historical evidence, discussions and remaining uncertainty.
+   **History and precedents:** the Auditor and Analytix helpers listed above were approved shortly after the original rule and support updating documentation that lagged accepted practice. These precedents establish the communication pattern, not compliance with every requirement above; see the [investigation timeline](https://reallyosome.atlassian.net/browse/ITG-2345) for the historical evidence, discussions and remaining uncertainty.
 
 ### Timeouts
 
