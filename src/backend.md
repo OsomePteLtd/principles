@@ -504,7 +504,7 @@ One of the key principles in effective transaction management is the avoidance o
 
 ## Event Bus
 
-1. Use the Event Bus for asynchronous communication between services.
+1. Use the Event Bus for asynchronous communication between services; for an asynchronous request to one known consumer, see [Microservices](#microservices).
 
 1. Bear in mind that you could receive an outdated message. So you can safely use only immutable data (such `id`) from a message. Always fetch actual data before using it.
 
@@ -819,9 +819,23 @@ One of the key principles in effective transaction management is the avoidance o
 
 1. Treat [Pablo](https://github.com/OsomePteLtd/pablo) as a canonical microservice.
 
-1. Don't post messages to other service SQS queues. Consider using 1) SNS event if the current service does not want to know about what happens with the event and who in fact uses it, 2) direct Lambda invocation if the service wants to know what happens and what is the result, 3) async Lambda invocation if the service knows what happens, but does not want to know the result, or can not afford waiting for the result.
+1. Don't post messages to other service SQS queues, except under the [direct SQS exception](#direct-sqs-exception) below. Consider using 1) SNS event if the current service does not want to know about what happens with the event and who in fact uses it, 2) direct Lambda invocation if the service wants to know what happens and what is the result, 3) async Lambda invocation if the service knows what happens, but does not want to know the result, or can not afford waiting for the result.
 
-   By the moment, there are usages like this, but they are deprecated.
+1. Asynchronous Lambda invocation requires, and the direct SQS exception inherits:
+
+   - **Safe processing:** make handlers idempotent (safe to repeat) and handle stale or out-of-order messages; neither transport guarantees exactly-once business effects. Signal success only after the required work succeeds and surface transient failures to the delivery mechanism instead of returning normal API error responses.
+   - **Consumer ownership:** the consumer owns processing concurrency, retries, retention, monitoring, alarms and recovery, limits processing to downstream capacity, and defines what happens after retries are exhausted or events expire.
+   - **Delivery policy:** the producer handles failed submissions. Retain and retry required business messages, use an outbox (delivery intent saved with the producer's database change) when both must succeed together, and accept loss only explicitly, for best-effort analytics. An acknowledgment confirms acceptance, not completed processing.
+   - **Fallbacks:** a missing acknowledgment does not prove the submission failed, so a retry may duplicate accepted work. Do not switch transports automatically in a way that bypasses consumer capacity controls; any fallback must be explicitly supported and keep duplicate safety and the delivery policy.
+
+### Direct SQS exception
+
+Fire-and-forget messages (no result needed) may go straight to a known consumer's supported queue only when the consumer must hold, batch, replay or pace the work beyond what asynchronous Lambda invocation provides (it holds throttled events for at most six hours, one per invocation, with no batching or replay). Adding SQS behind an SNS subscription is not this exception. Conditions:
+
+- **Contract:** the consumer exposes the queue as a supported service interface with a shared typed message contract and producer helper, validates messages and owns schema evolution; an internal worker queue is not a service interface. Messages carry producer identity and trace context through the helper, and the consumer authorizes by producer.
+- **Ownership:** the consumer owns the queue configuration, a queue policy limited to approved producer services, the dead-letter queue, and the asynchronous Lambda requirements above.
+
+Known uses: [Auditor](https://github.com/OsomePteLtd/server-toolkit/pull/63), [Analytix](https://github.com/OsomePteLtd/server-toolkit/pull/815) and [Core to Jamal](https://github.com/OsomePteLtd/core/pull/12056). They establish the pattern, not compliance with every condition; history in [ITG-2345](https://reallyosome.atlassian.net/browse/ITG-2345).
 
 ### Timeouts
 
